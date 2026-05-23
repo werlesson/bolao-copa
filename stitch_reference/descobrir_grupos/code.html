@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'geist';
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        }
+        @font-face {
+            font-family: 'jetbrainsMono';
+            src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        }
+        body {
+            background-color: #111319;
+            color: #e2e2eb;
+            font-family: 'geist', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#1e1f26",
+                        "on-tertiary": "#003543",
+                        "secondary": "#4de082",
+                        "on-secondary-container": "#003e1c",
+                        "primary": "#ffe7af",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "surface-container-high": "#282a30",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0c0e14",
+                        "on-tertiary-container": "#005f75",
+                        "on-surface": "#e2e2eb",
+                        "surface-bright": "#373940",
+                        "on-secondary": "#003919",
+                        "on-primary-fixed-variant": "#584400",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#b5ebff",
+                        "on-background": "#e2e2eb",
+                        "secondary-fixed-dim": "#4de082",
+                        "tertiary-container": "#6adbff",
+                        "secondary-container": "#00b55d",
+                        "inverse-primary": "#755b00",
+                        "surface-container-low": "#191b22",
+                        "primary-fixed": "#ffe08f",
+                        "tertiary": "#c8efff",
+                        "on-secondary-fixed-variant": "#005227",
+                        "on-tertiary-fixed": "#001f28",
+                        "surface-container-highest": "#33343b",
+                        "outline": "#9a907b",
+                        "on-surface-variant": "#d1c5ae",
+                        "surface-dim": "#111319",
+                        "primary-container": "#f5c842",
+                        "on-primary": "#3d2e00",
+                        "on-primary-fixed": "#241a00",
+                        "outline-variant": "#4e4634",
+                        "background": "#111319",
+                        "secondary-fixed": "#6dfe9c",
+                        "error-container": "#93000a",
+                        "surface": "#111319",
+                        "primary-fixed-dim": "#eec13c",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-secondary-fixed": "#00210c",
+                        "surface-variant": "#33343b",
+                        "surface-tint": "#eec13c",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#6c5400",
+                        "inverse-surface": "#e2e2eb",
+                        "inverse-on-surface": "#2e3037"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "margin-desktop": "48px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "score-sm": ["jetbrainsMono"],
+                        "label-bold": ["geist"],
+                        "headline-md": ["geist"],
+                        "body-md": ["geist"],
+                        "body-lg": ["geist"],
+                        "display-score": ["jetbrainsMono"],
+                        "headline-lg": ["geist"]
+                    },
+                    "fontSize": {
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-background text-primary border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<span class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</span>
+</div>
+<button class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full" data-icon="notifications">notifications</button>
+</header>
+<main class="px-margin-mobile pt-lg">
+<!-- Search Bar Section -->
+<div class="mb-lg">
+<div class="relative flex items-center bg-surface-container border border-outline-variant rounded transition-all focus-within:border-primary-container group">
+<span class="material-symbols-outlined absolute left-md text-on-surface-variant group-focus-within:text-primary-container" data-icon="search">search</span>
+<input class="w-full bg-transparent border-none focus:ring-0 text-body-lg text-on-surface pl-12 py-3 placeholder:text-on-surface-variant" placeholder="Procurar grupos..." type="text"/>
+</div>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-sm overflow-x-auto pb-md no-scrollbar">
+<button class="bg-primary-container text-on-primary-container px-lg py-sm rounded-full font-label-bold text-label-bold whitespace-nowrap">Populares</button>
+<button class="bg-surface-container-low text-on-surface-variant border border-outline-variant px-lg py-sm rounded-full font-label-bold text-label-bold whitespace-nowrap hover:bg-surface-container-high transition-colors">Novos</button>
+<button class="bg-surface-container-low text-on-surface-variant border border-outline-variant px-lg py-sm rounded-full font-label-bold text-label-bold whitespace-nowrap hover:bg-surface-container-high transition-colors">Amigos participando</button>
+</div>
+<!-- Groups List -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md mt-md">
+<!-- Group Card 1 -->
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden flex flex-col">
+<div class="h-32 w-full bg-surface-container-highest relative">
+<img alt="Amigos do Futebol" class="w-full h-full object-cover" data-alt="A cinematic overhead shot of a high-tech soccer stadium at night, illuminated by neon golden stadium lights. The aesthetic is clean and corporate modern, featuring deep monochromatic dark surfaces and a focus on architectural precision. The atmosphere is intense and professional, reflecting a high-stakes competitive sports environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRZsg2o38QuDxQHDwrEGCsAZDUbdVoznhLkb2iRM5V-uzrBNJHHZrUJ_OdNULJ62njTRn7qXDB4HfGkqCNifrcDNGSnpAiJIC0Kt-HyvTgdSAl41t1oyz82ZfcgR9fL0R8BD7xrTrHkW76MvTr9mSY7tY1O8cE-MrXm-NUf2xQXUM_WswHGXs8_UQAvuYSU58fevESIxgeMW4fAqUfOAV13OVA8BwVhT9nwyCZMaW1J6ZcDnLiJATGnXodZ5aSJOo2EEPQVxiR_ws"/>
+<div class="absolute top-sm right-sm bg-surface-container-lowest/80 backdrop-blur-sm px-sm py-1 rounded border border-outline-variant">
+<span class="text-label-bold font-label-bold text-secondary">Grátis</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-xs">Amigos do Futebol</h3>
+<div class="flex items-center gap-sm text-on-surface-variant mb-lg">
+<span class="material-symbols-outlined text-[16px]" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">1.2k membros</span>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-primary-container text-on-primary font-label-bold text-label-bold py-3 rounded uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all">Participar</button>
+</div>
+</div>
+</div>
+<!-- Group Card 2 -->
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden flex flex-col">
+<div class="h-32 w-full bg-surface-container-highest relative">
+<img alt="Bolão dos Especialistas" class="w-full h-full object-cover" data-alt="A detailed digital art piece of a sleek, dark-themed football dashboard display. The scene is illuminated by subtle golden accent lights that highlight data-dense charts and match statistics. The visual style is premium and sophisticated, utilizing a corporate modern design with raw structural clarity and monochromatic surfaces." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKraOtopVpZQuAZqkn-juU5yzuZoMDEiwZfeESDrkRXFOW2il23PqTTWt6oPo9AM7VbbZp6GO0U8jNtk3Y-wSLDdY2EmF9_upDo2hjcJaPrjo4_bLTGE1eUE217GLIAyUEGpxociSgzGhvkyW8vRrhpjvk_Uz0Yct1LaLnTmqBaABhUqH-oxHbxvaOl-mnQMQh_18yiz4_VRMdR096x5kV_9e4A6jzcuJphcKJQbXnYlb03cfWA4tlemuA6XIbBjfj0bLjN9hFOvc"/>
+<div class="absolute top-sm right-sm bg-on-primary-container px-sm py-1 rounded border border-primary-container">
+<span class="text-label-bold font-label-bold text-primary">R$ 50,00</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-xs">Bolão dos Especialistas</h3>
+<div class="flex items-center gap-sm text-on-surface-variant mb-lg">
+<span class="material-symbols-outlined text-[16px]" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">850 membros</span>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-primary-container text-on-primary font-label-bold text-label-bold py-3 rounded uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all">Participar</button>
+</div>
+</div>
+</div>
+<!-- Group Card 3 -->
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden flex flex-col">
+<div class="h-32 w-full bg-surface-container-highest relative">
+<img alt="Brasil Rumo ao Hexa" class="w-full h-full object-cover" data-alt="A vibrant yet professional composition of a world-class soccer ball resting on a dark synthetic turf. The lighting is focused and dramatic, using high-contrast shadows to emphasize texture. The color palette centers on deep slate and obsidian blacks, with glowing golden yellow highlights typical of a premium sports broadcast aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnM1b1UYjSAIhoprTNwYVGDR-B57SHqy4u-vvfoJkIIPOCnO7nOjMmudIt3STxb0Vv4faHC5IaftRk0yoK_qZrXTq0POYVULnnweB1ZBUOn3dhhcffkL9eYKEzWuWqs96QpQNVyjkT7zvZxI5Ox42QNsgHD3c0laJjb2iti4yrlQwMZbkaK7EaTQqMf4z8Gv_b-2e4kwcy8rpk9ftbqT6s5EUlusudiZdT6Nm-LYF-quXIMJvdfKvaeCBezYJV60qiFJMR7J0isFQ"/>
+<div class="absolute top-sm right-sm bg-surface-container-lowest/80 backdrop-blur-sm px-sm py-1 rounded border border-outline-variant">
+<span class="text-label-bold font-label-bold text-secondary">Grátis</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-xs">Brasil Rumo ao Hexa</h3>
+<div class="flex items-center gap-sm text-on-surface-variant mb-lg">
+<span class="material-symbols-outlined text-[16px]" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">3.5k membros</span>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-primary-container text-on-primary font-label-bold text-label-bold py-3 rounded uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all">Participar</button>
+</div>
+</div>
+</div>
+<!-- Group Card 4 -->
+<div class="bg-surface-container-low border border-outline-variant rounded overflow-hidden flex flex-col">
+<div class="h-32 w-full bg-surface-container-highest relative">
+<img alt="Liga de Elite 2026" class="w-full h-full object-cover" data-alt="A minimalist architectural view of a modern sports arena corridor with sharp angles and clean structural lines. The atmosphere is sophisticated and quiet, lit by soft recessed lighting that casts long, precise shadows. The aesthetic follows a flat-tactile corporate style, dominated by dark monochromatic tones and high-definition details." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZQeeSQin0SUkIiY4vW0zGj3wCGlFcLfpGWBbI_7DOQZo5DdG7FgrSIHoTuLnFUDa_3-iRnTckuwU9dOeXmrpx7-MROCuZu7VaVcKyP8S54M1-m_uzMPtX88gCbJGrQJ_kNOvL5Oo3NwXTNBlosG3cXU4rWmQ7AOhem7Lp9UsHrqP5J2IKK2yRD-fa_g0C43yY-f6OakEh7dFui-2NB7bQ10286xaCE-iqh--PR-wqFBZYq5s9epZYhcweHK-wSriz3RCEAUZAXr0"/>
+<div class="absolute top-sm right-sm bg-on-primary-container px-sm py-1 rounded border border-primary-container">
+<span class="text-label-bold font-label-bold text-primary">R$ 100,00</span>
+</div>
+</div>
+<div class="p-md flex flex-col flex-grow">
+<h3 class="text-headline-md font-headline-md text-on-surface mb-xs">Liga de Elite 2026</h3>
+<div class="flex items-center gap-sm text-on-surface-variant mb-lg">
+<span class="material-symbols-outlined text-[16px]" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">420 membros</span>
+</div>
+<div class="mt-auto">
+<button class="w-full bg-primary-container text-on-primary font-label-bold text-label-bold py-3 rounded uppercase tracking-wider hover:opacity-90 active:scale-95 transition-all">Participar</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

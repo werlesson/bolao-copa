@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#690005",
+                    "surface-bright": "#373940",
+                    "secondary": "#4de082",
+                    "tertiary-fixed-dim": "#62d4f8",
+                    "secondary-fixed-dim": "#4de082",
+                    "primary-fixed-dim": "#eec13c",
+                    "primary-fixed": "#ffe08f",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed": "#001f28",
+                    "on-surface": "#e2e2eb",
+                    "primary-container": "#f5c842",
+                    "surface-container-highest": "#33343b",
+                    "secondary-fixed": "#6dfe9c",
+                    "on-background": "#e2e2eb",
+                    "on-tertiary": "#003543",
+                    "surface-container": "#1e1f26",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#33343b",
+                    "secondary-container": "#00b55d",
+                    "outline-variant": "#4e4634",
+                    "on-tertiary-fixed-variant": "#004e60",
+                    "on-secondary-container": "#003e1c",
+                    "inverse-surface": "#e2e2eb",
+                    "surface-dim": "#111319",
+                    "on-secondary-fixed": "#00210c",
+                    "surface-container-low": "#191b22",
+                    "tertiary": "#c8efff",
+                    "on-primary-fixed-variant": "#584400",
+                    "inverse-on-surface": "#2e3037",
+                    "on-secondary-fixed-variant": "#005227",
+                    "tertiary-fixed": "#b5ebff",
+                    "outline": "#9a907b",
+                    "on-primary-container": "#6c5400",
+                    "surface-tint": "#eec13c",
+                    "surface": "#111319",
+                    "on-primary-fixed": "#241a00",
+                    "on-tertiary-container": "#005f75",
+                    "primary": "#ffe7af",
+                    "on-surface-variant": "#d1c5ae",
+                    "surface-container-lowest": "#0c0e14",
+                    "surface-container-high": "#282a30",
+                    "inverse-primary": "#755b00",
+                    "on-primary": "#3d2e00",
+                    "background": "#111319",
+                    "error-container": "#93000a",
+                    "tertiary-container": "#6adbff",
+                    "on-secondary": "#003919"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "margin-desktop": "48px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Geist", "sans-serif"],
+                    "body-md": ["Geist", "sans-serif"],
+                    "body-lg": ["Geist", "sans-serif"],
+                    "label-bold": ["Geist", "sans-serif"],
+                    "headline-lg": ["Geist", "sans-serif"],
+                    "display-score": ["JetBrains Mono", "monospace"],
+                    "score-sm": ["JetBrains Mono", "monospace"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0f1117;
+            font-family: 'Geist', sans-serif;
+        }
+        .tonal-card {
+            background-color: #161820;
+            border: 1px solid #252836;
+        }
+        .interactive-surface {
+            background-color: #1e2028;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-surface-container-high transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<main class="px-margin-mobile pt-lg max-w-2xl mx-auto">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Meus Grupos</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Você está em 2 competições</p>
+</div>
+</div>
+<!-- Groups List -->
+<div class="space-y-md">
+<!-- Group Card: Amigos do Futebol (Rank #1) -->
+<div class="tonal-card rounded-xl p-md flex flex-col gap-md transition-all active:scale-[0.98] cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="flex gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Amigos do Futebol" class="w-full h-full object-cover" data-alt="A professional football stadium seen from the pitch level at dusk, capturing the intense atmosphere with bright floodlights piercing through a slightly misty air. The composition emphasizes the vibrant green turf and the modern architectural lines of the stands. The color palette is dominated by deep navy blues and vivid greens, reflecting a high-stakes competitive environment with a clean, corporate sports aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_I-AxSAM0LQswdIOglnfRc313qVAQ6pmCvalbF989Y7aXVjAawOITggCbGZmLwv5pOxI2mKv36tOpC8GFeyNd04lk0LE4apdo11lwucwtq2-i_y7vGTpbEQ4epiOUAZ_thHmlmPlU23dijtMwtwqrzfndsECBFIshegfVd-zJCh-HUsGJ8Mh8LS8gjm_Tw-paqnWEYbiuvPbc8q-a3KJlUjfVTRNZ9S5H9dp-fHF7lFwRBpI1MImSgfE6OXB-cNO4G_-En8YvOUg"/>
+</div>
+<div>
+<h3 class="text-body-lg font-bold text-on-surface">Amigos do Futebol</h3>
+<div class="flex items-center gap-sm mt-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant">8 membros</span>
+</div>
+</div>
+</div>
+<!-- Golden Badge for Rank #1 -->
+<div class="bg-[#3d2f00] border border-primary-container px-3 py-1 rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-primary-container text-[14px]" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="text-label-bold font-label-bold text-primary-container">RANK #1</span>
+</div>
+</div>
+<!-- Ranking Preview -->
+<div class="bg-surface-container-low rounded-lg p-sm border border-outline-variant">
+<div class="flex justify-between items-center px-2 py-1 bg-primary-container text-on-primary-container rounded mb-1">
+<span class="text-label-bold font-label-bold">VOCÊ</span>
+<span class="text-score-sm font-score-sm">1º • 145 pts</span>
+</div>
+<div class="flex justify-between items-center px-2 py-1 text-on-surface-variant opacity-60">
+<span class="text-label-bold font-label-bold">CARLOS M.</span>
+<span class="text-score-sm font-score-sm">2º • 132 pts</span>
+</div>
+</div>
+</div>
+<!-- Group Card: Copa da Firma (Rank #2) -->
+<div class="tonal-card rounded-xl p-md flex flex-col gap-md transition-all active:scale-[0.98] cursor-pointer">
+<div class="flex justify-between items-start">
+<div class="flex gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant">
+<img alt="Copa da Firma" class="w-full h-full object-cover" data-alt="A modern corporate office environment with glass walls and minimalist furniture, subtly blended with sports imagery like a World Cup trophy silhouette. The lighting is cold and professional with soft blue highlights, creating a sophisticated business atmosphere. The visual style is crisp and high-definition, focusing on structural clarity and a premium monochromatic surface palette with deep blacks and cool greys." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkDshRF4ZSEo4Ua8uAsmHAo1jTfLsLmBrdodwi6trSDAyQNvpLUsy09bfw8349cAJzqHqMVsibcdwLb96xx1BOuxLbfFb_jkCJMhQstHFIk3GviHdLEykQvgBxy-tFtkp5e_BvzmHpb_q8_vLFiRb3AfVBanyrFiTpAm1A3wgMFu4hg_ZOT7OJ1N2bVRyXTbdLIjuWGIAibj599y73AzJeCTGDhHkq4vs_LLq65Xtx11hn94b7riJMTkTyKwssxWYiqaCC7UaWLdY"/>
+</div>
+<div>
+<h3 class="text-body-lg font-bold text-on-surface">Copa da Firma</h3>
+<div class="flex items-center gap-sm mt-1">
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant">24 membros</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-highest px-3 py-1 rounded-full">
+<span class="text-label-bold font-label-bold text-on-surface">RANK #2</span>
+</div>
+</div>
+<!-- Ranking Preview -->
+<div class="bg-surface-container-low rounded-lg p-sm border border-outline-variant">
+<div class="flex justify-between items-center px-2 py-1 text-on-surface-variant opacity-60">
+<span class="text-label-bold font-label-bold">RODRIGO S.</span>
+<span class="text-score-sm font-score-sm">1º • 210 pts</span>
+</div>
+<div class="flex justify-between items-center px-2 py-1 bg-surface-container-high text-on-surface rounded border border-outline-variant">
+<span class="text-label-bold font-label-bold">VOCÊ</span>
+<span class="text-score-sm font-score-sm">2º • 198 pts</span>
+</div>
+</div>
+</div>
+<!-- Join another group hint -->
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-lg flex flex-col items-center justify-center text-center gap-sm opacity-60 hover:opacity-100 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-on-surface-variant text-[32px]" data-icon="search">search</span>
+<p class="text-label-bold font-label-bold text-on-surface-variant">Procurar grupo público</p>
+</div>
+</div>
+</main>
+<!-- FAB: Criar Novo Grupo -->
+<button class="fixed bottom-24 right-margin-mobile bg-primary-container text-on-primary-container h-14 px-6 rounded-xl flex items-center gap-3 shadow-xl hover:scale-105 transition-transform z-40">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+<span class="text-label-bold font-label-bold">Criar Novo Grupo</span>
+</button>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface border-t border-outline-variant">
+<!-- Jogos -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<!-- Ranking -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<!-- Grupos (Active) -->
+<a class="flex flex-col items-center justify-center text-primary scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<!-- Perfil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

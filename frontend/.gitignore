@@ -1,0 +1,25 @@
+node_modules/
+.pnpm-store/
+
+# Environment — NEVER commit real secrets
+.env
+.env.*
+!.env.example
+
+# Nuxt build output
+.nuxt/
+.output/
+dist/
+
+# Logs
+*.log
+logs/
+
+# IDE
+.idea/
+.vscode/
+*.sw*
+
+# OS
+.DS_Store
+Thumbs.db

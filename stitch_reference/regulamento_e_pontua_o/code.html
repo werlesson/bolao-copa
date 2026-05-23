@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#1e1f26",
+                    "on-tertiary": "#003543",
+                    "secondary": "#4de082",
+                    "on-secondary-container": "#003e1c",
+                    "primary": "#ffe7af",
+                    "tertiary-fixed-dim": "#62d4f8",
+                    "surface-container-high": "#282a30",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0c0e14",
+                    "on-tertiary-container": "#005f75",
+                    "on-surface": "#e2e2eb",
+                    "surface-bright": "#373940",
+                    "on-secondary": "#003919",
+                    "on-primary-fixed-variant": "#584400",
+                    "on-error": "#690005",
+                    "tertiary-fixed": "#b5ebff",
+                    "on-background": "#e2e2eb",
+                    "secondary-fixed-dim": "#4de082",
+                    "tertiary-container": "#6adbff",
+                    "secondary-container": "#00b55d",
+                    "inverse-primary": "#755b00",
+                    "surface-container-low": "#191b22",
+                    "primary-fixed": "#ffe08f",
+                    "tertiary": "#c8efff",
+                    "on-secondary-fixed-variant": "#005227",
+                    "on-tertiary-fixed": "#001f28",
+                    "surface-container-highest": "#33343b",
+                    "outline": "#9a907b",
+                    "on-surface-variant": "#d1c5ae",
+                    "surface-dim": "#111319",
+                    "primary-container": "#f5c842",
+                    "on-primary": "#3d2e00",
+                    "on-primary-fixed": "#241a00",
+                    "outline-variant": "#4e4634",
+                    "background": "#111319",
+                    "secondary-fixed": "#6dfe9c",
+                    "error-container": "#93000a",
+                    "surface": "#111319",
+                    "primary-fixed-dim": "#eec13c",
+                    "on-tertiary-fixed-variant": "#004e60",
+                    "on-secondary-fixed": "#00210c",
+                    "surface-variant": "#33343b",
+                    "surface-tint": "#eec13c",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#6c5400",
+                    "inverse-surface": "#e2e2eb",
+                    "inverse-on-surface": "#2e3037"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "margin-desktop": "48px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "score-sm": ["jetbrainsMono"],
+                    "label-bold": ["system-ui", "sans-serif"],
+                    "headline-md": ["system-ui", "sans-serif"],
+                    "body-md": ["system-ui", "sans-serif"],
+                    "body-lg": ["system-ui", "sans-serif"],
+                    "display-score": ["jetbrainsMono"],
+                    "headline-lg": ["system-ui", "sans-serif"]
+            },
+            "fontSize": {
+                    "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0f1117;
+            color: #e2e2eb;
+            font-family: 'system-ui', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .card-outline {
+            border: 1px solid #252836;
+        }
+        .bg-card {
+            background-color: #161820;
+        }
+        .bg-level-2 {
+            background-color: #1e2028;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-headline-md" data-icon="sports_soccer">sports_soccer</span>
+<span class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</span>
+</div>
+<button class="text-on-surface-variant hover:bg-surface-container-high transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-grow w-full max-w-3xl mx-auto px-margin-mobile py-lg pb-32">
+<!-- Hero Title Section -->
+<div class="mb-xl text-center">
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-xs">Regras de Pontuação</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Entenda como subir no ranking e ganhar pontos no BolãoCopa.</p>
+</div>
+<!-- Rules Accordion Sections -->
+<div class="space-y-md">
+<!-- Accordion 1: Como pontuar -->
+<div class="bg-card card-outline rounded-lg overflow-hidden">
+<div class="flex justify-between items-center p-md cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="info">info</span>
+<h2 class="text-body-lg font-label-bold text-on-surface">Como pontuar?</h2>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+<div class="px-md pb-md border-t border-outline-variant/30 pt-md">
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+                        A pontuação é calculada automaticamente após o encerramento oficial de cada partida. Os pontos não são cumulativos para uma mesma partida (você recebe apenas a maior pontuação atingida).
+                    </p>
+</div>
+</div>
+<!-- Accordion 2: Placar Exato -->
+<div class="bg-card card-outline rounded-lg overflow-hidden">
+<div class="flex justify-between items-center p-md cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary-container" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<h2 class="text-body-lg font-label-bold text-on-surface">Placar exato (+3 pts)</h2>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+<div class="px-md pb-md border-t border-outline-variant/30 pt-md">
+<div class="flex items-center justify-between bg-surface-container-lowest p-sm rounded border border-outline-variant mb-sm">
+<div class="flex items-center gap-xs">
+<span class="text-score-sm font-score-sm">BRA 2 x 0 SRB</span>
+</div>
+<div class="bg-primary-container/20 px-sm py-1 rounded">
+<span class="text-primary-container font-score-sm text-xs">ACERTO CRÍTICO</span>
+</div>
+</div>
+<p class="text-body-md font-body-md text-on-surface-variant">
+                        Você ganha 3 pontos se acertar exatamente o número de gols de ambas as seleções. É a pontuação máxima por jogo.
+                    </p>
+</div>
+</div>
+<!-- Accordion 3: Vencedor e Diferença -->
+<div class="bg-card card-outline rounded-lg overflow-hidden">
+<div class="flex justify-between items-center p-md cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="add_chart">add_chart</span>
+<h2 class="text-body-lg font-label-bold text-on-surface">Vencedor e saldo (+2 pts)</h2>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+<div class="px-md pb-md border-t border-outline-variant/30 pt-md">
+<p class="text-body-md font-body-md text-on-surface-variant">
+                        Você ganha 2 pontos se acertar o vencedor (ou empate) e também a diferença exata de gols entre as seleções.
+                    </p>
+<div class="mt-sm p-sm bg-surface-container-low rounded border-l-4 border-secondary">
+<p class="text-xs text-secondary font-label-bold">EXEMPLO:</p>
+<p class="text-body-md font-body-md text-on-surface">Palpite: 2-1 | Resultado: 1-0</p>
+</div>
+</div>
+</div>
+<!-- Accordion 4: Apenas Vencedor -->
+<div class="bg-card card-outline rounded-lg overflow-hidden">
+<div class="flex justify-between items-center p-md cursor-pointer hover:bg-surface-container-high transition-colors">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="check_circle">check_circle</span>
+<h2 class="text-body-lg font-label-bold text-on-surface">Apenas vencedor (+1 pt)</h2>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+<div class="px-md pb-md border-t border-outline-variant/30 pt-md">
+<p class="text-body-md font-body-md text-on-surface-variant">
+                        Você ganha 1 ponto se acertar apenas qual seleção venceu a partida ou se o jogo terminou em empate, errando o número de gols.
+                    </p>
+</div>
+</div>
+</div>
+<!-- Deadlines Section -->
+<section class="mt-xl">
+<div class="bg-level-2 border border-primary-container/30 rounded-xl p-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-primary" data-icon="schedule" style="font-size: 80px;">schedule</span>
+</div>
+<div class="relative z-10">
+<h3 class="text-headline-md font-headline-md text-primary-container mb-sm flex items-center gap-sm">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+                        Prazos para palpites
+                    </h3>
+<p class="text-body-lg font-body-lg text-on-surface mb-md">
+                        Não perca o apito inicial! Os palpites podem ser enviados ou alterados até <strong class="text-primary-container">30 minutos antes</strong> do horário oficial de cada partida.
+                    </p>
+<div class="flex items-center gap-sm bg-background/50 p-sm rounded-lg border border-outline-variant">
+<span class="material-symbols-outlined text-error" data-icon="lock">lock</span>
+<p class="text-label-bold font-label-bold text-on-surface-variant">Após o prazo, os palpites são travados para auditoria.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Help Link -->
+<div class="mt-xl text-center">
+<p class="text-body-md font-body-md text-on-surface-variant mb-xs">Ainda tem dúvidas?</p>
+<a class="text-primary-container font-label-bold flex items-center justify-center gap-xs hover:underline" href="#">
+                Entre em contato com o suporte
+                <span class="material-symbols-outlined text-sm" data-icon="open_in_new">open_in_new</span>
+</a>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

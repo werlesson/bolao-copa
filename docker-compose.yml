@@ -1,0 +1,146 @@
+services:
+
+  # ─── PostgreSQL ──────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: bolao_postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: bolao
+      POSTGRES_USER: bolao
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - bolao_network
+
+  # ─── Backend Laravel (PHP-FPM) ───────────────────────────────────────────────
+  app:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bolao_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor          # não sobrescrever vendor com bind mount
+    environment:
+      - APP_ENV=local
+    env_file:
+      - ./backend/.env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - bolao_network
+
+  # ─── Nginx (proxy para o PHP-FPM) ────────────────────────────────────────────
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: bolao_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/html
+      - ./backend/.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+    networks:
+      - bolao_network
+
+  # ─── Laravel Horizon (filas) ─────────────────────────────────────────────────
+  horizon:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bolao_horizon
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+    env_file:
+      - ./backend/.env
+    command: php artisan horizon
+    depends_on:
+      - app
+      - redis
+    networks:
+      - bolao_network
+
+  # ─── Laravel Scheduler (cron a cada minuto) ──────────────────────────────────
+  scheduler:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: bolao_scheduler
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+      - /var/www/html/vendor
+    env_file:
+      - ./backend/.env
+    command: >
+      sh -c "while true; do
+        php artisan schedule:run --verbose --no-interaction;
+        sleep 60;
+      done"
+    depends_on:
+      - app
+      - redis
+    networks:
+      - bolao_network
+
+  # ─── Redis ───────────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: bolao_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - bolao_network
+
+  # ─── Frontend Nuxt (dev) ─────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: dev                     # stage de desenvolvimento
+    container_name: bolao_frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    env_file:
+      - ./frontend/.env
+    environment:
+      - CI=false
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=300
+      - WATCHPACK_POLLING=true
+      - NUXT_PUBLIC_API_URL=
+      - NUXT_PROXY_TARGET=http://nginx
+    depends_on:
+      - nginx
+    networks:
+      - bolao_network
+
+networks:
+  bolao_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
+  frontend_node_modules:

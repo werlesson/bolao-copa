@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;700&display=swap');
+
+        body {
+            background-color: #0f1117;
+            color: #e2e2eb;
+            font-family: 'Geist', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bracket-connector {
+            border-color: #4e4634; /* outline-variant */
+        }
+        
+        .active-connector {
+            border-color: #f5c842; /* primary-container */
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#005227",
+                      "tertiary-fixed-dim": "#62d4f8",
+                      "surface-variant": "#33343b",
+                      "on-primary-fixed-variant": "#584400",
+                      "tertiary": "#c8efff",
+                      "surface-container": "#1e1f26",
+                      "on-tertiary-container": "#005f75",
+                      "on-tertiary-fixed-variant": "#004e60",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-fixed": "#b5ebff",
+                      "on-primary-fixed": "#241a00",
+                      "on-primary": "#3d2e00",
+                      "inverse-surface": "#e2e2eb",
+                      "surface-tint": "#eec13c",
+                      "on-surface-variant": "#d1c5ae",
+                      "on-background": "#e2e2eb",
+                      "primary-fixed-dim": "#eec13c",
+                      "inverse-on-surface": "#2e3037",
+                      "surface-dim": "#111319",
+                      "on-secondary-container": "#003e1c",
+                      "on-error": "#690005",
+                      "surface-container-highest": "#33343b",
+                      "outline": "#9a907b",
+                      "on-secondary": "#003919",
+                      "on-tertiary-fixed": "#001f28",
+                      "error": "#ffb4ab",
+                      "surface-container-low": "#191b22",
+                      "primary-container": "#f5c842",
+                      "surface-container-lowest": "#0c0e14",
+                      "secondary-container": "#00b55d",
+                      "error-container": "#93000a",
+                      "secondary": "#4de082",
+                      "outline-variant": "#4e4634",
+                      "primary-fixed": "#ffe08f",
+                      "surface-container-high": "#282a30",
+                      "primary": "#ffe7af",
+                      "tertiary-container": "#6adbff",
+                      "on-primary-container": "#6c5400",
+                      "secondary-fixed-dim": "#4de082",
+                      "on-secondary-fixed": "#00210c",
+                      "surface": "#111319",
+                      "inverse-primary": "#755b00",
+                      "secondary-fixed": "#6dfe9c",
+                      "on-tertiary": "#003543",
+                      "on-surface": "#e2e2eb",
+                      "background": "#111319",
+                      "surface-bright": "#373940"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "lg": "24px",
+                      "margin-mobile": "16px",
+                      "base": "4px",
+                      "margin-desktop": "48px",
+                      "xs": "4px",
+                      "md": "16px",
+                      "gutter": "16px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": ["Geist"],
+                      "score-sm": ["JetBrains Mono"],
+                      "headline-lg": ["Geist"],
+                      "headline-md": ["Geist"],
+                      "display-score": ["JetBrains Mono"],
+                      "body-md": ["Geist"],
+                      "label-bold": ["Geist"]
+              },
+              "fontSize": {
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<div class="hidden md:flex gap-md items-center">
+<button class="text-primary text-label-bold font-label-bold px-md py-xs hover:bg-surface-container-high transition-colors rounded">FASE ELIMINATÓRIA</button>
+<button class="text-on-surface-variant text-label-bold font-label-bold px-md py-xs hover:bg-surface-container-high transition-colors rounded">GRUPOS</button>
+<button class="text-on-surface-variant text-label-bold font-label-bold px-md py-xs hover:bg-surface-container-high transition-colors rounded">RANKING GERAL</button>
+</div>
+<button class="md:hidden text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</header>
+<!-- Sub Navigation (Mobile) -->
+<nav class="md:hidden bg-surface-container-low px-margin-mobile py-sm flex gap-sm overflow-x-auto whitespace-nowrap scrollbar-hide">
+<button class="bg-primary-container text-on-primary-container px-md py-xs rounded-full text-label-bold font-label-bold">Mata-Mata</button>
+<button class="bg-surface-container-high text-on-surface-variant px-md py-xs rounded-full text-label-bold font-label-bold">Grupos</button>
+<button class="bg-surface-container-high text-on-surface-variant px-md py-xs rounded-full text-label-bold font-label-bold">Meus Palpites</button>
+</nav>
+<!-- Main Content: Bracket Canvas -->
+<main class="min-h-[calc(100vh-128px)] overflow-x-auto overflow-y-hidden md:px-margin-desktop py-lg">
+<!-- Header Info -->
+<div class="px-margin-mobile md:px-0 mb-lg flex flex-col md:flex-row md:justify-between md:items-end gap-md">
+<div>
+<span class="text-secondary text-label-bold font-label-bold uppercase tracking-widest">Fase Final</span>
+<h2 class="text-headline-lg font-headline-lg text-on-surface">Caminho para a Glória</h2>
+</div>
+<div class="flex gap-sm">
+<div class="bg-surface-container border border-outline-variant p-sm rounded flex items-center gap-sm">
+<div class="w-3 h-3 rounded-full bg-primary-container"></div>
+<span class="text-label-bold font-label-bold text-on-surface-variant">Meus Acertos</span>
+</div>
+</div>
+</div>
+<!-- The Bracket Grid (Responsive scrollable container) -->
+<div class="flex min-w-[1024px] justify-between relative px-margin-mobile">
+<!-- Round of 16 (Oitavas) -->
+<div class="flex flex-col justify-around gap-lg py-md w-64">
+<h3 class="text-center text-label-bold font-label-bold text-on-surface-variant mb-base uppercase">Oitavas</h3>
+<!-- Match 1 -->
+<div class="bg-surface-container border border-outline-variant rounded p-sm relative group cursor-pointer hover:border-primary-container transition-colors">
+<div class="flex justify-between items-center mb-xs">
+<div class="flex items-center gap-sm">
+<img alt="Brasil" class="w-6 h-4 object-cover" data-alt="A high-quality, vibrant macro photograph of the Brazilian national flag showing its detailed fabric texture and rich green, yellow, and blue colors. The lighting is dramatic, professional studio style, emphasizing the national identity and sports spirit. The style is clean, corporate modern, and authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAIZzB-Iluk5ZoHB29yuewWOwNy2bKpcGqnue3SFDjwiz2RHmBrOlLQ2egngAgNngB4UfffPHz9Hom6SU_gIMy2QC1EpSogcvtJti4qy4JRfnJCPlff2lHI3Q7TwZV2ic-JeTnL2tEmzQfrSeemfzpfMfDC8SxNKGq2YRs2lDDdm_biJdv6lojd9hsz1wytb8Q2W9w46lMyG1sAiQDRnKpnh5UL8MPR1svDCHa1XxjSfObVWC3GRFIfJr1ONngTQa129QW8x6KhgA"/>
+<span class="text-label-bold font-label-bold">Brasil</span>
+</div>
+<span class="font-display-score text-score-sm text-primary">2</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<img alt="Japão" class="w-6 h-4 object-cover" data-alt="A high-quality, crisp photograph of the Japanese national flag with its minimalist white field and bold red sun. The shot features professional studio lighting with soft shadows, creating a sophisticated and precise look. The image aligns with a corporate modern sports betting app aesthetic, focusing on clarity and national pride." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDyLSpNeM7yNT-edxd4eqJhgCcGvnYN3_T3OUnwNh7PJnW9saI07QLZ4Wz0wTTFTA2wYmptIUbia1s0MF4n5bTHZ7MCuYHtd_aFYKCBkwK1D2hbi7U4jYuKubNVnbMA39z1s_M_8HlHiNFsKExsfu1oftQoXv5Oz19QKQFp0u3D_r1a-xLdvjeySXhE6jepn-tyeVVwhbPcxRAV8WWB9rFRsKNr99zaXa_5D--VhuNOMqsWTbI1C2a2w4tafX7t3A4UKpCix7F5k1w"/>
+<span class="text-label-bold font-label-bold opacity-60">Japão</span>
+</div>
+<span class="font-display-score text-score-sm text-on-surface-variant">1</span>
+</div>
+<!-- Connector line -->
+<div class="absolute -right-8 top-1/2 w-8 h-px bg-primary-container"></div>
+</div>
+<!-- Match 2 -->
+<div class="bg-surface-container border border-outline-variant rounded p-sm relative cursor-pointer hover:border-primary-container transition-colors">
+<div class="flex justify-between items-center mb-xs">
+<div class="flex items-center gap-sm">
+<img alt="Espanha" class="w-6 h-4 object-cover" data-alt="A high-resolution photograph of the Spanish national flag, focusing on the vibrant red and yellow stripes and the intricate coat of arms. The lighting is sharp and high-definition, typical of a modern sports broadcast. The overall style is professional, authoritative, and clean, fitting a premium World Cup prediction platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQTxU2LuDMPUn78t49eS_hpTEYmGayj0k5eImBOtXh6TX_U02PeVkFr_9hZ8IeKKlxmXNKcXmItCo0Wjaz6nwPJjmOpbHsUxrIO_SKaWoUFmicQSco5ICGJeMbCcqnwP7rh4kOKY3r0hXi8r7uGbX7daPGWb0QsFHpfSgiEXQ2Z94B9dZschLAIjTAHvhXV8KhZ4q3GbYs-imhzI3q9PioakR4Sf8CsvFHyv4GqXFphfYXeLzDoY4TxP80ayZ-xrHRGpeBUyPPnJU"/>
+<span class="text-label-bold font-label-bold">Espanha</span>
+</div>
+<span class="font-display-score text-score-sm text-primary">3</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<img alt="EUA" class="w-6 h-4 object-cover" data-alt="A detailed, professional photograph of the United States flag, highlighting the stars and stripes with precision. The image features a 'Scoreboard' inspired aesthetic with high contrast and raw structural clarity. The lighting is modern and sophisticated, evoking a stadium atmosphere at night for a high-stakes football environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARFjl7H-nD_lv1DJpqA25oeeFY7Wa9MdogaSEp682epKUWFDhS9AnMa_zOVXiI03963R2aWoIhkkEtU6-YcmM2XuZyueBxerfxc3aAZxy_cR4xBKT72BLLGW4P6PCDpJzZrnJHdX5cBFBbqkXkT7O7hukWhwpxWVa2P6p5ggU4Riec6UN6xhbzljktMUz5b8698_0EA4dVzhAn1-fg36EqwzIWH0j89FG9qbmvRCoI4OTgohwg3L1j2Vsc9Y_Yd0kGUlN8L8xkKng"/>
+<span class="text-label-bold font-label-bold opacity-60">EUA</span>
+</div>
+<span class="font-display-score text-score-sm text-on-surface-variant">0</span>
+</div>
+<div class="absolute -right-8 top-1/2 w-8 h-px bg-primary-container"></div>
+</div>
+<!-- Match 3 -->
+<div class="bg-surface-container border border-outline-variant rounded p-sm relative cursor-pointer opacity-80">
+<div class="flex justify-between items-center mb-xs">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-4 bg-surface-container-high rounded-xs border border-outline-variant"></div>
+<span class="text-label-bold font-label-bold text-on-surface-variant italic">1º Grupo C</span>
+</div>
+<span class="font-display-score text-score-sm text-on-surface-variant">-</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-4 bg-surface-container-high rounded-xs border border-outline-variant"></div>
+<span class="text-label-bold font-label-bold text-on-surface-variant italic">2º Grupo D</span>
+</div>
+<span class="font-display-score text-score-sm text-on-surface-variant">-</span>
+</div>
+<div class="absolute -right-8 top-1/2 w-8 h-px bg-outline-variant"></div>
+</div>
+<!-- Match 4 -->
+<div class="bg-surface-container border border-outline-variant rounded p-sm relative cursor-pointer opacity-80">
+<div class="flex justify-between items-center mb-xs">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-4 bg-surface-container-high rounded-xs border border-outline-variant"></div>
+<span class="text-label-bold font-label-bold text-on-surface-variant italic">1º Grupo E</span>
+</div>
+<span class="font-display-score text-score-sm text-on-surface-variant">-</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<div class="w-6 h-4 bg-surface-container-high rounded-xs border border-outline-variant"></div>
+<span class="text-label-bold font-label-bold text-on-surface-variant italic">2º Grupo F</span>
+</div>
+<span class="font-display-score text-score-sm text-on-surface-variant">-</span>
+</div>
+<div class="absolute -right-8 top-1/2 w-8 h-px bg-outline-variant"></div>
+</div>
+</div>
+<!-- Vertical Connector Column 1 -->
+<div class="w-8 relative">
+<div class="absolute top-[16.5%] bottom-[39%] right-0 w-px bg-primary-container"></div>
+<div class="absolute top-[61%] bottom-[16%] right-0 w-px bg-outline-variant"></div>
+</div>
+<!-- Quarter Finals (Quartas) -->
+<div class="flex flex-col justify-around gap-lg py-md w-64 z-10">
+<h3 class="text-center text-label-bold font-label-bold text-on-surface-variant mb-base uppercase">Quartas</h3>
+<!-- Match Q1 -->
+<div class="bg-surface border-2 border-primary-container rounded p-md relative shadow-2xl">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex items-center gap-sm">
+<img alt="Brasil" class="w-7 h-5 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoHYziqdCf72jU1uzSnI1HwMuB3vNS6cMNgPEHTfZar8Dqlrkynxcolz7dDVoup49GP1dEBgTdYauvljMjv-D11y7r8klIOnPe1Hjb3EZYk5acKchBBgNRy7EXGaI5_v0zv6EHHHGzZaycfEa2xiOwWvGu1xHhiQdHE2lnNIn85mMfTslihbs28hpxu9Q8x5Dgy3wi93S8TwE1kEhifpEc6NkpqxXKd4wNCsiEl3K3eKg3XKqCWXrV1SajGSpl_m4YftQwKlb--tI"/>
+<span class="text-body-md font-label-bold">Brasil</span>
+</div>
+<span class="text-label-bold font-label-bold text-secondary-fixed">Palpitado</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<img alt="Espanha" class="w-7 h-5 object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6L4xxrFPRnq2GFLgyRf1gWfyvdfj56grTMT4ab0WIOhuVSfcn3c3q5yIO_lAmzktAgw6I9TdngPSiO0YUP2C_p4UJ_Xahqd65R1nQseRln5ratwFRMI45zgDIb72ooTXA0RqN61GUVwzwGmV3H5No0pF5Pry8_1nOhGuXFEeCGDKkSkQtt6WtkEhEe1meorAbmYPhBJLtCVKLtJA2afjsXk2Di8ZtzgN5F227opBVhyl43w3GYe6dHgveo_dDCEud585c5IHuyXY"/>
+<span class="text-body-md font-label-bold">Espanha</span>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-sm text-on-surface-variant" data-icon="schedule">schedule</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant">12/07</span>
+</div>
+</div>
+<div class="absolute -right-8 top-1/2 w-8 h-px bg-primary-container"></div>
+<!-- Live indicator for active game -->
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-surface border border-outline-variant px-sm py-xs rounded flex items-center gap-xs">
+<div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+<span class="text-[10px] font-bold text-secondary uppercase">Ao Vivo</span>
+</div>
+</div>
+<!-- Match Q2 -->
+<div class="bg-surface-container border border-outline-variant rounded p-md relative opacity-60">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex items-center gap-sm">
+<div class="w-7 h-5 bg-surface-container-high rounded-xs border border-outline-variant"></div>
+<span class="text-body-md font-label-bold">A definir</span>
+</div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<div class="w-7 h-5 bg-surface-container-high rounded-xs border border-outline-variant"></div>
+<span class="text-body-md font-label-bold">A definir</span>
+</div>
+</div>
+<div class="absolute -right-8 top-1/2 w-8 h-px bg-outline-variant"></div>
+</div>
+</div>
+<!-- Vertical Connector Column 2 -->
+<div class="w-8 relative">
+<div class="absolute top-[28%] bottom-[28%] right-0 w-px bg-primary-container opacity-40"></div>
+</div>
+<!-- Semi Finals -->
+<div class="flex flex-col justify-around gap-lg py-md w-64">
+<h3 class="text-center text-label-bold font-label-bold text-on-surface-variant mb-base uppercase">Semi</h3>
+<div class="bg-surface-container border border-outline-variant rounded p-md relative flex flex-col items-center justify-center min-h-[120px] group hover:bg-surface-container-high transition-all">
+<span class="material-symbols-outlined text-4xl text-outline-variant mb-sm" data-icon="lock">lock</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-tighter">Aguardando Quartas</span>
+<div class="absolute -right-8 top-1/2 w-8 h-px bg-outline-variant"></div>
+</div>
+</div>
+<!-- Final -->
+<div class="flex flex-col justify-center gap-lg py-md w-72">
+<h3 class="text-center text-label-bold font-label-bold text-primary mb-md flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined" data-icon="emoji_events" style="font-variation-settings: 'FILL' 1;">emoji_events</span>
+                    GRANDE FINAL
+                </h3>
+<div class="bg-surface-container-lowest border-2 border-dashed border-primary-fixed-dim rounded-xl p-xl flex flex-col items-center gap-md text-center">
+<div class="w-20 h-20 rounded-full bg-surface-container-high flex items-center justify-center border border-outline-variant relative overflow-hidden">
+<span class="material-symbols-outlined text-5xl text-outline-variant" data-icon="trophy">trophy</span>
+<!-- Subtle radial gradient overlay -->
+<div class="absolute inset-0 bg-gradient-to-t from-primary-fixed-dim/10 to-transparent"></div>
+</div>
+<div>
+<p class="text-display-score font-display-score text-primary">VS</p>
+<p class="text-label-bold font-label-bold text-on-surface-variant mt-sm">Estádio Azteca, 19/07</p>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-label-bold py-sm rounded-lg hover:opacity-90 transition-opacity">
+                        FAZER MEU PALPITE
+                    </button>
+</div>
+</div>
+</div>
+<!-- Floating Stats Summary (Desktop Only) -->
+<aside class="hidden xl:block fixed right-margin-desktop top-32 w-64 space-y-md">
+<div class="bg-surface-container border border-outline-variant p-md rounded-lg">
+<h4 class="text-label-bold font-label-bold text-on-surface-variant mb-md uppercase">Estatísticas do Bracket</h4>
+<div class="space-y-sm">
+<div class="flex justify-between text-body-md">
+<span class="opacity-60">Acertos exatos</span>
+<span class="text-secondary font-bold">4/8</span>
+</div>
+<div class="w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-1/2"></div>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="opacity-60">Pontos Ganhos</span>
+<span class="text-primary-container font-bold">850 pts</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="opacity-60">Global Rank</span>
+<span class="text-on-surface font-bold">#1,240</span>
+</div>
+</div>
+</div>
+<div class="bg-surface border border-outline-variant p-md rounded-lg flex items-center gap-md">
+<div class="bg-on-tertiary-container/20 p-sm rounded">
+<span class="material-symbols-outlined text-tertiary-container" data-icon="help">help</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-bold font-label-bold">Como funciona?</span>
+<span class="text-[10px] text-on-surface-variant">Veja as regras de pontuação da fase final.</span>
+</div>
+</div>
+</aside>
+</main>
+<!-- BottomNavBar -->
+<footer class="md:hidden bg-surface dark:bg-surface border-t border-outline-variant fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</footer>
+<!-- FAB for Quick Actions (Only on appropriate context) -->
+<button class="fixed bottom-20 right-6 w-14 h-14 bg-primary-container text-on-primary-container rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-3xl" data-icon="edit">edit</span>
+</button>
+</body></html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BolãoCopa 2026 - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error": "#690005",
+                    "surface-bright": "#373940",
+                    "secondary": "#4de082",
+                    "tertiary-fixed-dim": "#62d4f8",
+                    "secondary-fixed-dim": "#4de082",
+                    "primary-fixed-dim": "#eec13c",
+                    "primary-fixed": "#ffe08f",
+                    "error": "#ffb4ab",
+                    "on-tertiary-fixed": "#001f28",
+                    "on-surface": "#e2e2eb",
+                    "primary-container": "#f5c842",
+                    "surface-container-highest": "#33343b",
+                    "secondary-fixed": "#6dfe9c",
+                    "on-background": "#e2e2eb",
+                    "on-tertiary": "#003543",
+                    "surface-container": "#1e1f26",
+                    "on-error-container": "#ffdad6",
+                    "surface-variant": "#33343b",
+                    "secondary-container": "#00b55d",
+                    "outline-variant": "#4e4634",
+                    "on-tertiary-fixed-variant": "#004e60",
+                    "on-secondary-container": "#003e1c",
+                    "inverse-surface": "#e2e2eb",
+                    "surface-dim": "#111319",
+                    "on-secondary-fixed": "#00210c",
+                    "surface-container-low": "#191b22",
+                    "tertiary": "#c8efff",
+                    "on-primary-fixed-variant": "#584400",
+                    "inverse-on-surface": "#2e3037",
+                    "on-secondary-fixed-variant": "#005227",
+                    "tertiary-fixed": "#b5ebff",
+                    "outline": "#9a907b",
+                    "on-primary-container": "#6c5400",
+                    "surface-tint": "#eec13c",
+                    "surface": "#111319",
+                    "on-primary-fixed": "#241a00",
+                    "on-tertiary-container": "#005f75",
+                    "primary": "#ffe7af",
+                    "on-surface-variant": "#d1c5ae",
+                    "surface-container-lowest": "#0c0e14",
+                    "surface-container-high": "#282a30",
+                    "inverse-primary": "#755b00",
+                    "on-primary": "#3d2e00",
+                    "background": "#111319",
+                    "error-container": "#93000a",
+                    "tertiary-container": "#6adbff",
+                    "on-secondary": "#003919"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "margin-mobile": "16px",
+                    "xl": "32px",
+                    "margin-desktop": "48px",
+                    "gutter": "16px",
+                    "xs": "4px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter", "sans-serif"],
+                    "body-md": ["Inter", "sans-serif"],
+                    "body-lg": ["Inter", "sans-serif"],
+                    "label-bold": ["Inter", "sans-serif"],
+                    "headline-lg": ["Inter", "sans-serif"],
+                    "display-score": ["JetBrains Mono", "monospace"],
+                    "score-sm": ["JetBrains Mono", "monospace"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #111319;
+            color: #e2e2eb;
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col">
+<!-- Top App Bar (From Shared Components) -->
+<header class="flex justify-between items-center w-full px-margin-mobile h-16 border-b border-outline-variant bg-background sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<button class="text-label-bold font-label-bold text-on-surface-variant hover:bg-surface-container-high px-3 py-2 rounded transition-colors uppercase tracking-wider">
+            Pular
+        </button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-margin-mobile py-lg text-center max-w-md mx-auto w-full">
+<!-- Illustration Container -->
+<div class="w-full aspect-square mb-xl relative bg-surface-container rounded-xl overflow-hidden border border-outline-variant flex items-center justify-center">
+<img alt="Friends celebrating soccer match" class="w-full h-full object-cover opacity-80" data-alt="A cinematic, high-contrast photograph of a group of diverse friends celebrating a soccer goal in a modern, dimly lit sports bar. The scene is illuminated by the cool blue and warm golden glow of large television screens, reflecting off excited faces. The atmosphere is energetic and premium, featuring a corporate modern aesthetic with sharp details and a sophisticated dark color palette dominated by deep charcoal and vibrant golden yellow accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCduWKkYkoTwR5QWN9v8bTzTdGelzSmK-72-okNQHdq6LUHXBZlGj_R6xdi4NqSUAvwtcLNGnIBGZ8lltIn5FE5DXSGj1UFIqE6JcsmP-yGQY8okTicdlMIlkUawmiDhWrZZH5UGYg0fjiN7bWingrS1xL6ZCo5LOEcx9Rt412X9U00IFrj8XabF2MabnMjG3csBW-sTGnAjevRMlkxEde4IEZubm5QTLEXnbpJ-0RCvluRMFrDvM_gWW29cwPsxJdumiqm4VxRUrc"/>
+<!-- Stylized Overlay Icon -->
+<div class="absolute bottom-4 right-4 bg-primary-container p-4 rounded-full shadow-lg">
+<span class="material-symbols-outlined text-on-primary-container text-4xl" data-icon="groups" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+</div>
+<!-- Typography & Messaging -->
+<section class="space-y-md">
+<h2 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">
+                Crie seus grupos
+            </h2>
+<p class="text-body-lg font-body-lg text-on-surface-variant leading-relaxed px-4">
+                Convide amigos, família ou colegas de trabalho para competir e descobrir quem é o verdadeiro especialista em futebol.
+            </p>
+</section>
+</main>
+<!-- Bottom Actions Section (Sticky at bottom but not a Nav Bar) -->
+<footer class="p-margin-mobile space-y-xl bg-background w-full max-w-md mx-auto">
+<!-- Progress Indicators -->
+<div class="flex justify-center items-center gap-2">
+<div class="h-1.5 w-8 rounded-full bg-primary-container transition-all"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-surface-variant"></div>
+<div class="h-1.5 w-1.5 rounded-full bg-surface-variant"></div>
+</div>
+<!-- CTA Button -->
+<button class="w-full bg-primary-container hover:opacity-90 active:scale-[0.98] transition-all py-4 rounded-lg flex justify-center items-center gap-2 group">
+<span class="text-on-primary-container font-label-bold text-lg uppercase tracking-widest">Próximo</span>
+<span class="material-symbols-outlined text-on-primary-container group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+<!-- Safe area padding for mobile -->
+<div class="h-4 md:hidden"></div>
+</footer>
+</body></html>

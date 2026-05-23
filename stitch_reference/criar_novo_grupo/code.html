@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=JetBrains+Mono:wght@100..800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0f1117;
+            font-family: 'Geist', sans-serif;
+            color: #e2e2eb;
+            margin: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#1e1f26",
+                        "on-tertiary": "#003543",
+                        "secondary": "#4de082",
+                        "on-secondary-container": "#003e1c",
+                        "primary": "#ffe7af",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "surface-container-high": "#282a30",
+                        "on-error-container": "#ffdad6",
+                        "surface-container-lowest": "#0c0e14",
+                        "on-tertiary-container": "#005f75",
+                        "on-surface": "#e2e2eb",
+                        "surface-bright": "#373940",
+                        "on-secondary": "#003919",
+                        "on-primary-fixed-variant": "#584400",
+                        "on-error": "#690005",
+                        "tertiary-fixed": "#b5ebff",
+                        "on-background": "#e2e2eb",
+                        "secondary-fixed-dim": "#4de082",
+                        "tertiary-container": "#6adbff",
+                        "secondary-container": "#00b55d",
+                        "inverse-primary": "#755b00",
+                        "surface-container-low": "#191b22",
+                        "primary-fixed": "#ffe08f",
+                        "tertiary": "#c8efff",
+                        "on-secondary-fixed-variant": "#005227",
+                        "on-tertiary-fixed": "#001f28",
+                        "surface-container-highest": "#33343b",
+                        "outline": "#9a907b",
+                        "on-surface-variant": "#d1c5ae",
+                        "surface-dim": "#111319",
+                        "primary-container": "#f5c842",
+                        "on-primary": "#3d2e00",
+                        "on-primary-fixed": "#241a00",
+                        "outline-variant": "#4e4634",
+                        "background": "#111319",
+                        "secondary-fixed": "#6dfe9c",
+                        "error-container": "#93000a",
+                        "surface": "#111319",
+                        "primary-fixed-dim": "#eec13c",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-secondary-fixed": "#00210c",
+                        "surface-variant": "#33343b",
+                        "surface-tint": "#eec13c",
+                        "error": "#ffb4ab",
+                        "on-primary-container": "#6c5400",
+                        "inverse-surface": "#e2e2eb",
+                        "inverse-on-surface": "#2e3037"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "gutter": "16px",
+                        "base": "4px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "lg": "24px",
+                        "margin-desktop": "48px",
+                        "xs": "4px"
+                    },
+                    "fontFamily": {
+                        "score-sm": ["jetbrainsMono"],
+                        "label-bold": ["geist"],
+                        "headline-md": ["geist"],
+                        "body-md": ["geist"],
+                        "body-lg": ["geist"],
+                        "display-score": ["jetbrainsMono"],
+                        "headline-lg": ["geist"]
+                    },
+                    "fontSize": {
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- Top App Bar -->
+<header class="bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="close">close</span>
+<span class="text-headline-md font-headline-md font-bold text-primary">Criar Grupo</span>
+</div>
+<div class="flex items-center">
+<span class="text-label-bold font-label-bold text-on-surface-variant">PASSO 1 DE 2</span>
+</div>
+</header>
+<main class="flex-grow w-full max-w-2xl mx-auto px-margin-mobile py-lg">
+<!-- Progress Indicator -->
+<div class="w-full h-1 bg-surface-container-high rounded-full mb-xl overflow-hidden">
+<div class="w-1/2 h-full bg-primary-container"></div>
+</div>
+<section class="space-y-xl">
+<!-- Header Section -->
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-xs">Informações Básicas</h1>
+<p class="text-body-md font-body-md text-on-surface-variant">Defina a identidade do seu grupo de apostas para começar.</p>
+</div>
+<!-- Form Content -->
+<form class="space-y-lg">
+<!-- Cover Image Upload -->
+<div class="space-y-sm">
+<label class="text-label-bold font-label-bold text-on-surface-variant block uppercase tracking-wider">Foto de Capa</label>
+<div class="relative w-full h-40 bg-[#161820] border-2 border-dashed border-[#252836] rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-[#1e2028] transition-colors group overflow-hidden">
+<img alt="Placeholder Cover" class="absolute inset-0 w-full h-full object-cover opacity-20" data-alt="A professional high-definition photograph of a lush green soccer stadium at dusk, with bright arena lights casting a dramatic glow. The image is captured from a high-angle perspective, emphasizing the precision of the grass patterns. The atmosphere is intense and sophisticated, perfectly aligned with a dark corporate sports aesthetic featuring deep shadows and sharp highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDIBM-V-X288N90O41n9AQ-vDCjfH4zVSmYYJdmPnGAEwPpBdsR4-2D6759n2L7A21Qwzt8N0a6xlnXNR0G-4GjYRvZghC9ipGheXK9Z9YWlnMLaLWkbj-ON_4Zedfo6bMbtTWWGYhw0UIODwyk0V9dK1VqV_Afrjz08u3PrtAHgSQ0ICKAHDpibNuZbUq1X1uBZY5P5180RRpl6NC_C19gc2f7Al32Gf21cqLE9Ije4P2q5vtOIzy7OGyi6Sd9MYyf663yIw6SjE"/>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-primary mb-sm" data-icon="add_a_photo" style="font-size: 32px;">add_a_photo</span>
+<span class="text-body-md font-body-md text-on-surface">Toque para enviar uma imagem</span>
+</div>
+</div>
+</div>
+<!-- Group Name -->
+<div class="space-y-sm">
+<label class="text-label-bold font-label-bold text-on-surface-variant block uppercase tracking-wider" for="group-name">Nome do Grupo</label>
+<input class="w-full bg-[#1e2028] border border-[#252836] text-on-surface rounded-lg px-md py-md focus:outline-none focus:border-primary-container transition-colors placeholder:text-on-surface-variant/50 font-body-lg text-body-lg" id="group-name" placeholder="Ex: Galera do Futebol 2026" type="text"/>
+</div>
+<!-- Group Description -->
+<div class="space-y-sm">
+<label class="text-label-bold font-label-bold text-on-surface-variant block uppercase tracking-wider" for="group-desc">Descrição</label>
+<textarea class="w-full bg-[#1e2028] border border-[#252836] text-on-surface rounded-lg px-md py-md focus:outline-none focus:border-primary-container transition-colors placeholder:text-on-surface-variant/50 font-body-md text-body-md resize-none" id="group-desc" placeholder="Descreva as regras e o objetivo do grupo..." rows="4"></textarea>
+</div>
+<!-- Privacy Toggle -->
+<div class="bg-[#161820] border border-[#252836] rounded-lg p-md space-y-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 bg-[#1e2028] rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="lock_open">lock_open</span>
+</div>
+<div>
+<h3 class="text-body-lg font-label-bold text-on-surface">Grupo Público</h3>
+<p class="text-label-bold font-body-md text-on-surface-variant">Qualquer um pode encontrar e pedir para entrar.</p>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary"></div>
+</label>
+</div>
+<div class="border-t border-[#252836] pt-md flex items-start gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="info" style="font-size: 16px;">info</span>
+<p class="text-label-bold font-label-bold text-on-surface-variant">Grupos privados exigem um convite direto ou link de acesso.</p>
+</div>
+</div>
+</form>
+</section>
+</main>
+<!-- Bottom Navigation with Action -->
+<footer class="bg-background border-t border-[#252836] p-margin-mobile flex justify-center items-center sticky bottom-0 w-full z-50">
+<div class="w-full max-w-2xl flex flex-col md:flex-row gap-md items-center">
+<button class="w-full bg-primary-container text-on-primary font-label-bold text-body-lg py-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 active:scale-[0.98] transition-all uppercase tracking-widest">
+<span>PRÓXIMO</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</footer>
+<!-- Bottom Nav Spacing for Mobile -->
+<div class="h-4 md:hidden"></div>
+</body></html>

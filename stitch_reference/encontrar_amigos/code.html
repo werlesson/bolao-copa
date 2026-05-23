@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/jetbrains-mono@1.0.6/css/jetbrains-mono.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#005227",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "surface-variant": "#33343b",
+                        "on-primary-fixed-variant": "#584400",
+                        "tertiary": "#c8efff",
+                        "surface-container": "#1e1f26",
+                        "on-tertiary-container": "#005f75",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#b5ebff",
+                        "on-primary-fixed": "#241a00",
+                        "on-primary": "#3d2e00",
+                        "inverse-surface": "#e2e2eb",
+                        "surface-tint": "#eec13c",
+                        "on-surface-variant": "#d1c5ae",
+                        "on-background": "#e2e2eb",
+                        "primary-fixed-dim": "#eec13c",
+                        "inverse-on-surface": "#2e3037",
+                        "surface-dim": "#111319",
+                        "on-secondary-container": "#003e1c",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#33343b",
+                        "outline": "#9a907b",
+                        "on-secondary": "#003919",
+                        "on-tertiary-fixed": "#001f28",
+                        "error": "#ffb4ab",
+                        "surface-container-low": "#191b22",
+                        "primary-container": "#f5c842",
+                        "surface-container-lowest": "#0c0e14",
+                        "secondary-container": "#00b55d",
+                        "error-container": "#93000a",
+                        "secondary": "#4de082",
+                        "outline-variant": "#4e4634",
+                        "primary-fixed": "#ffe08f",
+                        "surface-container-high": "#282a30",
+                        "primary": "#ffe7af",
+                        "tertiary-container": "#6adbff",
+                        "on-primary-container": "#6c5400",
+                        "secondary-fixed-dim": "#4de082",
+                        "on-secondary-fixed": "#00210c",
+                        "surface": "#111319",
+                        "inverse-primary": "#755b00",
+                        "secondary-fixed": "#6dfe9c",
+                        "on-tertiary": "#003543",
+                        "on-surface": "#e2e2eb",
+                        "background": "#111319",
+                        "surface-bright": "#373940"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "base": "4px",
+                        "margin-desktop": "48px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "gutter": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Geist", "sans-serif"],
+                        "score-sm": ["JetBrains Mono", "monospace"],
+                        "headline-lg": ["Geist", "sans-serif"],
+                        "headline-md": ["Geist", "sans-serif"],
+                        "display-score": ["JetBrains Mono", "monospace"],
+                        "body-md": ["Geist", "sans-serif"],
+                        "label-bold": ["Geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0f1117;
+            font-family: 'Geist', sans-serif;
+            color: #e2e2eb;
+        }
+        .card-border {
+            border: 1px solid #252836;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 fixed top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="hover:bg-surface-container-high transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="pt-20 px-margin-mobile max-w-2xl mx-auto w-full">
+<!-- Search Section -->
+<section class="mb-lg">
+<h2 class="text-headline-md font-headline-md mb-md">Adicionar Amigos</h2>
+<div class="relative group">
+<div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+</div>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-lg py-4 pl-12 pr-4 text-body-lg focus:outline-none focus:border-primary-container transition-colors placeholder:text-on-surface-variant" placeholder="Buscar por @usuario ou nome..." type="text"/>
+</div>
+</section>
+<!-- Stats Overview (Asymmetric Highlight) -->
+<div class="grid grid-cols-2 gap-sm mb-lg">
+<div class="bg-surface-container card-border p-md rounded-lg flex flex-col justify-between h-32">
+<span class="text-label-bold font-label-bold text-on-surface-variant">SEUS AMIGOS</span>
+<div class="flex items-baseline gap-2">
+<span class="text-display-score font-display-score text-primary">42</span>
+<span class="text-secondary text-label-bold">+3 esta semana</span>
+</div>
+</div>
+<div class="bg-surface-container card-border p-md rounded-lg flex flex-col justify-between h-32">
+<span class="text-label-bold font-label-bold text-on-surface-variant">RANKING SOCIAL</span>
+<div class="flex items-baseline gap-2">
+<span class="text-display-score font-display-score text-primary">12º</span>
+<span class="text-on-surface-variant text-label-bold">entre amigos</span>
+</div>
+</div>
+</div>
+<!-- Suggested Friends List -->
+<section class="space-y-md">
+<div class="flex justify-between items-center mb-base">
+<h3 class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-wider">Sugestões para você</h3>
+<button class="text-primary text-label-bold hover:underline transition-all">Ver todos</button>
+</div>
+<!-- Suggestion Card 1 -->
+<div class="bg-surface-container card-border p-md rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img alt="" class="w-12 h-12 rounded-full object-cover border-2 border-primary-container" data-alt="A professional headshot of a young man with a friendly smile, set against a dark architectural background. The lighting is dramatic and crisp, matching a premium tech aesthetic with deep blacks and sharp highlights. He is wearing modern streetwear, fitting the corporate modern vibe of a sports betting application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3OVpIDrUjsickdifVuyl_7M1OLHbXll59Z_NbFVU8BTIfNrc57kCNzWkyC13t1Iid9ZCEFY2NE95waBpWqhIvOGAhUwta2qS-HVGme1ymecsPXdxiUHnwBV4cKWlCpYK4FMZ85fnImo6O-PLjQUQQPqotbvucIfC2dezFy2DA6ZmD47XJ1_6ryI-hkASGIzGQjQNE3jwoCJzCmaP75tXZDb39ZOYIgHrmRx1WkJtteSUe5qFjkRuxPXf9LRF3tuWvu5ZHyjMVN8Y"/>
+<div class="absolute -bottom-1 -right-1 bg-secondary w-3 h-3 rounded-full border-2 border-surface-container"></div>
+</div>
+<div>
+<p class="text-body-lg font-headline-md">Ricardo Silva</p>
+<p class="text-label-bold font-label-bold text-secondary">8 amigos em comum</p>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-bold hover:opacity-80 transition-opacity active:scale-95">
+                    Seguir
+                </button>
+</div>
+<!-- Suggestion Card 2 -->
+<div class="bg-surface-container card-border p-md rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img alt="" class="w-12 h-12 rounded-full object-cover border-2 border-outline-variant" data-alt="A cinematic portrait of a woman looking confidently into the camera, with soft ambient light highlighting her facial features. The background is a blurred stadium interior at night with subtle hints of emerald green and golden yellow lighting. The overall mood is sophisticated and focused, representing a high-stakes competitive environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbAqUOu6hK5XPXN2HS14p0ubionSeVt94FbnkxaLOeSdE-cakfK6CKMmbY5qCYGRtauKUma2r1Qu5DoNNjqIvjUvjew3ORfPBe9VyycZMoNbdvo4vi-W5-7wI8f6-p7-ik-a5YExzN_sdt2j_QG-ovMNpHdi3sZPyFDrInqkDofaR5rJDgKjM0IOspvzZsrPrujrTLqZqWkID0f_XtHlrTHI2xQ9LtmvhPlaT07eUAwGKmfJP4vu0OdEgPhvl2TfD3uHGId-DuAVc"/>
+</div>
+<div>
+<p class="text-body-lg font-headline-md">Beatriz Santos</p>
+<p class="text-label-bold font-label-bold text-on-surface-variant">12 amigos em comum</p>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-bold hover:opacity-80 transition-opacity active:scale-95">
+                    Seguir
+                </button>
+</div>
+<!-- Suggestion Card 3 (Golden Badge Context) -->
+<div class="bg-surface-container card-border p-md rounded-lg flex items-center justify-between border-l-4 border-l-primary-container">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img alt="" class="w-12 h-12 rounded-full object-cover border-2 border-primary-container" data-alt="A high-contrast profile picture of a diverse male sports enthusiast, captured in a modern studio with cool blue and warm gold rim lighting. The visual style is sharp and data-driven, evoking the feeling of a premium digital athlete profile. The aesthetic is clean, professional, and corporate modern." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlOyNHxCHtTRX2DrhjOyg1_ylTvhDbNIuozeIxRWNWr-H1_wewUV4eugmNSrrpB2EftHc758khv0zrIFFj3geUEdeDSUeobuE9lh-Fb-ED7_FRdt_NClyilcmtcIEynxO2ZzlDcm6_OV4tzZkB4eDfyZxEsTtX_PUJIpNqHN4rzGLbW6bonvJIiPKXQjjCbRZo5hnfE7_LFuyB3yzJemCJvdL8hlg5EkIvMidQjiqupIl177y4wU1DD5vGOYzTRKjyTZ7Eg-OMIAY"/>
+<div class="absolute -top-1 -left-1 bg-primary-container text-on-primary-container rounded-full p-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[12px] block" data-icon="workspace_premium" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+</div>
+<div>
+<div class="flex items-center gap-1">
+<p class="text-body-lg font-headline-md">Lucas "Pro" Oliveira</p>
+</div>
+<p class="text-label-bold font-label-bold text-primary-fixed-dim">Mestre dos Palpites • 15 comum</p>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 rounded font-label-bold hover:opacity-80 transition-opacity active:scale-95">
+                    Seguir
+                </button>
+</div>
+<!-- Suggestion Card 4 -->
+<div class="bg-surface-container card-border p-md rounded-lg flex items-center justify-between opacity-90">
+<div class="flex items-center gap-md">
+<div class="relative">
+<img alt="" class="w-12 h-12 rounded-full object-cover border-2 border-outline-variant" data-alt="Close-up portrait of a tech-savvy user in a dark room illuminated by the glow of multiple screens displaying data charts and sports statistics. The lighting is high-key with vibrant green accents. The composition is tight and modern, emphasizing a sophisticated and analytical approach to sports predictions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVlLLluJltt3X9PNBogNgAP96OhuUKmglKVEAj_DvKNU4T7imrcfNmiwBoXHzdFi9vgYVJHcXa_KjxzL4sgFAJad-9hM4CPdKFojZ_qa8jQPtTPpdjpyP9wEEJCT88vKFO4jKC_om07mgiH7bS9yMtqp7KCOkMvatp6p98zVGflYVEgaYWRJI6vDxhVnay5kloGNzX0ZZmaMG-LjK9QAd5epJRsg-ThVsgqItiiUFPt3DGgtx-4lKErH9UTXIr3JDmuKakbtlrOqM"/>
+</div>
+<div>
+<p class="text-body-lg font-headline-md">Fernanda Lima</p>
+<p class="text-label-bold font-label-bold text-on-surface-variant">3 amigos em comum</p>
+</div>
+</div>
+<button class="bg-surface-container-highest border border-outline-variant text-on-surface-variant px-4 py-2 rounded font-label-bold hover:bg-surface-bright transition-colors active:scale-95">
+                    Seguir
+                </button>
+</div>
+</section>
+<!-- Social Integration Call-to-action -->
+<section class="mt-xl">
+<div class="bg-surface-container-high p-lg rounded-xl flex flex-col items-center text-center gap-md">
+<div class="w-16 h-16 bg-primary-container/10 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="share">share</span>
+</div>
+<div>
+<h4 class="text-headline-md font-headline-md text-primary">Convide seus amigos</h4>
+<p class="text-body-md text-on-surface-variant mt-1">Crie um grupo privado e veja quem entende mais de futebol.</p>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-4 rounded-lg font-label-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined" data-icon="link">link</span>
+                    COPIAR LINK DE CONVITE
+                </button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

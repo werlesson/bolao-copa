@@ -1,0 +1,117 @@
+/*
+  Page transitions — imported directly in nuxt.config css[] so Tailwind
+  JIT never touches this file and every rule is guaranteed in the bundle.
+
+  Strategy: mode "out-in" per Nuxt default.
+  Leave is a quick fade (120ms) so the blank gap is barely visible.
+  Enter is the hero animation — a full-viewport slide from the side (320ms).
+*/
+
+/* ── slide-left: navigating INTO a sub-page (push) ──────────────── */
+
+.slide-left-leave-active {
+  transition: opacity 120ms ease-in, transform 120ms ease-in;
+}
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(-32px) scale(0.97);
+}
+
+.slide-left-enter-active {
+  animation: page-enter-from-right 320ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes page-enter-from-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ── slide-right: going BACK to parent page (pop) ────────────────── */
+
+.slide-right-leave-active {
+  transition: opacity 120ms ease-in, transform 120ms ease-in;
+}
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(32px) scale(0.97);
+}
+
+.slide-right-enter-active {
+  animation: page-enter-from-left 320ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes page-enter-from-left {
+  from {
+    transform: translateX(-100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ── page-fade: switching between bottom-nav tabs ────────────────── */
+
+.page-fade-leave-active {
+  transition: opacity 150ms ease-in;
+}
+.page-fade-leave-to {
+  opacity: 0;
+}
+
+.page-fade-enter-active {
+  transition: opacity 200ms ease-out;
+}
+.page-fade-enter-from {
+  opacity: 0;
+}
+
+/* ── overlay-fade: backdrop behind bottom sheet ──────────────────── */
+
+.overlay-fade-enter-active {
+  transition: opacity 200ms ease;
+}
+.overlay-fade-leave-active {
+  transition: opacity 180ms ease;
+}
+.overlay-fade-enter-from,
+.overlay-fade-leave-to {
+  opacity: 0;
+}
+
+/* ── toast-slide: snackbar toast pop ────────────────────────────── */
+
+.toast-slide-enter-active {
+  transition: opacity 180ms ease, transform 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+.toast-slide-leave-active {
+  transition: opacity 160ms ease, transform 160ms ease-in;
+}
+.toast-slide-enter-from {
+  opacity: 0;
+  transform: translateX(-50%) translateY(10px);
+}
+.toast-slide-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(6px);
+}
+
+/* ── sheet-up: bottom sheet slide-up ─────────────────────────────── */
+
+.sheet-up-enter-active {
+  transition: transform 300ms cubic-bezier(0.2, 0, 0, 1);
+}
+.sheet-up-leave-active {
+  transition: transform 240ms cubic-bezier(0.4, 0, 1, 1);
+}
+.sheet-up-enter-from,
+.sheet-up-leave-to {
+  transform: translateY(100%);
+}

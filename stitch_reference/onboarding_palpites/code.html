@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>BolãoCopa 2026 - Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "surface-bright": "#373940",
+                        "secondary": "#4de082",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "secondary-fixed-dim": "#4de082",
+                        "primary-fixed-dim": "#eec13c",
+                        "primary-fixed": "#ffe08f",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#001f28",
+                        "on-surface": "#e2e2eb",
+                        "primary-container": "#f5c842",
+                        "surface-container-highest": "#33343b",
+                        "secondary-fixed": "#6dfe9c",
+                        "on-background": "#e2e2eb",
+                        "on-tertiary": "#003543",
+                        "surface-container": "#1e1f26",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#33343b",
+                        "secondary-container": "#00b55d",
+                        "outline-variant": "#4e4634",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-secondary-container": "#003e1c",
+                        "inverse-surface": "#e2e2eb",
+                        "surface-dim": "#111319",
+                        "on-secondary-fixed": "#00210c",
+                        "surface-container-low": "#191b22",
+                        "tertiary": "#c8efff",
+                        "on-primary-fixed-variant": "#584400",
+                        "inverse-on-surface": "#2e3037",
+                        "on-secondary-fixed-variant": "#005227",
+                        "tertiary-fixed": "#b5ebff",
+                        "outline": "#9a907b",
+                        "on-primary-container": "#6c5400",
+                        "surface-tint": "#eec13c",
+                        "surface": "#111319",
+                        "on-primary-fixed": "#241a00",
+                        "on-tertiary-container": "#005f75",
+                        "primary": "#ffe7af",
+                        "on-surface-variant": "#d1c5ae",
+                        "surface-container-lowest": "#0c0e14",
+                        "surface-container-high": "#282a30",
+                        "inverse-primary": "#755b00",
+                        "on-primary": "#3d2e00",
+                        "background": "#111319",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#6adbff",
+                        "on-secondary": "#003919"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "xl": "32px",
+                        "margin-desktop": "48px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["geist"],
+                        "body-md": ["geist"],
+                        "body-lg": ["geist"],
+                        "label-bold": ["geist"],
+                        "headline-lg": ["geist"],
+                        "display-score": ["jetbrainsMono"],
+                        "score-sm": ["jetbrainsMono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        @font-face {
+            font-family: 'geist';
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        }
+        @font-face {
+            font-family: 'jetbrainsMono';
+            src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap');
+        }
+        body {
+            background-color: #0f1117;
+            color: #e2e2eb;
+            font-family: 'geist', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 fixed top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<span class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</span>
+</div>
+<div class="hidden md:flex gap-6">
+<span class="text-label-bold font-label-bold text-on-surface-variant hover:bg-surface-container-high transition-colors px-2 py-1 rounded cursor-pointer">Jogos</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant hover:bg-surface-container-high transition-colors px-2 py-1 rounded cursor-pointer">Ranking</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant hover:bg-surface-container-high transition-colors px-2 py-1 rounded cursor-pointer">Grupos</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center pt-16 pb-24 px-margin-mobile">
+<!-- Illustration Section (Bento-style layout for visual impact) -->
+<div class="w-full max-w-md mb-xl">
+<div class="relative bg-[#161820] border border-[#252836] rounded-xl overflow-hidden aspect-video group">
+<img alt="Soccer Stadium" class="w-full h-full object-cover opacity-60" data-alt="A cinematic, low-angle shot of a grand soccer stadium at night under intense floodlights. The atmosphere is thick with a dark, moody blue and charcoal palette, reflecting a professional high-stakes environment. Sharp structural lines of the stadium architecture are visible against a deep black sky, creating a premium corporate-modern aesthetic with golden accents reflecting off the damp grass." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6lVk1xATeRsopOZPkXSpEyFsg84UceSP8ZwQtbxXVddbm2jNT_Yv5CBEZ6uwLsw-ww4ZhGJ-Uq2xDG2lcrY5YV882PbJ2wwun9R1iNbi_fXQ0jZKTErQr6CYEoxCuscqbN-i7qdoEGumvJ2lICGzUY9k0VKU5ZXZPDjRD2REaWqOgTa-DTwZIjUE-0GoE6FFMA-TxoLeWbt4l0OCebHEfJcXOuBy7z2-krhqLo5pVF8zT3GPRvQMUGX8inrDgzjgkbTN41CzNGow"/>
+<!-- Scoreboard Overlay Overlay -->
+<div class="absolute inset-0 flex items-center justify-center p-md">
+<div class="bg-[#1e2028] border border-[#252836] p-lg rounded-lg w-full shadow-2xl">
+<div class="flex justify-between items-center mb-md">
+<div class="flex items-center gap-sm">
+<div class="w-2 h-2 rounded-full bg-[#4ade80] animate-pulse"></div>
+<span class="text-label-bold font-label-bold text-secondary">AO VIVO</span>
+</div>
+<span class="text-label-bold font-label-bold text-on-surface-variant">GRUPO G</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex flex-col items-center gap-sm flex-1">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="flag">flag</span>
+</div>
+<span class="text-label-bold font-label-bold">BRASIL</span>
+</div>
+<div class="flex items-center gap-md">
+<span class="text-display-score font-display-score text-on-background">2</span>
+<span class="text-headline-md font-headline-md text-outline">:</span>
+<span class="text-display-score font-display-score text-on-background">1</span>
+</div>
+<div class="flex flex-col items-center gap-sm flex-1">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="flag">flag</span>
+</div>
+<span class="text-label-bold font-label-bold">SUIÇA</span>
+</div>
+</div>
+<div class="mt-lg pt-md border-t border-outline-variant flex justify-center">
+<div class="bg-[#0a2a14] px-md py-xs rounded-full flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary scale-75" data-icon="stars" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-label-bold font-label-bold text-secondary">+15 PONTOS</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Text Content -->
+<div class="text-center max-w-sm">
+<h1 class="text-headline-lg font-headline-lg text-on-surface mb-md">Dê seus palpites</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant mb-xl">
+                Acompanhe os jogos em tempo real e pontue com seus resultados. O próximo craque dos palpites pode ser você!
+            </p>
+</div>
+<!-- Call to Action -->
+<div class="w-full max-w-sm mt-auto">
+<button class="w-full py-4 bg-primary-container text-on-primary-fixed font-label-bold text-label-bold rounded-lg uppercase tracking-wider hover:opacity-80 active:scale-95 transition-all">
+                Começar agora
+            </button>
+<div class="flex justify-center gap-2 mt-xl">
+<div class="h-1.5 w-1.5 rounded-full bg-surface-container-highest"></div>
+<div class="h-1.5 w-6 rounded-full bg-primary-container"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Suppressed for focused journey as per rule, but structural shell kept for reference if needed. Navigation shell is suppressed here to prioritize the onboarding canvas.) -->
+<!-- Footer/Legal (Subtle) -->
+<footer class="mt-auto py-sm text-center">
+<p class="text-[10px] text-outline opacity-50 uppercase tracking-widest">Fifa World Cup 2026 Edition</p>
+</footer>
+</body></html>

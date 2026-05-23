@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @font-face {
+            font-family: 'geist';
+            src: url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+        }
+        @font-face {
+            font-family: 'jetbrainsMono';
+            src: url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap');
+        }
+        body {
+            background-color: #0f1117;
+            color: #e2e2eb;
+            font-family: 'geist', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-fixed-variant": "#005227",
+                      "tertiary-fixed-dim": "#62d4f8",
+                      "surface-variant": "#33343b",
+                      "on-primary-fixed-variant": "#584400",
+                      "tertiary": "#c8efff",
+                      "surface-container": "#1e1f26",
+                      "on-tertiary-container": "#005f75",
+                      "on-tertiary-fixed-variant": "#004e60",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-fixed": "#b5ebff",
+                      "on-primary-fixed": "#241a00",
+                      "on-primary": "#3d2e00",
+                      "inverse-surface": "#e2e2eb",
+                      "surface-tint": "#eec13c",
+                      "on-surface-variant": "#d1c5ae",
+                      "on-background": "#e2e2eb",
+                      "primary-fixed-dim": "#eec13c",
+                      "inverse-on-surface": "#2e3037",
+                      "surface-dim": "#111319",
+                      "on-secondary-container": "#003e1c",
+                      "on-error": "#690005",
+                      "surface-container-highest": "#33343b",
+                      "outline": "#9a907b",
+                      "on-secondary": "#003919",
+                      "on-tertiary-fixed": "#001f28",
+                      "error": "#ffb4ab",
+                      "surface-container-low": "#191b22",
+                      "primary-container": "#f5c842",
+                      "surface-container-lowest": "#0c0e14",
+                      "secondary-container": "#00b55d",
+                      "error-container": "#93000a",
+                      "secondary": "#4de082",
+                      "outline-variant": "#4e4634",
+                      "primary-fixed": "#ffe08f",
+                      "surface-container-high": "#282a30",
+                      "primary": "#ffe7af",
+                      "tertiary-container": "#6adbff",
+                      "on-primary-container": "#6c5400",
+                      "secondary-fixed-dim": "#4de082",
+                      "on-secondary-fixed": "#00210c",
+                      "surface": "#111319",
+                      "inverse-primary": "#755b00",
+                      "secondary-fixed": "#6dfe9c",
+                      "on-tertiary": "#003543",
+                      "on-surface": "#e2e2eb",
+                      "background": "#111319",
+                      "surface-bright": "#373940"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "lg": "24px",
+                      "margin-mobile": "16px",
+                      "base": "4px",
+                      "margin-desktop": "48px",
+                      "xs": "4px",
+                      "md": "16px",
+                      "gutter": "16px",
+                      "sm": "8px"
+              },
+              "fontFamily": {
+                      "body-lg": ["geist"],
+                      "score-sm": ["jetbrainsMono"],
+                      "headline-lg": ["geist"],
+                      "headline-md": ["geist"],
+                      "display-score": ["jetbrainsMono"],
+                      "body-md": ["geist"],
+                      "label-bold": ["geist"]
+              },
+              "fontSize": {
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                      "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background selection:bg-primary-container selection:text-on-primary-container">
+<!-- TopAppBar -->
+<header class="fixed top-0 z-50 w-full bg-background border-b border-outline-variant flex justify-between items-center px-margin-mobile h-16">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-headline-md" data-icon="sports_soccer">sports_soccer</span>
+<span class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</span>
+</div>
+<div class="hidden md:flex items-center gap-xl">
+<nav class="flex gap-lg">
+<a class="text-label-bold font-label-bold text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Jogos</a>
+<a class="text-label-bold font-label-bold text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Ranking</a>
+<a class="text-label-bold font-label-bold text-primary hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Grupos</a>
+<a class="text-label-bold font-label-bold text-on-surface-variant hover:bg-surface-container-high transition-colors px-3 py-2 rounded" href="#">Perfil</a>
+</nav>
+</div>
+<div class="flex items-center gap-md">
+<button class="material-symbols-outlined p-2 hover:bg-surface-container-high rounded-full" data-icon="search">search</button>
+<button class="material-symbols-outlined p-2 hover:bg-surface-container-high rounded-full" data-icon="notifications">notifications</button>
+</div>
+</header>
+<main class="pt-20 pb-24 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto">
+<!-- Phase Toggle -->
+<div class="mb-lg flex flex-col md:flex-row md:items-center justify-between gap-md">
+<div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface mb-1">Fase de Grupos</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Acompanhe a classificação em tempo real.</p>
+</div>
+<div class="bg-surface-container-low p-1 rounded-lg flex border border-outline-variant w-fit self-start">
+<button class="bg-primary-container text-on-primary-container px-lg py-2 rounded font-label-bold text-label-bold transition-all">Grupos</button>
+<button class="text-on-surface-variant px-lg py-2 rounded font-label-bold text-label-bold hover:text-on-surface transition-all">Mata-Mata</button>
+</div>
+</div>
+<!-- Bento Grid of Groups -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter">
+<!-- Group A Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-label-bold text-label-bold text-primary-fixed-dim uppercase tracking-widest">Grupo A</h2>
+<span class="flex items-center gap-1 text-[10px] font-bold text-secondary">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full animate-pulse"></span>
+                        AO VIVO
+                    </span>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] text-on-surface-variant uppercase border-b border-outline-variant/30">
+<th class="pl-md py-2 w-8">#</th>
+<th class="py-2">Seleção</th>
+<th class="py-2 text-center w-8">P</th>
+<th class="pr-md py-2 text-center w-8">SG</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="bg-primary/5">
+<td class="pl-md py-2 font-score-sm text-primary">1</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A clean, minimalist high-definition macro shot of the United States flag texture, showing detailed fabric weaving in a modern sports studio lighting. The aesthetic is professional and high-contrast, focusing on the vibrant red, white, and blue colors against a dark, monochromatic corporate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNu6xdAFZ2UoMEBX0EtbhJBbaeSX8HKNG4g1FMndAqVzNAOzTWdQbZd0Y6MQrF4BCcEGu7PKdDXWXWuJ0akDFVsHQlFEpjVaQJxdxbgOHasoza1e3JuKZ2Pfyw_daeEFkkdwdhR7Y_y_7H-UfGfFS_nEtIJRat6_RJTdhzDSVJoML8sLc3-spn29qHDYWmNOA8gvXFfm0RuvSrNISN7H21xkyTXHMA1w3LdSw4_4wEV1hprNXMp9JRopmtlibIsqR6qwk-BJmVq0M"/>
+<span class="font-label-bold">EUA</span>
+</td>
+<td class="py-2 text-center font-score-sm">7</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+4</td>
+</tr>
+<tr class="bg-primary/5 border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-primary">2</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A high-end cinematic close-up of the Mexican flag, emphasizing the rich green, white, and red colors with professional studio lighting. The background is a sleek, dark corporate environment with subtle golden accents. The mood is authoritative and precise, fitting for a premium sports data application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeaChI8B9ZkH4FDsIhGxhtpR8BnPw8kgEOF-z2oc69TPubc47doCgHMD8nyFY7cF7Pklo6x8bopENoyUMgH_E1PFvHUdG9LHgDNSV-vQfnGyQzC6a85RE3NSJXMY0tpF8JXR3IM4cbvY7vYoq0o2Gye3V5V17W0JOmwtYFw_a1b9ByYvDr5bBRn1rKeZsXF0oh7YbNRHeqnC13qgDpUNOP7Ytoa7IyHsco91x1_wCzm0fJnqn47As2q2p8BAXwrp4AN_mOrKIZxSw"/>
+<span class="font-label-bold">México</span>
+</td>
+<td class="py-2 text-center font-score-sm">6</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+2</td>
+</tr>
+<tr class="border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">3</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A crisp, high-definition visualization of the Polish flag in a modern digital stadium setting. The lighting is focused and clear, highlighting the simple red and white horizontal bands. The overall style is flat-tactile and premium, ensuring absolute clarity and sophistication within the UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFalrFFLYl7wb-S06Iq19CrjWzXXp0n3P8AnrIgwD4Af6uXC-zjP4eVzeZCjhAyWQGPJ0pPJPcKANUFzQzXjLf4AJKr1A3BuxWcUodEylAEnFjHo9wb-d7oWz5ZuEOpzL0rMWpYaYHShm2BUurMF2vZe-VyIZj_z_0kXXI1PWd5HREDuLuaj0uJdrLqorU2g7-v81Zk3KcXUAPyqlmcAiKbZw3Ft3EWcL4xNPms29Cua33OZ2jjZcY3_mInplGp3_MpMoujmef-FQ"/>
+<span class="text-on-surface-variant">Polônia</span>
+</td>
+<td class="py-2 text-center font-score-sm">3</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-1</td>
+</tr>
+<tr>
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">4</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A detailed digital rendering of the Ghanaian flag with its vibrant red, yellow, and green stripes and central black star. The image is styled for a professional sports dashboard, with high-key lighting and a clean, engineered look. The atmosphere is sophisticated and celebratory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkLKnDT-AgdkBj1tYkrYRjJIiILxZ9-1sYNmnU5cEMTLDdS7Pi58hWkY6Lkz26lVjW1X8-NcNCFIKL16n7PTyVYlybZX5r2dpO0Ll30BqPg8P0AfU3R_f31kHH0Gelp4nvZyo2PkJE1zFEUZ7Lea2xPM4phG9T1OrC3kIj7GnRJf1qWwA180_5S8x_5-6HQwmldx3Qh8qvTj3R3nMw6ca4pZRQ9ydHEp7lLN-RDQmYStQ-m0gbFQC1G2Qz9sEdk4SPftY28GEu1Gc"/>
+<span class="text-on-surface-variant">Gana</span>
+</td>
+<td class="py-2 text-center font-score-sm">1</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-5</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- Group B Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-label-bold text-label-bold text-primary-fixed-dim uppercase tracking-widest">Grupo B</h2>
+<span class="text-[10px] font-bold text-on-surface-variant">FINALIZADO</span>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] text-on-surface-variant uppercase border-b border-outline-variant/30">
+<th class="pl-md py-2 w-8">#</th>
+<th class="py-2">Seleção</th>
+<th class="py-2 text-center w-8">P</th>
+<th class="pr-md py-2 text-center w-8">SG</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="bg-primary/5">
+<td class="pl-md py-2 font-score-sm text-primary">1</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A premium close-up of the Brazilian flag showing the intricate detail of the globe and stars. The lighting is sophisticated, creating a professional scoreboard aesthetic. The green and yellow colors are vibrant and saturated against a deep black, monochromatic background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD98y06yLXn5-3S5zzkXXw3ctfEcvT5kG8d1VHf6rGEP1v1x2Ax4FuloqKFKNUrTnAqbPhtMztZYDF5lxK8DmpgG4Vo7hFiLBw4_-X91NSFqHV5vCmveBm2ERV0z7NnTxORFmTtpc33C0VhpvuUXBUAcZZ1LJ8u0g2k-LQJ8HXHPkyy2Uy0Y52KcgRlmQKUXJbRzEIky5WXELvDOlqLWEvo-fAit3f_TmfgzrxWQ7LFIGSj3WyZ5T9WwPYcvKHHmLmMndcU3VvLAuo"/>
+<span class="font-label-bold">Brasil</span>
+</td>
+<td class="py-2 text-center font-score-sm">9</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+8</td>
+</tr>
+<tr class="bg-primary/5 border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-primary">2</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The French tricolor flag presented in a sharp, high-definition digital render. The lighting is clear and modern, emphasizing the blue, white, and red bands. The visual style is engineered for a data-dense sports application, evoking an atmosphere of elite competition and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcjols7eXW-9lLmZD3Z8QIQTpZDTq6428zV4QtnWqwCY3XJl8-QsLJU3brVMJan5Gq9oBeS9SiM28k6dkMjMYQNCQV8ZqpYVQxXpDExORqzoYy9naVOlZl_-ZNGbvUOnwk-iHXczsiP937VoAP3j2hWtr8gwPzsiZS5SabMMfLnR90bjzF44iDwt9x2jeJUDySk0OPR0tcL8s1nbnGqlKSQRAmwdPr62v2geiQHDGPgEZzKgutS4AuBgqenlrH2wUCuTGZafFXVTc"/>
+<span class="font-label-bold">França</span>
+</td>
+<td class="py-2 text-center font-score-sm">6</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+3</td>
+</tr>
+<tr class="border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">3</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A detailed macro shot of the South Korean flag, focusing on the Taegeuk symbol and trigrams. The lighting is soft but high-contrast, creating a professional and technologically advanced look. The colors are clean and crisp against a minimalist dark grey surface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACTPozCJxlKaZTl-e--joIGeM7axcnfsn8LWh1iVqWtBIyVToDj5k6Jkg-xx5tCrRpNGnq1SG8xEvgvDzrnjCRXSIKrAX-Ttqw7HqSqovQ4YOPhZcBfVDpFL5g4XtWp_Ccy-KaiR5hySM7L9_1SDs7jVyXEQV9m9Xw2Ha6-L7h7xWhS9cidi1RUwYJLqEoElwLu6H1N56hoaZLPFgpQfoLgzCM-eyMtLP3e0jV-iog1zkxaRuwWUZcZeA6TDmzKytuDFNa9B_NH34"/>
+<span class="text-on-surface-variant">Coreia do Sul</span>
+</td>
+<td class="py-2 text-center font-score-sm">1</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-4</td>
+</tr>
+<tr>
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">4</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Cameroonian flag rendered in high detail for a premium sports UI. The green, red, and yellow vertical bands and the yellow star are illuminated with modern studio lighting. The aesthetic is precise and sophisticated, fitting for a top-tier world cup prediction platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaeMn87QDj08Y9ZmOTyPT2HUFW59du747Ewjb1Q_WjAwvZ3Gq3tgKg7dXkewslNxwxEXTrHQOrgHdbUkJjfaAjl7faL8SiggpxvPTqTnrDIpAe9U7Y3_-QIbxhoKgZZVdm7Aos9wZZ5_AbFV4i5kmSymQM13CubDIgVzQmyA5gNQRaA5PbTbhjDHcW-VvfYMeUyEOewPV0nx2JtSq-1sUPh4B7W3VuZpUFf1iiZWO5ybnyWJM0ceVjhRmen-5e2LSBLBOuXyZMHVE"/>
+<span class="text-on-surface-variant">Camarões</span>
+</td>
+<td class="py-2 text-center font-score-sm">1</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-7</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- Group C Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-label-bold text-label-bold text-primary-fixed-dim uppercase tracking-widest">Grupo C</h2>
+<span class="text-[10px] font-bold text-on-surface-variant">EM BREVE</span>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] text-on-surface-variant uppercase border-b border-outline-variant/30">
+<th class="pl-md py-2 w-8">#</th>
+<th class="py-2">Seleção</th>
+<th class="py-2 text-center w-8">P</th>
+<th class="pr-md py-2 text-center w-8">SG</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="bg-primary/5">
+<td class="pl-md py-2 font-score-sm text-primary">1</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Argentinian flag showing the Sun of May and the light blue and white stripes in high-resolution detail. The lighting is elegant and professional, creating a premium feel. The colors are soft yet vibrant against a sophisticated, dark corporate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBccIAoplJ8pa4V1AFZFEKqKC1i8LIV7ay7fd96Z801DqtRF2NhNNXEllpPxFTKq7xBz6_PHKoVDbNE2g0xSx1Imm-h19zqf8BIlC2GgGE6NiYAmvAdfeKrQcM1zzYYVyAq7muCHAIQl8BMM0hAME2gfz1-rkw6zDNfoqhoB10Mhj8Oj89le0zpCu0V4K0K7FoyPKSkfdoMi1e90LLrpggTxC1_QwsqkA9vIq-X4pMYFKIwymSqx0bWL1h0a4ad-3SucBcwAzkAGXM"/>
+<span class="font-label-bold">Argentina</span>
+</td>
+<td class="py-2 text-center font-score-sm">0</td>
+<td class="pr-md py-2 text-center font-score-sm">0</td>
+</tr>
+<tr class="bg-primary/5 border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-primary">2</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A minimalist and sharp digital render of the Japanese flag. The red circle is perfectly centered on a white background, illuminated by clear, high-key lighting. The style is modern and authoritative, fitting for an engineered sports dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7_MwaHtOgmkvNVaEwHvjGtYOl4YNKY3We3VZOmZoSqyFsWcOKKVGk-lMcNfhMaA713SYMwSlIJ83QvAS51J_Q0NTy0hfcmh2oRN1mFEve7rK-3uzgXz1ZnwqqEIksw1F3RR7hEwWhlg4apwLgvsZo0gusoF-JBjgL-fFJu-6koVVSGc_orpCBxpRPwpGYlXsRWmmIhca7h9qtrn8iyzcshzfkGKIbcvy59kUWEguoEnEqorEVWRBFVZPYw-9VD05I91UZ_d2mrRs"/>
+<span class="font-label-bold">Japão</span>
+</td>
+<td class="py-2 text-center font-score-sm">0</td>
+<td class="pr-md py-2 text-center font-score-sm">0</td>
+</tr>
+<tr class="border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">3</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The German flag's black, red, and gold horizontal bands rendered with professional precision. The lighting is crisp, highlighting the deep colors against a sleek dark surface. The overall atmosphere is one of systematic efficiency and elite sport." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiI4O_GRR22jFFRKb6bk0ROED0bL-l_MSgZsYh_-N9JEulR7OE17xAf2PtsH3Qz7OLhSVMBlZ8Z7XVZ2WI1kuagOWvnO3VTsZq0C_UUTnIqx6ze_xdHpsOns9JX1qEFTWczKCzvRg-ffjXiA_kAkdzVcOS22-nfOaGiHtD_6lMLHrs8xT55m88adfyI4uwqnEAkCIuJrX0j7bp-6-BrQgt26UYTqdFlnkOQ1ffVgASBBH5pIXOZa6ZH9rLibxWH1oriNZqtrF_p8w"/>
+<span class="text-on-surface-variant">Alemanha</span>
+</td>
+<td class="py-2 text-center font-score-sm">0</td>
+<td class="pr-md py-2 text-center font-score-sm">0</td>
+</tr>
+<tr>
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">4</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A high-definition visualization of the Canadian flag with its iconic maple leaf. The red and white colors are vibrant, shown under modern stadium lighting. The style is flat-tactile and professional, ensuring clarity and premium aesthetic quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBDkryDOUvAfRp4tTRpDOm17d9c3ielrP3GdDqbrLgc8Y21WCEo5CQ5GMKhsvSz7J0XFRw-jWTco3nXx7wcOIQdfC646a-gSn--kV6qaHtTfiM9OYM0zcjaW9wZciqtjawzpDQFXHnADqophmt_p1xNlTzOeCkCPGjDvTkgACqUguiF-C-DIjZ2afxKzzNxGDJpQqeThDKktM4qYCcIUpDBqn2cvVRb321_OOYRmR2qC_VvT2gU7ZfwIelTDpIKjLnTHiZKaPEo94"/>
+<span class="text-on-surface-variant">Canadá</span>
+</td>
+<td class="py-2 text-center font-score-sm">0</td>
+<td class="pr-md py-2 text-center font-score-sm">0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- Stats/Insight Card (Bento Pattern) -->
+<section class="bg-primary-container text-on-primary-container p-lg rounded-xl flex flex-col justify-between md:row-span-2">
+<div>
+<span class="material-symbols-outlined text-display-score mb-md" data-icon="insights">insights</span>
+<h3 class="font-headline-md text-headline-md font-bold mb-sm leading-tight">Insight da Rodada</h3>
+<p class="font-body-md text-body-md opacity-90">O Grupo B é o único com 100% de aproveitamento do líder. Brasil garante vaga antecipada.</p>
+</div>
+<div class="mt-xl">
+<div class="flex items-center justify-between mb-2">
+<span class="text-label-bold font-label-bold uppercase">Média de Gols</span>
+<span class="font-score-sm text-lg">3.2</span>
+</div>
+<div class="w-full bg-on-primary-container/20 h-2 rounded-full overflow-hidden">
+<div class="bg-on-primary-container h-full w-3/4"></div>
+</div>
+</div>
+<button class="mt-xl bg-on-primary-container text-primary-fixed py-3 rounded font-label-bold text-label-bold w-full uppercase tracking-widest hover:opacity-90 transition-all">Ver Detalhes</button>
+</section>
+<!-- Group D Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-label-bold text-label-bold text-primary-fixed-dim uppercase tracking-widest">Grupo D</h2>
+<span class="text-[10px] font-bold text-on-surface-variant">FINALIZADO</span>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] text-on-surface-variant uppercase border-b border-outline-variant/30">
+<th class="pl-md py-2 w-8">#</th>
+<th class="py-2">Seleção</th>
+<th class="py-2 text-center w-8">P</th>
+<th class="pr-md py-2 text-center w-8">SG</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="bg-primary/5">
+<td class="pl-md py-2 font-score-sm text-primary">1</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A cinematic close-up of the Spanish flag, highlighting the vibrant red and gold stripes and the royal crest. The lighting is high-end and focused, creating a sophisticated scoreboard feel. The image aesthetic is precise and authoritative, set against a dark, monochromatic background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUdb5j96TOMVkNzIu3YQlncvCBOfwLP8oD2kvRSA8QcqEQ0DEkLgDCmn4lpWaPcrun47sRgF29bAbxrVEzqIDDHGkoqX5QN6rQj0vj0f2DCmZxhVQJ0kzn27mnF9YqU5_1BO8P8F-gPXUYSRbeIX7eoqt7c-0UI6yM5QD-x-h9DZfgVsKbXusY7RcRnnm9E-xzOJlV8FnG3xub_bGBj1l9Z5RRG5MAIH9FxhzocwcObOgdlr_3f20uswvzO7jRcv3n3tMQ4QBIq1k"/>
+<span class="font-label-bold">Espanha</span>
+</td>
+<td class="py-2 text-center font-score-sm">7</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+5</td>
+</tr>
+<tr class="bg-primary/5 border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-primary">2</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The English flag's St George's Cross rendered in a clean, modern digital style. The lighting is bright and clear, focusing on the simple red cross on a white field. The visual style is engineered for a premium data-dense sports application, evoking a mood of tradition and elite competition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuArbGuR3vF9McmI22A6Umt61803xmF9dgVif4vrw2oapw0LzrUaACRP8HdJqfww4OvTW7ZJdED4z7uBac1fk6r28btRcY3AIWTYoiYAhLbiFo5nAJStIg1pS37LVXL6pcHZ6BmBMpCzzZZKwF6Mff-ZppzxI3gbpDjbHbcogwb-xW2XwSo2oXdzeAcmdVkEzPbOrzmM6XEaW4uTyetQvwlJeNcshaDcWx0VClzuigIU7TTfwBCU3VQ8Dilzzobt0uT3T36joOroXE4"/>
+<span class="font-label-bold">Inglaterra</span>
+</td>
+<td class="py-2 text-center font-score-sm">5</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+1</td>
+</tr>
+<tr class="border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">3</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Senegalese flag shown with its green, yellow, and red vertical bands and central green star. The render is high-definition and professional, using modern studio lighting to create a sharp, high-contrast look. The mood is sophisticated and authoritative within a sports data context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMfMc-SPfInwLRj1MUW6nH7xI9WKB2tKrUtTLBlAET68AdKUTv9LVk8JnQ-nr95LkOqnVuuO0RDTqWoOg4oTRwFS3l1HXHuWzU5dDEqgOVu2qqC4R5S-vFboXlzXxRs1V8DQ6Gn1wOGWyQ2meFfwUEKFxVwGS10P-_DwExCASWshZCqE4T8RcfMXc21HsyRWYosmHUylxhEYKrNk3MxacO7B3Bz32toT-Em8M2hGtcmNtGCskCHgXDxJf1pvNCC5ri2tWYuc37dG0"/>
+<span class="text-on-surface-variant">Senegal</span>
+</td>
+<td class="py-2 text-center font-score-sm">4</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">0</td>
+</tr>
+<tr>
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">4</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Ecuadorian flag's yellow, blue, and red horizontal stripes and coat of arms presented in a detailed digital rendering. The lighting is crisp and modern, emphasizing the rich colors. The overall aesthetic is flat-tactile and professional, ensuring high-definition clarity for a sports UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAl2RNBx4kb9RKZQJUFqStfv2CD11J2wwIzOmRg7xrzc-cZMIRQfVzV0OHUOgCKNyHeeKRdJSAJEEE5AnNewqRXUjvHK8F3rT8b6C5LMupg_lNb8DIv6KyuPkL68thEGSiOogl71NU5mW4g_YSZaeWRqncoRWtDzGEGVABVgpySVJ-Ehd6iQ0tx9COZQ4ph7hy_0uWmSNY9DmqTDBLBhy2dmvjKg_d-Nyjm96CuqhYwJem2nteWnHGptVxjigU2aIiOUvKhf1jMSvA"/>
+<span class="text-on-surface-variant">Equador</span>
+</td>
+<td class="py-2 text-center font-score-sm">0</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-6</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- Group E Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-label-bold text-label-bold text-primary-fixed-dim uppercase tracking-widest">Grupo E</h2>
+<span class="text-[10px] font-bold text-on-surface-variant">FINALIZADO</span>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] text-on-surface-variant uppercase border-b border-outline-variant/30">
+<th class="pl-md py-2 w-8">#</th>
+<th class="py-2">Seleção</th>
+<th class="py-2 text-center w-8">P</th>
+<th class="pr-md py-2 text-center w-8">SG</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="bg-primary/5">
+<td class="pl-md py-2 font-score-sm text-primary">1</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A clean, high-definition macro shot of the Belgian flag texture, showing the black, yellow, and red vertical bands. The lighting is sophisticated and clear, emphasizing a modern corporate aesthetic. The image is set against a dark, monochromatic environment to ensure professional clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBC4jDk1N4HuTavMp3YRa2juLMNHPkIg-Bgxco5JKgkbPHY6dCHvTsoAN7RNIdMULKiPSdp5J7eyLtVL_pUbEOiEoi8YfXAXx38ckW0ryCxdIWg6ODXaoAZAjg7mAIpOpnhuQXU8CL-rivGsGCSTXkEMTkOB3pR6RmH5gDu043XXgvdIGGw7ls00UQANkArEt7iSrEYek-WUumKjwG0Q9liYVQDtepzopGVaT5Lkyv5LekBLmJHGa4udY36Vxkn0i8boyUxYVTMvAE"/>
+<span class="font-label-bold">Bélgica</span>
+</td>
+<td class="py-2 text-center font-score-sm">7</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+3</td>
+</tr>
+<tr class="bg-primary/5 border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-primary">2</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A sharp digital visualization of the Croatian flag, focusing on the iconic red and white checkerboard pattern in the coat of arms. The lighting is modern and authoritative, creating a premium scoreboard look. The atmosphere is one of high-stakes competition and precise data representation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsa-8dcGolF0uqlcCi0vYKeDMojhqX5n0X6MfP5KYnnEpxOTPtaf-PyKRLmOrPxBs-qWBib0Sd-kWvQr2kRiXHGyGXdcA3lJEEryctWGijsbW4Y7kSyuwiyHUaGWWg4X2dByHJaQfZhSGCRnjAP8bWGLpKK7pvSmqKm6OAk8SnceoSxCGOB0J3Aik3_WFXufcL5rVJ6kcuBS30B2WwdiMwvwVnKCXNYFu11QDSOaiW7ucWlSLuM6ejlctZm-2-gG0y2Pm2qUUudmU"/>
+<span class="font-label-bold">Croácia</span>
+</td>
+<td class="py-2 text-center font-score-sm">5</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+1</td>
+</tr>
+<tr class="border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">3</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Moroccan flag with its deep red field and green pentagram star rendered in high resolution. The lighting is focused and clear, highlighting the simple yet powerful design. The style is engineered for a data-rich sports application, evoking a mood of resilience and sophistication." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1WQ3sDtETtX1FqRXRbHdpxqh4yEeBagcCqKBUSdb0lvJJylltqiujuaEvw7VNQdX4aPcCtnKglxV8QtKE0Hy5mSdPBoHq4th4i1fuxEUXYm-otb3nuLP2dn80IAQim7LEv3_8KAg9WqGUaMzO-P0dxBidIhDeZA5fLCkfWdbZlHELQolsejzFzFS-yXlxOi0gf9dKvIv4YCqxXpE8qbQ8lCHtSDNuDys3NP2vO6PJZkRZKPEP6EQWnTvf_IRFxw4YJFa_TxgWljM"/>
+<span class="text-on-surface-variant">Marrocos</span>
+</td>
+<td class="py-2 text-center font-score-sm">4</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">0</td>
+</tr>
+<tr>
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">4</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Uruguayan flag presented in a premium digital render, showing the Sun of May and the blue and white stripes. The lighting is modern and sophisticated, creating a high-definition sports visual. The overall aesthetic is flat-tactile and clear, ensuring absolute professional quality for the UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDf8dYBrmaCQKDE6ctDljw7hzuXufX62Aoipe-67RNPncbWH59Fz4dRTC-_gihyigWVNnSDTL0XlcJbJDGgCK2cQ0xV4wqEQDNk_0btmRRXyvbV0ZfRAkJ7147wn0ny9jNODlNu2ftXB7mZy8cT3-pqfauIZjbFu3T_FHsFV1DkEj3Hcv7316C-telwAi1nAdY6WYaOr58hu_8OUW97LkfFjt-9cpfBoeEE8zLTdx4YMP-OIR7f1Vp5SMR50DWejuBnt9yT-mvhYHQ"/>
+<span class="text-on-surface-variant">Uruguai</span>
+</td>
+<td class="py-2 text-center font-score-sm">0</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-4</td>
+</tr>
+</tbody>
+</table>
+</section>
+<!-- Group F Card -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<div class="bg-surface-container p-md border-b border-outline-variant flex justify-between items-center">
+<h2 class="font-label-bold text-label-bold text-primary-fixed-dim uppercase tracking-widest">Grupo F</h2>
+<span class="text-[10px] font-bold text-on-surface-variant">FINALIZADO</span>
+</div>
+<table class="w-full text-left">
+<thead>
+<tr class="text-[10px] text-on-surface-variant uppercase border-b border-outline-variant/30">
+<th class="pl-md py-2 w-8">#</th>
+<th class="py-2">Seleção</th>
+<th class="py-2 text-center w-8">P</th>
+<th class="pr-md py-2 text-center w-8">SG</th>
+</tr>
+</thead>
+<tbody class="text-body-md font-body-md">
+<tr class="bg-primary/5">
+<td class="pl-md py-2 font-score-sm text-primary">1</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="A sophisticated close-up of the Portuguese flag, emphasizing the green and red bands and the ornate coat of arms. The lighting is professional and clear, creating a premium high-definition feel. The visual style is engineered for clarity and authority within a modern sports UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvQKqWzGrOauxkAMs7d1tBCRMNWifS0WVGxvNbpoQ8qytDfKlWrrGFR1QwNzRDwXw5LH9Uo0GAbdNLBtq8UtzUID0RQgwJehwbY28c-nKjd0Bhi9kWGLZJE4nL1e2ARmWzNoFyNRFEImxwSDZ64W5cYQ3cA3kP502n_9SxzUdnZ0I5h582XgE91JenA42kxIASIJXZCX3yJQNITVkp0LaDuTXDgCNHxZaFvAfKoLFGtTCOewpBq3z8kPlcUhQPBmfnBd1NWQvInnE"/>
+<span class="font-label-bold">Portugal</span>
+</td>
+<td class="py-2 text-center font-score-sm">9</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+6</td>
+</tr>
+<tr class="bg-primary/5 border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-primary">2</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Swiss flag's red field and white cross rendered in a sharp, high-definition digital style. The lighting is modern and high-contrast, highlighting the simple iconic design. The atmosphere is professional and precise, evocative of an elite corporate sports data dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTzv1K6lUJTA_9n7aiQrs-RAkMeFRvjdBxWjFoIAudgceeGDXuDQx4uyxTEHBlNzvAnNrFdag7AlYA-j-Dl23qFxR3crj8cVWflRyanSfMGHJtSSEoAL7R2G4vVINBOcwkCfJQCI2gdaDSfz1H3eXHFMVaIWqVisMMfnMXgsJBgk4WojRXXp9Lh6tT6AEA3QapKxN5xIHRDxd1ZBx2_m1fw893nK-pwhDUiCgtR8kMEy9MJbEaFaYNns2GpsX6QeX2Xo7y0ZtrBKg"/>
+<span class="font-label-bold">Suíça</span>
+</td>
+<td class="py-2 text-center font-score-sm">6</td>
+<td class="pr-md py-2 text-center font-score-sm text-secondary">+2</td>
+</tr>
+<tr class="border-b border-outline-variant/30">
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">3</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Serbian flag's red, blue, and white horizontal bands and coat of arms shown in clear high resolution. The lighting is modern and sophisticated, creating a sharp scoreboard aesthetic. The colors are saturated and vibrant against a deep black, monochromatic corporate background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdbfHP-wqCtaU1C6lLzR_P8OyNt8LqvMDnQpVgmWHLmVd1Cei6jW3EeYSjitdGoT2ddrRr-qn9bbe5tZjawxzFd4T4FXasU10lHKUQN6SSeUo3BF65Fog7QyRK_kUpe4knMs4q6E4MfCv_Vc0UGKCrJg3uvzUOuCeScbjLPCU_b-IRlnD9z6jGectH9VATC0hb5rAQX9YFXhu3T9zuI_HU67TpLDAZ8O0-gv8Xefrt6UgPDYPuBS5gwHK2jrkWSP3yBc5PXspSToY"/>
+<span class="text-on-surface-variant">Sérvia</span>
+</td>
+<td class="py-2 text-center font-score-sm">3</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-1</td>
+</tr>
+<tr>
+<td class="pl-md py-2 font-score-sm text-on-surface-variant">4</td>
+<td class="py-2 flex items-center gap-2">
+<img alt="" class="w-5 h-3.5 object-cover rounded-sm shadow-sm" data-alt="The Danish flag's white cross on a red field presented in a crisp, professional digital render. The lighting is focused and clear, highlighting the simple graphic design. The aesthetic is modern and authoritative, fitting for a top-tier world cup prediction and ranking platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXfmUDGbhKX9Q6BDRfE5q_lu-tvQRmjCrWx92uY64_tNNHBuH-fiGMY8Lbzwlgtqq5RB6FUEDVrLuDG6iLXGx0u_eHb5JcKbhQbfkm1s0CiV8JuGVO6gT9ZmcfYnNxKiRfHt5L57yJpXfya4o-YDtAw4TFzsn_z1m_fA9Rr5vO_b-1Hn9xl7WAOkXD02rOC0CQW8e_HnV7Vkz1b9x9W9Vj5imNdM_HxqQ982tjCnQ0U_Ilpp63Oav_fL-g1daygnlpC7ZTVwg9Nts"/>
+<span class="text-on-surface-variant">Dinamarca</span>
+</td>
+<td class="py-2 text-center font-score-sm">0</td>
+<td class="pr-md py-2 text-center font-score-sm text-error">-7</td>
+</tr>
+</tbody>
+</table>
+</section>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface border-t border-outline-variant flex justify-around items-center px-4 py-2 md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary hover:text-primary-fixed-dim transition-all scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

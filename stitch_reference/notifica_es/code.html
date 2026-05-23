@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-br"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;family=Geist:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#1e1f26",
+                    "on-tertiary": "#003543",
+                    "secondary": "#4de082",
+                    "on-secondary-container": "#003e1c",
+                    "primary": "#ffe7af",
+                    "tertiary-fixed-dim": "#62d4f8",
+                    "surface-container-high": "#282a30",
+                    "on-error-container": "#ffdad6",
+                    "surface-container-lowest": "#0c0e14",
+                    "on-tertiary-container": "#005f75",
+                    "on-surface": "#e2e2eb",
+                    "surface-bright": "#373940",
+                    "on-secondary": "#003919",
+                    "on-primary-fixed-variant": "#584400",
+                    "on-error": "#690005",
+                    "tertiary-fixed": "#b5ebff",
+                    "on-background": "#e2e2eb",
+                    "secondary-fixed-dim": "#4de082",
+                    "tertiary-container": "#6adbff",
+                    "secondary-container": "#00b55d",
+                    "inverse-primary": "#755b00",
+                    "surface-container-low": "#191b22",
+                    "primary-fixed": "#ffe08f",
+                    "tertiary": "#c8efff",
+                    "on-secondary-fixed-variant": "#005227",
+                    "on-tertiary-fixed": "#001f28",
+                    "surface-container-highest": "#33343b",
+                    "outline": "#9a907b",
+                    "on-surface-variant": "#d1c5ae",
+                    "surface-dim": "#111319",
+                    "primary-container": "#f5c842",
+                    "on-primary": "#3d2e00",
+                    "on-primary-fixed": "#241a00",
+                    "outline-variant": "#4e4634",
+                    "background": "#111319",
+                    "secondary-fixed": "#6dfe9c",
+                    "error-container": "#93000a",
+                    "surface": "#111319",
+                    "primary-fixed-dim": "#eec13c",
+                    "on-tertiary-fixed-variant": "#004e60",
+                    "on-secondary-fixed": "#00210c",
+                    "surface-variant": "#33343b",
+                    "surface-tint": "#eec13c",
+                    "error": "#ffb4ab",
+                    "on-primary-container": "#6c5400",
+                    "inverse-surface": "#e2e2eb",
+                    "inverse-on-surface": "#2e3037"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "8px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "base": "4px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "margin-desktop": "48px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "score-sm": ["JetBrains Mono"],
+                    "label-bold": ["Geist"],
+                    "headline-md": ["Geist"],
+                    "body-md": ["Geist"],
+                    "body-lg": ["Geist"],
+                    "display-score": ["JetBrains Mono"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #0f1117;
+            color: #e2e2eb;
+            font-family: 'Geist', sans-serif;
+        }
+        .notification-card {
+            background-color: #161820;
+            border: 1px solid #252836;
+        }
+        .active-dot {
+            box-shadow: 0 0 8px #4ade80;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-24">
+<!-- TopAppBar -->
+<header class="bg-background dark:bg-background border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-40">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="sports_soccer">sports_soccer</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="hover:bg-surface-container-high transition-colors p-2 rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="person">person</span>
+</button>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-margin-mobile pt-lg">
+<!-- Notification Header -->
+<div class="flex justify-between items-end mb-lg">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-background">Notificações</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Fique por dentro dos seus palpites</p>
+</div>
+<button class="text-label-bold font-label-bold text-primary-container hover:opacity-80 transition-opacity">
+                Marcar como lidas
+            </button>
+</div>
+<!-- Notification List -->
+<div class="flex flex-col gap-sm">
+<!-- Type 1: Match Result -->
+<div class="notification-card p-md rounded-lg flex gap-md items-start">
+<div class="relative mt-1">
+<div class="w-2 h-2 bg-secondary rounded-full active-dot"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<span class="text-label-bold font-label-bold text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="military_tech">military_tech</span>
+                            RESULTADO
+                        </span>
+<span class="text-[10px] font-label-bold text-on-surface-variant">HÁ 5 MIN</span>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface mb-xs">Brasil 2x0 Sérvia: Você marcou +3 pontos!</p>
+<div class="bg-secondary-container/20 border border-secondary/30 rounded p-sm inline-flex items-center gap-sm">
+<span class="text-score-sm font-score-sm text-secondary">Palpite certeiro: 2-0</span>
+</div>
+</div>
+</div>
+<!-- Type 2: Group Invitation -->
+<div class="notification-card p-md rounded-lg flex gap-md items-start">
+<div class="w-2 h-2 bg-transparent rounded-full mt-1"></div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<span class="text-label-bold font-label-bold text-tertiary-fixed-dim flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="groups">groups</span>
+                            CONVITE
+                        </span>
+<span class="text-[10px] font-label-bold text-on-surface-variant">HÁ 2 HORAS</span>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface mb-md">Ricardo Silva te convidou para o grupo <span class="font-bold text-primary">'Copa dos Amigos'</span>.</p>
+<div class="flex gap-sm">
+<button class="bg-primary-container text-on-primary px-lg py-sm rounded text-label-bold font-label-bold flex-1 hover:opacity-90 transition-opacity">
+                            Aceitar
+                        </button>
+<button class="bg-surface-container text-on-surface-variant border border-outline-variant px-lg py-sm rounded text-label-bold font-label-bold flex-1 hover:bg-surface-container-high transition-colors">
+                            Recusar
+                        </button>
+</div>
+</div>
+</div>
+<!-- Type 3: Reminder -->
+<div class="notification-card p-md rounded-lg flex gap-md items-start">
+<div class="relative mt-1">
+<div class="w-2 h-2 bg-secondary rounded-full active-dot"></div>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<span class="text-label-bold font-label-bold text-primary-fixed-dim flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="alarm">alarm</span>
+                            LEMBRETE
+                        </span>
+<span class="text-[10px] font-label-bold text-on-surface-variant">HÁ 3 HORAS</span>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface mb-md">A partida França x Inglaterra começa em 30 min. Não esqueça seu palpite!</p>
+<button class="flex items-center gap-sm text-primary font-label-bold text-label-bold hover:underline">
+<span class="material-symbols-outlined" data-icon="edit_square">edit_square</span>
+                        Fazer palpite agora
+                    </button>
+</div>
+</div>
+<!-- Older Notifications (Simulated) -->
+<div class="mt-lg mb-sm">
+<h3 class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-widest">Anteriores</h3>
+</div>
+<div class="notification-card p-md rounded-lg flex gap-md items-start opacity-70">
+<div class="w-2 h-2 bg-transparent rounded-full mt-1"></div>
+<div class="flex-1">
+<div class="flex justify-between items-start mb-xs">
+<span class="text-label-bold font-label-bold text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]" data-icon="leaderboard">leaderboard</span>
+                            RANKING
+                        </span>
+<span class="text-[10px] font-label-bold text-on-surface-variant">ONTEM</span>
+</div>
+<p class="text-body-lg font-body-lg text-on-surface">Você subiu 4 posições no ranking geral!</p>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person" data-weight="fill">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+<!-- Contextual Information Card (Floating Style) -->
+<div class="fixed bottom-24 right-margin-mobile flex flex-col items-end gap-sm pointer-events-none">
+<div class="notification-card p-sm px-md rounded-full flex items-center gap-sm bg-surface-container-high pointer-events-auto">
+<div class="w-2 h-2 bg-secondary rounded-full animate-pulse active-dot"></div>
+<span class="text-label-bold font-label-bold text-on-surface">12 JOGOS AO VIVO</span>
+</div>
+</div>
+</body></html>

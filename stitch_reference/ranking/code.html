@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Inter:wght@400;700&display=swap');
+        
+        :root {
+            --geist: 'Inter', sans-serif;
+            --jetbrainsMono: 'JetBrains Mono', monospace;
+        }
+        
+        body {
+            font-family: var(--geist);
+            background-color: #0f1117;
+            color: #e2e2eb;
+            margin: 0;
+            padding: 0;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#e2e2eb",
+                        "tertiary-container": "#6adbff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#003543",
+                        "on-primary-container": "#6c5400",
+                        "on-error": "#690005",
+                        "surface-dim": "#111319",
+                        "inverse-primary": "#755b00",
+                        "surface-variant": "#33343b",
+                        "on-tertiary-fixed": "#001f28",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#6dfe9c",
+                        "secondary-container": "#00b55d",
+                        "on-secondary-fixed-variant": "#005227",
+                        "surface-tint": "#eec13c",
+                        "secondary-fixed-dim": "#4de082",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "outline": "#9a907b",
+                        "primary": "#ffe7af",
+                        "on-secondary-container": "#003e1c",
+                        "inverse-surface": "#e2e2eb",
+                        "tertiary": "#c8efff",
+                        "primary-fixed-dim": "#eec13c",
+                        "inverse-on-surface": "#2e3037",
+                        "on-tertiary-container": "#005f75",
+                        "background": "#111319",
+                        "on-secondary-fixed": "#00210c",
+                        "on-background": "#e2e2eb",
+                        "surface-container-high": "#282a30",
+                        "on-primary-fixed": "#241a00",
+                        "on-primary-fixed-variant": "#584400",
+                        "on-surface-variant": "#d1c5ae",
+                        "surface": "#111319",
+                        "surface-bright": "#373940",
+                        "surface-container-lowest": "#0c0e14",
+                        "secondary": "#4de082",
+                        "surface-container-highest": "#33343b",
+                        "outline-variant": "#4e4634",
+                        "surface-container": "#1e1f26",
+                        "primary-fixed": "#ffe08f",
+                        "surface-container-low": "#191b22",
+                        "primary-container": "#f5c842",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "on-secondary": "#003919",
+                        "on-primary": "#3d2e00",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#b5ebff"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "score-sm": ["JetBrains Mono"],
+                        "label-bold": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-score": ["JetBrains Mono"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<!-- TopAppBar -->
+<header class="bg-background text-primary border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="sports_soccer">sports_soccer</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant hover:bg-surface-container-high p-2 rounded-full transition-colors cursor-pointer" data-icon="notifications">notifications</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pb-24">
+<!-- Tabs Section -->
+<section class="mt-4 px-margin-mobile overflow-x-auto hide-scrollbar whitespace-nowrap flex gap-2">
+<button class="bg-primary-container text-on-primary px-4 py-2 rounded-full font-label-bold text-label-bold">Amigos</button>
+<button class="bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Global</button>
+<button class="bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Família</button>
+<button class="bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Empresa</button>
+<button class="bg-surface-container text-on-surface-variant px-4 py-2 rounded-full font-label-bold text-label-bold hover:bg-surface-container-high transition-colors">Bairros</button>
+</section>
+<!-- Podium Section -->
+<section class="mt-8 px-margin-mobile flex items-end justify-center gap-3 h-64">
+<!-- 2nd Place -->
+<div class="flex flex-col items-center w-full max-w-[100px]">
+<div class="relative mb-2">
+<img alt="2nd Place" class="w-14 h-14 rounded-full border-2 border-outline-variant" data-alt="A professional studio headshot of a smiling man with a neat beard, set against a dark architectural background. The lighting is sophisticated and directional, creating a premium high-stakes sports app aesthetic. The color palette is composed of deep charcoal tones and subtle golden highlights, reflecting a corporate modern design style with a flat-tactile edge." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJlsKxbgnZESjEAFXr-CPJe23C7yRiEVkYvxavyHkdidmyaLierF8Rzv3yWE6wStVU5_WM0xssKZbnQduzaxs0tuJBHuioXmbgXiB2PUoUpEocMtgEeAzu3iR5wRo9qCvZb1mfwLE2j_tEvSLdKRoPakAORXgS8Wgfkpj_-sEfTTgqYCQxMhCgeq_niZj88OFLqtPQNT5hoZCzp4gLBjLjk9xTZHGx7q4F1V8Zw3HWprBq0Bh9XiVpnVH4gtKx_kYrxYicMY0hY2Y"/>
+<div class="absolute -bottom-1 -right-1 bg-surface-container-highest rounded-full p-1 border border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-on-surface" data-icon="counter_2">counter_2</span>
+</div>
+</div>
+<div class="bg-surface-container-high w-full h-24 rounded-t-lg border-x border-t border-outline-variant flex flex-col items-center justify-start pt-3">
+<span class="font-label-bold text-label-bold text-on-surface truncate px-1">Ricardo M.</span>
+<span class="font-score-sm text-score-sm text-secondary mt-1">42 pts</span>
+</div>
+</div>
+<!-- 1st Place (Center) -->
+<div class="flex flex-col items-center w-full max-w-[120px]">
+<span class="text-2xl mb-1">👑</span>
+<div class="relative mb-2">
+<img alt="1st Place" class="w-20 h-20 rounded-full border-4 border-primary-container" data-alt="A vibrant professional portrait of a woman with a confident expression, captured in high-definition with soft-box lighting. The setting is a minimalist, modern office space with dark grey walls. The visual style is premium and data-dense, featuring sharp focus and a sophisticated palette of gold, deep black, and slate grey, perfectly aligned with a high-stakes sports prediction brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBGbxBiwax7kerq4l-qlNmmCPcABCptRViSztMAXrQ9Gue8-lzSFadlMenEPEptQZLyRMjSAw72FG_XFjmJ1pF-k8J5tEWZ7970WYNurfLsOFva_QuvnV_g9aP0ewiw9xdYYviDfnIr2NyhEUGM5ttgZJChKlYO78gjcMMSsdwm2MuQIiBA3Zl4veM2qVDrNDz2nz7kmbKliViR1pmMlDReeSDxLTA4LiU0vvGl3FPFgovUd_83MGxpC4JZXmisKf2GGjdcrFzzps"/>
+<div class="absolute -bottom-1 -right-1 bg-primary-container rounded-full p-1.5 border-2 border-background">
+<span class="material-symbols-outlined text-[20px] text-on-primary" data-icon="counter_1">counter_1</span>
+</div>
+</div>
+<div class="bg-primary-container w-full h-36 rounded-t-lg border-x border-t border-on-primary-container flex flex-col items-center justify-start pt-4">
+<span class="font-label-bold text-label-bold text-on-primary truncate px-1">Ana Paula</span>
+<span class="font-score-sm text-score-sm text-on-primary mt-1">48 pts</span>
+<div class="mt-2 bg-on-primary/10 px-2 py-0.5 rounded text-[10px] font-bold text-on-primary">CAMPEÃ</div>
+</div>
+</div>
+<!-- 3rd Place -->
+<div class="flex flex-col items-center w-full max-w-[100px]">
+<div class="relative mb-2">
+<img alt="3rd Place" class="w-14 h-14 rounded-full border-2 border-outline-variant" data-alt="A detailed digital photograph of a young professional man wearing a dark sweater, looking towards the camera. The background is a blurred stadium interior at night with moody, atmospheric lighting. The image emphasizes structural clarity and a professional aesthetic, using a color scheme of deep navy and bright accent greens to match a modern corporate sports UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAQvWJlniqB8__FHYjfR5UQT2ZNpiOgC-LjCescd3bnVSsJr6byES09zkj1s8TcagVuR3XK9Z1i8SZQHEiNCUuf9STex5rpnUsVDlWN752rpd5AqJgbk3gPqI10bBbNudkP21cwBa9JWsPF712xbZUbulp8p_Io08HH8KUK2c7fjDFTCJhttdUOZGtFPqcpz-iMCeMr6i8fhoc2tGcFoJytHdAWeySMjfo_m1K_z4FSmtbeOgmnGwF9UY30MP-qk3I6rHFrTpGGxbA"/>
+<div class="absolute -bottom-1 -right-1 bg-surface-container-highest rounded-full p-1 border border-outline-variant">
+<span class="material-symbols-outlined text-[16px] text-on-surface" data-icon="counter_3">counter_3</span>
+</div>
+</div>
+<div class="bg-surface-container w-full h-20 rounded-t-lg border-x border-t border-outline-variant flex flex-col items-center justify-start pt-3">
+<span class="font-label-bold text-label-bold text-on-surface truncate px-1">Bruno S.</span>
+<span class="font-score-sm text-score-sm text-secondary mt-1">39 pts</span>
+</div>
+</div>
+</section>
+<!-- Ranked List -->
+<section class="mt-4 px-margin-mobile flex flex-col gap-2">
+<!-- Header Label -->
+<div class="flex justify-between items-center px-4 mb-2">
+<span class="text-label-bold font-label-bold text-on-surface-variant">Classificação</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant">Total</span>
+</div>
+<!-- Row 4 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="font-score-sm text-score-sm w-4 text-on-surface-variant text-center">4</span>
+<img alt="Rank 4" class="w-10 h-10 rounded-full" data-alt="A sharp, clear studio portrait of a man in his 30s with a professional gaze. The background is a clean, dark monochromatic surface. The lighting is crisp, highlighting facial features without harsh shadows, maintaining a high-definition corporate feel. The overall mood is focused and sophisticated, consistent with a data-heavy sports application environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAjc_xk0qcq9vAbVTaNX6N4R9PDdFLQzBWLcuhDueMhJcXcnTYUjcJPkfsS_L-Ulork4lRxmarU0I2LV1Hgt2M8kh0TNe5MmXYKQyB0xhWEj150ezcaFhMYmj9efxiDS3IrK9AF06m9nQeG9Jp9KUewx6cVYOOCeZsR5LoRuDW_4S8kdd4-E3s1y0yHzWke53Zbu8AvIf89xMyfptDM1XdyWlrs5VPB0tYD01ApVJhMTjjczmMV3qc6K3rnkhsQGR56hCLwJC3R6Is"/>
+<div class="flex flex-col">
+<span class="font-label-bold text-label-bold text-on-surface">Lucas Guedes</span>
+<span class="font-body-md text-[10px] text-on-surface-variant">10 EXATOS</span>
+</div>
+</div>
+<span class="font-score-sm text-score-sm text-secondary">37 pts</span>
+</div>
+<!-- Row 5 - AUTHENTICATED USER -->
+<div class="bg-[#1e2028] border border-primary-container rounded-lg p-4 flex items-center justify-between ring-1 ring-primary-container/20 shadow-xl">
+<div class="flex items-center gap-4">
+<span class="font-score-sm text-score-sm w-4 text-primary text-center">5</span>
+<div class="relative">
+<img alt="You" class="w-10 h-10 rounded-full border border-primary-container" data-alt="A high-quality close-up portrait of a man with a friendly expression, set against a dark, tech-oriented background. The lighting is high-contrast, creating deep blacks and bright, focused areas on the face. The aesthetic is raw and structural, avoiding decorative flourishes in favor of a professional, engineered look typical of modern sports betting platforms." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc7UAkBMGB25OxtOCGHwzmo8tQ9OioKWfdgLpB_nlmq6dOiMwxkOAGx39R2IdBZyCnc9d9EEqTD5xxiR8pFbrWdxmcPf4WSiH7pmK65XfjLgmTdRzGBeW6xHinpTfpWJjtCtI_vgPiCFZXp4SazPBOUHNWGzeF74aIhd_V2O90IbJOgIzHChbLcpWLOrKZgQ1XoB5CDv8k0ReImTx4bTmiwK2Cj97qB64alWcmB40DKGT6Di0-kZAPjy3Clyh9rdQcKHK0SGhoj48"/>
+<div class="absolute -top-1 -right-1 w-3 h-3 bg-secondary rounded-full border-2 border-[#1e2028]"></div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<span class="font-label-bold text-label-bold text-on-surface">Você</span>
+<span class="bg-primary-container text-on-primary text-[8px] font-bold px-1 rounded">EU</span>
+</div>
+<span class="font-body-md text-[10px] text-on-surface-variant uppercase tracking-wider">12 exatos</span>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-score-sm text-score-sm text-secondary">35 pts</span>
+<span class="text-[9px] text-secondary/60">+2 pos</span>
+</div>
+</div>
+<!-- Row 6 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<span class="font-score-sm text-score-sm w-4 text-on-surface-variant text-center">6</span>
+<img alt="Rank 6" class="w-10 h-10 rounded-full" data-alt="A professional headshot of a woman with a neutral expression, captured in a modern studio. The background is a solid, dark navy tone that complements the corporate modern design. The lighting is soft and even, highlighting a high-definition, professional appearance suitable for a premium data-driven mobile application." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4KipOaROvrVyad3gkUtG_UmQPzzdBoujjvVbxmAl5RL_bxQe8hPPHl_evzMnbfF0K0Z7YqkmFhbhFDA3YUnc4hrkrgcRFNgKLmdgHU0dI7aQbkAeRLkjgix03uMc81sc_5qQN5sD6pT83rkKUj92n2rCmag0sPYR8Vv88SZAbgWBaRsDFG1j3jejpLMU6MFGHA5YHKJSO1PcEILZyBqz2z_J5Jlbm8puZ8aFZnYZS13tFd6m_jKZXlU2KFld-gmlzNlACrX9et1c"/>
+<div class="flex flex-col">
+<span class="font-label-bold text-label-bold text-on-surface">Fernanda Lima</span>
+<span class="font-body-md text-[10px] text-on-surface-variant">8 EXATOS</span>
+</div>
+</div>
+<span class="font-score-sm text-score-sm text-secondary">31 pts</span>
+</div>
+<!-- Row 7 -->
+<div class="bg-surface-container-low border border-outline-variant rounded-lg p-4 flex items-center justify-between opacity-80">
+<div class="flex items-center gap-4">
+<span class="font-score-sm text-score-sm w-4 text-on-surface-variant text-center">7</span>
+<img alt="Rank 7" class="w-10 h-10 rounded-full" data-alt="A clean, professional portrait of a man looking directly at the camera, set against a dark slate background. The aesthetic is minimal and functional, with precise lighting that emphasizes clarity and data-centric professionalism. The image matches the overall high-stakes and authoritative atmosphere of a sports prediction leaderboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs2DqMtCmrlLuv6uXCqc0Xj6tw7DJ1vWRtguh4RwLibA7j1YEFAfNhMz5kXMy4Bw2NUD8wA84jliFx_f37Jo3U7o6p_EAzwlBzM_wwnK4MBPxJzkkOxTtTrBCQ6NGCnuOVZ3VcY1S17t0jKi8WqklnbkODi4ZRU1404Orp14UIa9WL-xUjc3m5DWfEhIsCkD1IYp1Q59veNOeFi7JCx7hqNadezGkwrInnBYuMWCSAwfWyCh-SftOBzGjh8CHQBPdaR11gR0iu8LU"/>
+<div class="flex flex-col">
+<span class="font-label-bold text-label-bold text-on-surface">Marcos Silva</span>
+<span class="font-body-md text-[10px] text-on-surface-variant">7 EXATOS</span>
+</div>
+</div>
+<span class="font-score-sm text-score-sm text-secondary">28 pts</span>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="calendar_month">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary scale-95 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="leaderboard" style="font-variation-settings: 'FILL' 1;">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

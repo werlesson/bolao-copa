@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;family=Geist:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0f1117;
+            font-family: 'Geist', sans-serif;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scoreboard-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error": "#690005",
+                        "surface-bright": "#373940",
+                        "secondary": "#4de082",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "secondary-fixed-dim": "#4de082",
+                        "primary-fixed-dim": "#eec13c",
+                        "primary-fixed": "#ffe08f",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#001f28",
+                        "on-surface": "#e2e2eb",
+                        "primary-container": "#f5c842",
+                        "surface-container-highest": "#33343b",
+                        "secondary-fixed": "#6dfe9c",
+                        "on-background": "#e2e2eb",
+                        "on-tertiary": "#003543",
+                        "surface-container": "#1e1f26",
+                        "on-error-container": "#ffdad6",
+                        "surface-variant": "#33343b",
+                        "secondary-container": "#00b55d",
+                        "outline-variant": "#4e4634",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-secondary-container": "#003e1c",
+                        "inverse-surface": "#e2e2eb",
+                        "surface-dim": "#111319",
+                        "on-secondary-fixed": "#00210c",
+                        "surface-container-low": "#191b22",
+                        "tertiary": "#c8efff",
+                        "on-primary-fixed-variant": "#584400",
+                        "inverse-on-surface": "#2e3037",
+                        "on-secondary-fixed-variant": "#005227",
+                        "tertiary-fixed": "#b5ebff",
+                        "outline": "#9a907b",
+                        "on-primary-container": "#6c5400",
+                        "surface-tint": "#eec13c",
+                        "surface": "#111319",
+                        "on-primary-fixed": "#241a00",
+                        "on-tertiary-container": "#005f75",
+                        "primary": "#ffe7af",
+                        "on-surface-variant": "#d1c5ae",
+                        "surface-container-lowest": "#0c0e14",
+                        "surface-container-high": "#282a30",
+                        "inverse-primary": "#755b00",
+                        "on-primary": "#3d2e00",
+                        "background": "#111319",
+                        "error-container": "#93000a",
+                        "tertiary-container": "#6adbff",
+                        "on-secondary": "#003919"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "xl": "32px",
+                        "margin-desktop": "48px",
+                        "gutter": "16px",
+                        "xs": "4px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Geist"],
+                        "body-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "label-bold": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "display-score": ["JetBrains Mono"],
+                        "score-sm": ["JetBrains Mono"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-container-lowest text-on-surface min-h-screen flex flex-col items-center justify-center">
+<!-- Login Shell Context: Transactional screen, Navigation suppressed as per Mandate -->
+<main class="w-full max-w-md px-margin-mobile flex flex-col items-center">
+<!-- Brand Identity: Logo Section -->
+<div class="mb-xl flex flex-col items-center text-center">
+<div class="w-32 h-32 mb-lg relative">
+<div class="absolute inset-0 bg-primary-container opacity-10 rounded-full blur-xl"></div>
+<span class="material-symbols-outlined text-[80px] text-primary-container relative z-10" style="font-variation-settings: 'FILL' 1;">
+                    sports_soccer
+                </span>
+</div>
+<h1 class="text-primary font-headline-lg text-headline-lg mb-xs">BolãoCopa 2026</h1>
+<p class="text-on-surface-variant font-body-md text-body-md">A elite das previsões de futebol</p>
+</div>
+<!-- Login Container -->
+<div class="w-full bg-surface-container border border-outline-variant p-lg rounded-lg shadow-2xl">
+<h2 class="text-on-surface font-headline-md text-headline-md mb-xl text-center">Entrar no Bolão</h2>
+<!-- Social Auth Cluster -->
+<div class="flex flex-col gap-md mb-xl">
+<!-- Google Button -->
+<button class="w-full h-12 bg-surface-container-high border border-outline-variant flex items-center justify-center gap-sm px-md hover:bg-surface-bright transition-colors rounded-DEFAULT">
+<img alt="Google" class="w-5 h-5" data-alt="A clean and professional vector representation of the Google G logo in its signature four colors. The logo is perfectly centered on a transparent background, following modern minimalist design standards for high-end corporate UI authentication screens. The lighting is neutral and the colors are vibrant and saturated to match a dark theme aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVgFpf0U1TL15Wb5FrSA4WF42TMWZfvAnd_wfivsKnDAQtO24KotwuHpiUVCprJH-b_J3ZWnzJ_5HR-y2GJ5_NqqKM1_UH9dmDdQBq_pyGMQo0QuWnrPg8WwlNiS6FIOHARhVCrXKBzyR0vCLiUKCal6ggknfdxf1n6udQZweZ3T--1SG_L-ZYxx-fVVokaZnld6eO1MPJGMtRncOpSAuLWc2-rpEj3ldj8kzOcIsiFokQgOJXUUNIozYSUqXZuK8qlCKzB-8gMNw"/>
+<span class="font-label-bold text-label-bold text-on-surface">Continuar com Google</span>
+</button>
+<!-- Apple Button -->
+<button class="w-full h-12 bg-surface-container-high border border-outline-variant flex items-center justify-center gap-sm px-md hover:bg-surface-bright transition-colors rounded-DEFAULT">
+<span class="material-symbols-outlined text-on-surface" style="font-variation-settings: 'FILL' 1;">brand_awareness</span>
+<span class="font-label-bold text-label-bold text-on-surface">Continuar com Apple</span>
+</button>
+</div>
+<!-- Divider -->
+<div class="flex items-center gap-md mb-xl">
+<div class="h-[1px] flex-1 bg-outline-variant"></div>
+<span class="text-on-surface-variant font-label-bold text-label-bold uppercase tracking-widest">ou</span>
+<div class="h-[1px] flex-1 bg-outline-variant"></div>
+</div>
+<!-- Email Form -->
+<form class="flex flex-col gap-lg">
+<div class="flex flex-col gap-xs">
+<label class="text-on-surface-variant font-label-bold text-label-bold px-xs">Entrar com E-mail</label>
+<input class="w-full h-12 bg-surface-container-low border border-outline-variant px-md text-on-surface focus:border-primary-container focus:ring-0 transition-all placeholder:text-on-surface-variant/40 rounded-DEFAULT" placeholder="seu@email.com" type="email"/>
+</div>
+<button class="w-full h-12 bg-primary-container text-on-primary-container font-headline-md text-headline-md flex items-center justify-center hover:opacity-90 active:scale-[0.98] transition-all rounded-DEFAULT" type="button">
+                    Continuar
+                </button>
+</form>
+</div>
+<!-- Secondary Actions -->
+<div class="mt-xl text-center flex flex-col gap-sm">
+<p class="text-on-surface-variant font-body-md text-body-md">
+                Ainda não tem uma conta? 
+                <a class="text-primary-container font-label-bold hover:underline" href="#">Criar agora</a>
+</p>
+<a class="text-on-surface-variant font-label-bold text-label-bold opacity-60 hover:opacity-100 transition-opacity" href="#">Termos de Uso e Privacidade</a>
+</div>
+</main>
+<!-- Visual Polish: Background Grid Pattern -->
+<div class="fixed inset-0 -z-10 pointer-events-none opacity-20" style="background-image: radial-gradient(#252836 1px, transparent 1px); background-size: 24px 24px;"></div>
+<!-- Hero Image Placeholder (Background Context) -->
+<div class="fixed inset-0 -z-20 opacity-10 grayscale">
+<img class="w-full h-full object-cover" data-alt="An expansive aerial view of a futuristic football stadium at night, illuminated by high-intensity floodlights that cast long, dramatic shadows. The architecture is sharp and modern, with a monochromatic dark steel structure. Atmospheric fog hangs low over the pitch, creating a high-stakes, professional competitive environment. The scene is rendered in deep charcoals and dark blues with golden highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD13ynLsYc6Wv-o2T4bFez3rRT0qGFESpv2wk88vOHTadOJqjZ9_jifsTIriF4VjuRYvipIdn-q04SN2jvV4Hbg8BZFgFpxXFkIVrMXEdJ2bTHU42f-y7VWhpsjB1rB84pWf9Z1O-o3To-Y9cVuJVCBx_MtG9x7IURX0ip9QhsGIdhYV52NdLmVnecnHkyhwVdvgfsAmHN1aDVC2yly7OxA6U0YwXDJCFxHNuspvEzsDG0SbIpWIPv3PkjSVxWUTIeqA0GFXHxF-s4"/>
+</div>
+</body></html>

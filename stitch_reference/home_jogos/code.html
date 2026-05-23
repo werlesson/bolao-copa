@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface": "#e2e2eb",
+                    "tertiary-container": "#6adbff",
+                    "on-error-container": "#ffdad6",
+                    "on-tertiary": "#003543",
+                    "on-primary-container": "#6c5400",
+                    "on-error": "#690005",
+                    "surface-dim": "#111319",
+                    "inverse-primary": "#755b00",
+                    "surface-variant": "#33343b",
+                    "on-tertiary-fixed": "#001f28",
+                    "error": "#ffb4ab",
+                    "secondary-fixed": "#6dfe9c",
+                    "secondary-container": "#00b55d",
+                    "on-secondary-fixed-variant": "#005227",
+                    "surface-tint": "#eec13c",
+                    "secondary-fixed-dim": "#4de082",
+                    "on-tertiary-fixed-variant": "#004e60",
+                    "outline": "#9a907b",
+                    "primary": "#ffe7af",
+                    "on-secondary-container": "#003e1c",
+                    "inverse-surface": "#e2e2eb",
+                    "tertiary": "#c8efff",
+                    "primary-fixed-dim": "#eec13c",
+                    "inverse-on-surface": "#2e3037",
+                    "on-tertiary-container": "#005f75",
+                    "background": "#111319",
+                    "on-secondary-fixed": "#00210c",
+                    "on-background": "#e2e2eb",
+                    "surface-container-high": "#282a30",
+                    "on-primary-fixed": "#241a00",
+                    "on-primary-fixed-variant": "#584400",
+                    "on-surface-variant": "#d1c5ae",
+                    "surface": "#111319",
+                    "surface-bright": "#373940",
+                    "surface-container-lowest": "#0c0e14",
+                    "secondary": "#4de082",
+                    "surface-container-highest": "#33343b",
+                    "outline-variant": "#4e4634",
+                    "surface-container": "#1e1f26",
+                    "primary-fixed": "#ffe08f",
+                    "surface-container-low": "#191b22",
+                    "primary-container": "#f5c842",
+                    "tertiary-fixed-dim": "#62d4f8",
+                    "on-secondary": "#003919",
+                    "on-primary": "#3d2e00",
+                    "error-container": "#93000a",
+                    "tertiary-fixed": "#b5ebff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "sm": "8px",
+                    "margin-mobile": "16px",
+                    "xs": "4px",
+                    "base": "4px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "gutter": "16px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "score-sm": ["JetBrains Mono", "monospace"],
+                    "label-bold": ["Geist", "sans-serif"],
+                    "headline-lg": ["Geist", "sans-serif"],
+                    "headline-md": ["Geist", "sans-serif"],
+                    "body-lg": ["Geist", "sans-serif"],
+                    "display-score": ["JetBrains Mono", "monospace"],
+                    "body-md": ["Geist", "sans-serif"]
+            },
+            "fontSize": {
+                    "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0f1117;
+            font-family: 'Geist', sans-serif;
+        }
+        .card-border {
+            border: 1px solid #252836;
+        }
+        .surface-level-1 {
+            background-color: #161820;
+        }
+        .surface-level-2 {
+            background-color: #1e2028;
+        }
+        .pulse-live {
+            animation: pulse-animation 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-background flex justify-between items-center px-margin-mobile h-16 border-b border-outline-variant">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">sports_soccer</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<main class="pt-20 pb-24 px-margin-mobile max-w-2xl mx-auto">
+<!-- Filter/Category Row -->
+<div class="mb-lg flex items-center justify-between">
+<div class="flex items-center gap-xs bg-surface-container px-3 py-1.5 rounded-full border border-outline-variant">
+<span class="text-label-bold font-label-bold text-primary uppercase tracking-wider">Fase de Grupos</span>
+</div>
+<button class="text-primary flex items-center gap-1">
+<span class="text-label-bold font-label-bold uppercase">Filtrar</span>
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+<!-- Section: Today -->
+<section class="mb-xl">
+<div class="flex items-center gap-3 mb-md">
+<h2 class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-widest">Hoje, 14 de Junho</h2>
+<div class="h-[1px] flex-1 bg-outline-variant"></div>
+</div>
+<div class="space-y-base">
+<!-- Live Match Card -->
+<div class="surface-level-1 card-border rounded-lg p-md overflow-hidden relative">
+<div class="flex justify-between items-start mb-sm">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#0a2a14]">
+<div class="w-2 h-2 rounded-full bg-[#4ade80] pulse-live"></div>
+<span class="text-label-bold font-label-bold text-[#4ade80] uppercase">AO VIVO</span>
+</div>
+<span class="text-label-bold font-label-bold text-on-surface-variant">Grupo G • Min 72'</span>
+</div>
+<div class="grid grid-cols-3 items-center gap-md mb-md">
+<!-- Team 1 -->
+<div class="flex flex-col items-center gap-2">
+<img alt="Brazil Flag" class="w-12 h-8 object-cover rounded-sm border border-outline-variant" data-alt="A high-resolution, detailed flag of Brazil waving slightly in the wind, showing the vibrant green background, yellow rhombus, and blue globe with stars. The image is captured in a professional sports broadcast style with cinematic lighting, focusing on the texture of the fabric against a dark, stadium background in the FIFA World Cup 2026 style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMY11QOevZMPCKqkv_4efUaafgwwv3TjU5M_m2PZeFwt4hrmwhrfNhJ1ISvhxYpd28Jvz40G5kqCZ0qHiyt_kwjpklzf6AeAmYcLUcqY1cX2hDny_0ftuZW7QQsNIQR8Hhp_tpxmjssUiYD1za90B5oWexIXPdrnwDCUSzzNjI2r8PV8xbMsBC6nWP99qYAd0TlCAJTL21yPg5slC3I0n_1-y7WT0R5JU8FIriKHIJlTvWh0SpNUZpqNzTJidl6pPIork3bp5rZNE"/>
+<span class="text-label-bold font-label-bold text-on-surface uppercase text-center">Brasil</span>
+</div>
+<!-- Score -->
+<div class="flex flex-col items-center">
+<span class="text-display-score font-display-score text-primary-container tracking-tighter">2 - 0</span>
+</div>
+<!-- Team 2 -->
+<div class="flex flex-col items-center gap-2">
+<img alt="Serbia Flag" class="w-12 h-8 object-cover rounded-sm border border-outline-variant" data-alt="A detailed, textured flag of Serbia with its iconic red, blue, and white horizontal stripes and the national coat of arms. The lighting is dramatic and focused, reminiscent of a high-stakes international football match pre-game introduction. The style is sharp and modern, with a monochromatic dark peripheral environment that makes the national colors pop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIcIAIBAh6DLb3iKFZjVKMRku0MUUUJMdO97LDJNLDek3bvgx7zN845xMZNo4aIUY4RZM8iSN3fvnGeeTzMwkRySyWkORL0lNnYQnGF9wMyikUvuELVI5eAQAAMzFGpgQy2xWIGeQfqOBK2-VaexWvj1DO3WZhsEmvtiQzdKSdLzxgq232Gtg4yGVUpZkyOq_skPVrQGlLDjNB0tYFYUkgj1DTwwFtSteseuXImMErQinbsljfdKr9p0odXzyZdata0jYZ6g16nxY"/>
+<span class="text-label-bold font-label-bold text-on-surface uppercase text-center">Sérvia</span>
+</div>
+</div>
+<!-- User Prediction -->
+<div class="pt-sm border-t border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-body-md font-body-md text-on-surface-variant">Seu palpite: <span class="text-secondary font-bold">2×0</span></span>
+</div>
+<div class="bg-[#0a2a14] px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[#4ade80] text-[14px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="text-score-sm font-score-sm text-[#4ade80] tracking-tighter">+1 pt</span>
+</div>
+</div>
+</div>
+<!-- Finished Match Card -->
+<div class="surface-level-1 card-border rounded-lg p-md opacity-90">
+<div class="flex justify-between items-start mb-sm">
+<span class="text-label-bold font-label-bold text-on-surface-variant uppercase bg-surface-container px-2 py-0.5 rounded">Encerrado</span>
+<span class="text-label-bold font-label-bold text-on-surface-variant">Grupo B</span>
+</div>
+<div class="grid grid-cols-3 items-center gap-md mb-md">
+<div class="flex flex-col items-center gap-2">
+<img alt="England Flag" class="w-12 h-8 object-cover rounded-sm border border-outline-variant" data-alt="The English national flag, the St George's Cross, rendered in a high-fidelity sports presentation aesthetic. The red cross on white background is crisp and professional, set against a dark atmosphere that mimics a modern stadium's night lighting. The visual style is engineered and precise, emphasizing competitive national pride in a corporate sports context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqk0lJHHx_aHQ4CcQpGFhebnon8KZQCR6P2qZVBt-MQ6NRWDJ56h9EiSr8KBdAwz-LhCFSDOY33xRJdYEGoCKDb6eUJt7CJOF5op5kJfJKQrcqcCXsiwwApB1hz3_RxueoXYIo_Ivz_eTgy6NVSp3YYAU-r1BIHaJZxmn-ycvw6p3SNPgQooX-uylTq7uFxn02kGxhfTg8nizdFKdilaglr8846AjjWOSHdm_bXBqrZB0NIPsHONc3s2AllCGt7An-FTC_UOU4VUk"/>
+<span class="text-label-bold font-label-bold text-on-surface uppercase text-center">Inglaterra</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-display-score font-display-score text-on-surface-variant opacity-60 tracking-tighter">1 - 1</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<img alt="USA Flag" class="w-12 h-8 object-cover rounded-sm border border-outline-variant" data-alt="The flag of the United States of America with its stars and stripes, shown in a high-definition, professional football match broadcast layout. The lighting is sophisticated, with subtle reflections that suggest a glossy screen or digital display. The background is a deep charcoal, ensuring the red, white, and blue colors remain the focal point of the composition." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5GygnLinmPtTlBvRjD1ZpSTpf27gd2jJ6OWAndRHqAWau4s5QoDfkPwU2O5xl5Y06E_9ttsJPfnZduqimad6mwRpVOlrcrR1Y0SMocNJ1uBXsLJ-CZZrxl1v3JtdMtWOvqMTjOEyovI6JJ0YJ3GHVlkP8pSjnpTHnmDymZTcqTNgFi70vDMQ_-Vu07RQDzb6SFbASZsDuj4DyS8toopTVyD06BUMAGsCP8BX4rsaFJBihfxmPYZMFThv-VUqHgYFEAP-sEbsjrlg"/>
+<span class="text-label-bold font-label-bold text-on-surface uppercase text-center">EUA</span>
+</div>
+</div>
+<div class="pt-sm border-t border-outline-variant flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-body-md font-body-md text-on-surface-variant">Seu palpite: <span class="text-on-surface font-bold">1×0</span></span>
+</div>
+<div class="bg-surface-container px-2 py-0.5 rounded flex items-center gap-1">
+<span class="text-score-sm font-score-sm text-on-surface-variant tracking-tighter">0 pts</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Tomorrow -->
+<section class="mb-xl">
+<div class="flex items-center gap-3 mb-md">
+<h2 class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-widest">Amanhã, 15 de Junho</h2>
+<div class="h-[1px] flex-1 bg-outline-variant"></div>
+</div>
+<!-- Upcoming Match Card -->
+<div class="surface-level-1 card-border rounded-lg p-md">
+<div class="flex justify-between items-start mb-md">
+<div class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+<span class="text-label-bold font-label-bold uppercase">em 2h 14min</span>
+</div>
+<span class="text-label-bold font-label-bold text-on-surface-variant">Grupo C • 13:00</span>
+</div>
+<div class="grid grid-cols-3 items-center gap-md mb-lg">
+<div class="flex flex-col items-center gap-2">
+<img alt="Argentina Flag" class="w-12 h-8 object-cover rounded-sm border border-outline-variant" data-alt="The Argentine flag with its light blue and white horizontal stripes and the Sun of May in the center. The image uses a high-contrast, premium sports aesthetic with a dark, moody stadium background. The textures are sharp, capturing the fabric of the flag under bright arena floodlights, emphasizing the intense atmosphere of a world-class football tournament." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBehSsfJdQrEKza0tXIUPKFEENuyIJkp3AsjqUpkOfpF3tvuv9e-JYeq5vCQIZViOOT0sukjF4QiruQzLw_B6YnsB2BBCWlK-MMDezlOvoyrXFxchIt1rSBxty6yW6_6H2lcFNkDOXUIRFkmvUGfnf5hLe2epNXtgq2Wz1-cqOp7-c47Oybfq734FrwYEltidUjitdWwDZUjLhP3koileITNOqdL8aU7JAVbvOwhlNhlfJuiHKng4gqtHohMMm88kRdOgH2jfg_RbU"/>
+<span class="text-label-bold font-label-bold text-on-surface uppercase text-center">Argentina</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="text-display-score font-display-score text-outline-variant tracking-tighter">VS</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<img alt="Mexico Flag" class="w-12 h-8 object-cover rounded-sm border border-outline-variant" data-alt="The national flag of Mexico, featuring its green, white, and red vertical stripes with the national coat of arms. The lighting is cinematic and focused, designed for a professional sports betting interface. The background is a sleek, dark monochromatic surface, providing a high-definition and modern look that highlights the intensity of the upcoming match." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8FyoitlG0LnGm7GmM09ABFC8DBa1lrh1tyZ7V3OXNQgmA2hRjPHj6aFfvPXnbDkNq2obCG-l2vxxMRyXUaIxneo9N-m-Zpw1fBvz9z403VZ9vcD35Rq8vhR3M2oKzoOELNOE0MLSHlNr1k_sYClqQB5ix63odpueJQ4NkCNuUnjbPA1Y1NrhEF1C7CRcKuftq0oue-RnY8XCEbsf0JeNJeRo6Jki7u6q0q0Pt0_fLqy73YNSBq8lGI3-RkPPaWjVlMvCnV0t5DsM"/>
+<span class="text-label-bold font-label-bold text-on-surface uppercase text-center">México</span>
+</div>
+</div>
+<button class="w-full py-3 surface-level-2 border border-outline-variant rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">edit_square</span>
+<span class="text-label-bold font-label-bold text-primary-container uppercase">Palpitar</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface flex justify-around items-center px-4 py-2 border-t border-outline-variant">
+<!-- Jogos - Active -->
+<a class="flex flex-col items-center justify-center text-primary transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<!-- Ranking -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<!-- Grupos -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<!-- Perfil -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

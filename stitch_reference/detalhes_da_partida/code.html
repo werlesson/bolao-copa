@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0f1117;
+            color: #e2e2eb;
+            font-family: 'geist', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface": "#e2e2eb",
+                        "tertiary-container": "#6adbff",
+                        "on-error-container": "#ffdad6",
+                        "on-tertiary": "#003543",
+                        "on-primary-container": "#6c5400",
+                        "on-error": "#690005",
+                        "surface-dim": "#111319",
+                        "inverse-primary": "#755b00",
+                        "surface-variant": "#33343b",
+                        "on-tertiary-fixed": "#001f28",
+                        "error": "#ffb4ab",
+                        "secondary-fixed": "#6dfe9c",
+                        "secondary-container": "#00b55d",
+                        "on-secondary-fixed-variant": "#005227",
+                        "surface-tint": "#eec13c",
+                        "secondary-fixed-dim": "#4de082",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "outline": "#9a907b",
+                        "primary": "#ffe7af",
+                        "on-secondary-container": "#003e1c",
+                        "inverse-surface": "#e2e2eb",
+                        "tertiary": "#c8efff",
+                        "primary-fixed-dim": "#eec13c",
+                        "inverse-on-surface": "#2e3037",
+                        "on-tertiary-container": "#005f75",
+                        "background": "#111319",
+                        "on-secondary-fixed": "#00210c",
+                        "on-background": "#e2e2eb",
+                        "surface-container-high": "#282a30",
+                        "on-primary-fixed": "#241a00",
+                        "on-primary-fixed-variant": "#584400",
+                        "on-surface-variant": "#d1c5ae",
+                        "surface": "#111319",
+                        "surface-bright": "#373940",
+                        "surface-container-lowest": "#0c0e14",
+                        "secondary": "#4de082",
+                        "surface-container-highest": "#33343b",
+                        "outline-variant": "#4e4634",
+                        "surface-container": "#1e1f26",
+                        "primary-fixed": "#ffe08f",
+                        "surface-container-low": "#191b22",
+                        "primary-container": "#f5c842",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "on-secondary": "#003919",
+                        "on-primary": "#3d2e00",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#b5ebff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "sm": "8px",
+                        "margin-mobile": "16px",
+                        "xs": "4px",
+                        "base": "4px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "gutter": "16px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "jetbrainsMono": ["JetBrains Mono", "monospace"],
+                        "geist": ["sans-serif"],
+                        "score-sm": ["JetBrains Mono"],
+                        "label-bold": ["sans-serif"],
+                        "headline-lg": ["sans-serif"],
+                        "headline-md": ["sans-serif"],
+                        "body-lg": ["sans-serif"],
+                        "display-score": ["JetBrains Mono"],
+                        "body-md": ["sans-serif"]
+                    },
+                    "fontSize": {
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface">
+<!-- Top AppBar -->
+<header class="bg-background text-primary border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<button class="material-symbols-outlined text-primary hover:bg-surface-container-high transition-colors p-2 rounded-full">arrow_back</button>
+<span class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined">sports_soccer</span>
+</div>
+</header>
+<main class="pb-24 max-w-2xl mx-auto">
+<!-- Match Header Section -->
+<section class="p-margin-mobile text-center">
+<p class="text-on-surface-variant font-label-bold text-label-bold mb-lg">Grupo D · 16:00</p>
+<div class="flex justify-between items-center px-lg">
+<!-- Team France -->
+<div class="flex flex-col items-center gap-md">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="Close up high-resolution detail of the French national flag fluttering in a bright stadium atmosphere. The fabric texture is visible, emphasizing the vibrant blue, white, and red stripes. The lighting is cinematic and focused, reflecting a high-stakes competitive sports event in a corporate modern style with deep contrast and sharp edges." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDElY2xdLiXRXe8_d7T5ThfDeunQTpwJIt-WYumTr43OwrwaN-mjJkf20Psr-3_edhkBpn0JG_YPSqsQTQgDCKBakHgaxKbPAJP2qJSAVbGgGowL_nJ7MLhbDuT_mED-H0JEGXqp0zWzEKYc2SXcbFj8J-JMEaE_OeINytiAzFcdT08LIiCc4xusWy163HPNv5I7urIiYUWY40pRrDBvVpD5WlJsCey9AvLW8HuWC89va5P3bf5M1qAfm8ess2hr7qZ5zfq_PKCu44"/>
+</div>
+<span class="font-label-bold text-label-bold uppercase tracking-wider">França</span>
+</div>
+<div class="text-on-surface-variant font-display-score text-display-score">VS</div>
+<!-- Team England -->
+<div class="flex flex-col items-center gap-md">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="High-definition visual of the England national flag, the St George's Cross, rendered with sharp detail and professional sports photography aesthetics. The lighting is dramatic, casting subtle shadows on the white fabric while making the red cross pop against a dark, atmospheric stadium background, maintaining a sophisticated and prestigious tone." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNPp1p0UZMI3Qr7ty5zm7J7QYIbnGvJ_UZgoVmIBo7Qrx-M40x6gV_vgO2MRjLIxh6oRiDoy91GkRIBqiy1izy8xcA9OYeZUV1tBYmn9yoFnIEsBpQcs8FwSe-xkp4nL7j3_-PlrUTx9t8IQsDyhrRCpie9lcz2YxQyXQXtnblOeqr8R3g7oz6yLdEchhkUv2vT4yRTo62BkyPDWbq7ZHD7hgf8oharbO6R04FPyftdVg3K6ZIFbO6MOumyeHyWYVLE0fb-qjqmzM"/>
+</div>
+<span class="font-label-bold text-label-bold uppercase tracking-wider">Inglaterra</span>
+</div>
+</div>
+</section>
+<!-- Prediction Inputs -->
+<section class="px-margin-mobile py-lg">
+<div class="bg-[#161820] border border-[#252836] rounded-xl p-lg">
+<div class="flex justify-around items-center mb-lg">
+<!-- France Score Input -->
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 rounded-full bg-[#1e2028] border border-[#252836] flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all">
+<span class="material-symbols-outlined text-primary">remove</span>
+</button>
+<div class="w-16 h-20 bg-[#1e2028] border border-[#252836] flex items-center justify-center rounded-lg">
+<span class="font-display-score text-display-score text-primary">2</span>
+</div>
+<button class="w-10 h-10 rounded-full bg-[#1e2028] border border-[#252836] flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all">
+<span class="material-symbols-outlined text-primary">add</span>
+</button>
+</div>
+<div class="text-on-surface-variant font-display-score text-display-score">×</div>
+<!-- England Score Input -->
+<div class="flex items-center gap-md">
+<button class="w-10 h-10 rounded-full bg-[#1e2028] border border-[#252836] flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all">
+<span class="material-symbols-outlined text-primary">remove</span>
+</button>
+<div class="w-16 h-20 bg-[#1e2028] border border-[#252836] flex items-center justify-center rounded-lg">
+<span class="font-display-score text-display-score text-primary">1</span>
+</div>
+<button class="w-10 h-10 rounded-full bg-[#1e2028] border border-[#252836] flex items-center justify-center hover:bg-surface-container-high active:scale-95 transition-all">
+<span class="material-symbols-outlined text-primary">add</span>
+</button>
+</div>
+</div>
+<div class="bg-[#0a2a14] border border-[#4ade80] rounded p-md flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[#4ade80] text-[18px]">verified</span>
+<p class="text-[#4ade80] font-label-bold text-label-bold">Se acertar o placar exato: +3 pts</p>
+</div>
+<button class="w-full mt-lg bg-[#f5c842] text-[#0f1117] font-bold py-md rounded-lg active:scale-[0.98] transition-all">
+                    SALVAR PALPITE
+                </button>
+</div>
+</section>
+<!-- Community Predictions -->
+<section class="px-margin-mobile mt-lg">
+<h3 class="text-label-bold font-label-bold text-on-surface-variant uppercase tracking-widest mb-md">Palpites da galera</h3>
+<div class="space-y-base">
+<!-- User 1 -->
+<div class="bg-[#161820] border border-[#252836] p-md flex justify-between items-center rounded">
+<div class="flex items-center gap-md">
+<img class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional and modern profile portrait of a young man with a focused expression, set against a dark, monochromatic studio background. The lighting is sharp, creating high contrast and highlighting facial features in a way that matches a corporate sports application aesthetic. Minimalist and clean, using a palette of deep grays and blacks." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAl7orAmD5iQpbPudLUb5vvCsGgQCA-qLD5TR4jOhdVzfEiBRYK51tXDG0LLMmCgqdhZk62VKPHZ5twQZi-gqtXlJg0G_fr1z21GU0h03CfoKKUdhgf336bW3aMaOe8b74GZmlkUKoVOUj-QyLw7n9JI2P9Kp7xTuwdT8HE5UaTPR5c0LcRarUXkcbCLSAluqdAd6FQzRVZk5OLZ1Edyxtumvt_aa0TciLr0WVmcCr1UiP5RDtRxfqD5MtDcXAch7QMeUjZ-L-T5c"/>
+<span class="font-body-md text-body-md">Alex Mendes</span>
+</div>
+<div class="font-score-sm text-score-sm text-primary bg-surface-container px-sm py-xs rounded">1 × 2</div>
+</div>
+<!-- User 2 -->
+<div class="bg-[#161820] border border-[#252836] p-md flex justify-between items-center rounded">
+<div class="flex items-center gap-md">
+<img class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A sophisticated headshot of a woman with a confident smile, captured in a modern studio environment with dark, textured backgrounds. The image is rendered with a high-definition, corporate aesthetic, featuring cool-toned lighting that emphasizes clarity and professionalism. The color scheme is predominantly dark with subtle, neutral highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVKB7yNNElEeZNUEco7aTQbl4_uOq39f7052eAcdisnUqdjGW6lIktirLZJeIv3yIoRBvGx7D5YUKLeGfHqTBFdeEF5B0lt2nSEdYs3njp-pDOyjIcZHWTCHCMuMHbAB44GLKmSMq0ccIpKk90yFAV3duP2WLUm6dJz5YBr_QRvM55ma7otTf_RTdOnLrd4Xx-hZVjbCMZwlpwsP4DbEXcFVFuz8wUScO_J9g7gQA63KXfcAIwQCeWGh9rgFd9b2SPBJgxM_Z5RsY"/>
+<span class="font-body-md text-body-md">Beatriz Silva</span>
+</div>
+<div class="font-score-sm text-score-sm text-primary bg-surface-container px-sm py-xs rounded">3 × 0</div>
+</div>
+<!-- User 3 -->
+<div class="bg-[#161820] border border-[#252836] p-md flex justify-between items-center rounded">
+<div class="flex items-center gap-md">
+<img class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A crisp, high-quality portrait of a professional man, characterized by a clean-cut appearance and a neutral, professional expression. The background is a sleek, dark grey, consistent with a premium sports data interface. The lighting is balanced and directional, creating a polished, high-contrast look that fits a corporate modern design language." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnBgRy8hHcd7CgW5AlNQSLplU7aLlqiwosPQnx3qsFhkioZF0IzXXGIbr5bKjB2V1DdvWOWei7w0C5nuumw_9tPxNT1M-q4kGvai0ItWP-3OzR_9e1bgKSfWTXmCHA05G0wA3bg3kK5IsbTxmtZ1hBfQoeg70KppLFnDIWdACR57ovN81XplG12_gXJ69Pzx1LI8YAMiscTNo2UU9YadR8w94bf3NGOOBaeACKluiJMCqo6RTPREEQ0BiGj_WNcEyS8qM6R5cacLo"/>
+<span class="font-body-md text-body-md">Ricardo Lima</span>
+</div>
+<div class="font-score-sm text-score-sm text-primary bg-surface-container px-sm py-xs rounded">2 × 2</div>
+</div>
+</div>
+</section>
+<!-- Locked State Divider -->
+<div class="px-margin-mobile my-xl">
+<div class="h-[1px] bg-outline-variant w-full"></div>
+</div>
+<!-- Locked State Example -->
+<section class="px-margin-mobile opacity-60">
+<div class="bg-surface-container-low border border-outline-variant rounded-xl p-lg relative overflow-hidden">
+<!-- Overlay Lock Icon -->
+<div class="absolute inset-0 z-10 bg-background/20 backdrop-blur-[1px] flex flex-col items-center justify-center gap-sm">
+<span class="material-symbols-outlined text-on-surface-variant text-[48px]">lock</span>
+<p class="font-label-bold text-label-bold text-on-surface-variant uppercase tracking-widest">Palpites encerrados</p>
+</div>
+<div class="flex justify-around items-center mb-lg grayscale">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center opacity-30">
+<span class="material-symbols-outlined">remove</span>
+</div>
+<div class="w-16 h-20 bg-surface-container border border-outline-variant flex items-center justify-center rounded-lg">
+<span class="font-display-score text-display-score text-on-surface-variant">0</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center opacity-30">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+<div class="text-on-surface-variant font-display-score text-display-score">×</div>
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center opacity-30">
+<span class="material-symbols-outlined">remove</span>
+</div>
+<div class="w-16 h-20 bg-surface-container border border-outline-variant flex items-center justify-center rounded-lg">
+<span class="font-display-score text-display-score text-on-surface-variant">0</span>
+</div>
+<div class="w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center opacity-30">
+<span class="material-symbols-outlined">add</span>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface-container-highest text-on-surface-variant font-bold py-md rounded-lg text-center">
+                    ENCERRADO
+                </div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 py-2 bg-surface dark:bg-surface border-t border-outline-variant">
+<a class="flex flex-col items-center justify-center text-primary transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="text-label-bold font-label-bold">Jogos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">leaderboard</span>
+<span class="text-label-bold font-label-bold">Ranking</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-bold font-label-bold">Grupos</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary-fixed-dim transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-bold font-label-bold">Perfil</span>
+</a>
+</nav>
+</body></html>

@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* clip (not hidden) cuts off-screen sliding pages without creating a
+       new scroll container, so position:sticky headers are unaffected */
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-background font-sans text-on-surface;
+    overflow-x: clip;
+  }
+
+  h1 {
+    font-family: theme('fontFamily.display');
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(30, 32, 32, 0.7);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .neon-glow-green {
+    box-shadow: 0 0 15px rgba(101, 223, 118, 0.2);
+  }
+
+  .neon-glow-blue {
+    box-shadow: 0 0 15px rgba(181, 196, 255, 0.2);
+  }
+
+  .diagonal-grad {
+    background: linear-gradient(135deg, #00531c 0%, #121414 100%);
+  }
+
+  .header-glass {
+    background: rgba(18, 20, 20, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px rgba(101, 223, 118, 0.05);
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pulse-live {
+    animation: pulse-live 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-live {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.4; }
+  }
+
+  .text-display-lg,
+  .text-display-score {
+    font-family: theme('fontFamily.display');
+  }
+
+  /* Onboarding slide */
+  .slide-onboarding-enter-active,
+  .slide-onboarding-leave-active {
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .slide-onboarding-enter-from { opacity: 0; transform: translateX(60px); }
+  .slide-onboarding-leave-to   { opacity: 0; transform: translateX(-60px); }
+}
+
+/* Page transitions live in assets/css/transitions.css and are imported
+   directly in nuxt.config css[] — see that file for the rules. */

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&amp;family=Inter:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        /* Fallbacks for custom font families if they aren't loaded properly */
+        .font-geist { font-family: 'Inter', sans-serif; }
+        .font-jetbrainsMono { font-family: 'JetBrains Mono', monospace; }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-fixed-variant": "#005227",
+                        "tertiary-fixed-dim": "#62d4f8",
+                        "surface-variant": "#33343b",
+                        "on-primary-fixed-variant": "#584400",
+                        "tertiary": "#c8efff",
+                        "surface-container": "#1e1f26",
+                        "on-tertiary-container": "#005f75",
+                        "on-tertiary-fixed-variant": "#004e60",
+                        "on-error-container": "#ffdad6",
+                        "tertiary-fixed": "#b5ebff",
+                        "on-primary-fixed": "#241a00",
+                        "on-primary": "#3d2e00",
+                        "inverse-surface": "#e2e2eb",
+                        "surface-tint": "#eec13c",
+                        "on-surface-variant": "#d1c5ae",
+                        "on-background": "#e2e2eb",
+                        "primary-fixed-dim": "#eec13c",
+                        "inverse-on-surface": "#2e3037",
+                        "surface-dim": "#111319",
+                        "on-secondary-container": "#003e1c",
+                        "on-error": "#690005",
+                        "surface-container-highest": "#33343b",
+                        "outline": "#9a907b",
+                        "on-secondary": "#003919",
+                        "on-tertiary-fixed": "#001f28",
+                        "error": "#ffb4ab",
+                        "surface-container-low": "#191b22",
+                        "primary-container": "#f5c842",
+                        "surface-container-lowest": "#0c0e14",
+                        "secondary-container": "#00b55d",
+                        "error-container": "#93000a",
+                        "secondary": "#4de082",
+                        "outline-variant": "#4e4634",
+                        "primary-fixed": "#ffe08f",
+                        "surface-container-high": "#282a30",
+                        "primary": "#ffe7af",
+                        "tertiary-container": "#6adbff",
+                        "on-primary-container": "#6c5400",
+                        "secondary-fixed-dim": "#4de082",
+                        "on-secondary-fixed": "#00210c",
+                        "surface": "#111319",
+                        "inverse-primary": "#755b00",
+                        "secondary-fixed": "#6dfe9c",
+                        "on-tertiary": "#003543",
+                        "on-surface": "#e2e2eb",
+                        "background": "#111319",
+                        "surface-bright": "#373940"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "base": "4px",
+                        "margin-desktop": "48px",
+                        "xs": "4px",
+                        "md": "16px",
+                        "gutter": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Inter", "sans-serif"],
+                        "score-sm": ["JetBrains Mono", "monospace"],
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "display-score": ["JetBrains Mono", "monospace"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "label-bold": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "score-sm": ["14px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-score": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md">
+<!-- TopAppBar Shell -->
+<header class="bg-background text-primary border-b border-outline-variant flex justify-between items-center w-full px-margin-mobile h-16 sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary cursor-pointer hover:bg-surface-container-high transition-colors p-2 rounded-full">arrow_back</span>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">BolãoCopa 2026</h1>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary hover:bg-surface-container-high transition-colors p-2 rounded-full cursor-pointer">share</span>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop gap-lg">
+<!-- Main Recap Card (Bento Style/Premium) -->
+<div class="w-full max-w-lg bg-surface-container-low border border-outline-variant rounded-xl overflow-hidden shadow-2xl relative">
+<!-- Background Decoration (Gradient/Pattern) -->
+<div class="absolute inset-0 opacity-10 pointer-events-none" style="background-image: radial-gradient(circle at 2px 2px, #ffe7af 1px, transparent 0); background-size: 24px 24px;"></div>
+<div class="relative z-10">
+<!-- Recap Header -->
+<div class="bg-surface-container-high p-md flex justify-between items-center border-b border-outline-variant">
+<span class="font-label-bold text-label-bold text-on-surface-variant tracking-widest">RESUMO DA PARTIDA</span>
+<div class="flex items-center gap-1 px-sm py-xs bg-secondary-container rounded-full">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-bold text-label-bold text-on-secondary-container">ENCERRADO</span>
+</div>
+</div>
+<!-- The Scoreboard Section -->
+<div class="p-lg flex flex-col items-center gap-xl bg-surface-container-lowest">
+<div class="flex justify-between items-center w-full max-w-sm">
+<!-- Team A -->
+<div class="flex flex-col items-center gap-sm flex-1">
+<div class="w-20 h-20 bg-surface-container border border-outline-variant rounded-full flex items-center justify-center p-2">
+<img alt="Brasil" class="w-14 h-auto shadow-sm" data-alt="The national flag of Brazil, featuring its iconic green field, yellow diamond, and blue celestial globe, rendered with realistic fabric texture and subtle shadows. The lighting is crisp and studio-quality, emphasizing the vibrant colors and the historical significance of the emblem in a professional sports context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqpVyDRNDK836QCtXJsjh6fwsIGqYAx3_2VjQA3jB1_EP2v9cc4t6eVV-je_pqbGK61zaVs6kJ_EoWwTh0BB1Vo-vFWRt3SbwI4WY0WFS3PAyEOfA7hCMtYhQoWGchenpUaVv1kURfGvhJIOdshY8UlSbhGZzI6v1QYUxaiyQ85GQHFxmmMJSUafGnL1jUiR65XEN2AToEBrxT__fHXsYojy8AxUIxUDJCjElFZYcvv_I2JKqke4-e-ST8YY3V_wb33B3j623m52s"/>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface uppercase tracking-tighter">BRASIL</span>
+</div>
+<!-- Score -->
+<div class="flex flex-col items-center gap-xs px-md">
+<div class="font-display-score text-display-score text-primary-container tabular-nums">
+                                2 <span class="text-on-surface-variant font-body-lg mx-1">-</span> 1
+                            </div>
+<span class="font-label-bold text-label-bold text-on-surface-variant">FINAL</span>
+</div>
+<!-- Team B -->
+<div class="flex flex-col items-center gap-sm flex-1">
+<div class="w-20 h-20 bg-surface-container border border-outline-variant rounded-full flex items-center justify-center p-2">
+<img alt="França" class="w-14 h-auto shadow-sm" data-alt="The national flag of France, showing the classic tricolor vertical bands of blue, white, and red. The image is captured with high-fidelity detail, showcasing the weave of the fabric and a slight cinematic undulation. The background is dark and sophisticated, making the bold colors of the flag stand out as a symbol of international sports rivalry." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_hTtYDHUMfy18iQRsBgQxfg7vstdWnPEirsN9lcT-xIzts_8kjwipautH0jld50yffGBoSfZH7HdFOPtwHKS4qs_LqD2AFJarxPRV4w_6jV9kFgutkcAwIW50CZvZsJNLL8JH164JNRp6w7RCCxs6DKySHJy7l-PAGsnbBeNoIa8-qvgm0XLFq5Fhd8vFvMWY1WaJo7V4UwNcWOunZe1zWmnkkiE4MwXy1IbuVxKOQMv93H360klJTDoD9v_kYy_wehsRDhMZR0I"/>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface uppercase tracking-tighter">FRANÇA</span>
+</div>
+</div>
+<!-- Achievement Banner -->
+<div class="w-full bg-on-secondary-fixed-variant/20 border border-secondary/30 rounded-lg p-md flex flex-col items-center gap-xs">
+<span class="font-headline-lg text-headline-lg text-secondary uppercase tracking-widest italic">EU ACERTEI!</span>
+<p class="font-body-md text-body-md text-on-surface-variant text-center px-lg">Seu palpite de <span class="text-on-surface font-bold">2 - 1</span> foi certeiro no placar exato.</p>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 border-t border-outline-variant">
+<div class="p-lg flex flex-col items-center gap-xs border-r border-outline-variant">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">PONTOS GANHOS</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">stars</span>
+<span class="font-display-score text-display-score text-primary-container">+25</span>
+</div>
+</div>
+<div class="p-lg flex flex-col items-center gap-xs">
+<span class="font-label-bold text-label-bold text-on-surface-variant uppercase">RANKING ATUAL</span>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-display-score text-display-score text-on-surface">#12</span>
+</div>
+</div>
+</div>
+<!-- Share Footer -->
+<div class="p-lg bg-surface-container-high border-t border-outline-variant flex flex-col gap-md">
+<button class="w-full bg-primary-container text-on-primary-container py-md rounded-lg font-headline-md flex items-center justify-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined">share</span>
+                        Compartilhar Resultado
+                    </button>
+<div class="flex justify-around gap-md">
+<button class="flex-1 bg-surface-container border border-outline-variant text-on-surface py-sm rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">chat</span>
+                            WhatsApp
+                        </button>
+<button class="flex-1 bg-surface-container border border-outline-variant text-on-surface py-sm rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-tertiary-container" style="font-variation-settings: 'FILL' 1;">camera</span>
+                            Instagram
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Info/Leaderboard Snapshot -->
+<div class="w-full max-w-lg p-lg bg-surface-container rounded-xl border border-outline-variant flex flex-col gap-md">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md text-on-surface">Outros Acertos</h3>
+<span class="font-label-bold text-label-bold text-primary cursor-pointer hover:underline">Ver Ranking</span>
+</div>
+<div class="flex flex-col gap-sm">
+<div class="flex justify-between items-center py-sm border-b border-outline-variant/30">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-label-bold font-label-bold">1</div>
+<span class="font-body-md text-body-md">Lucas "O Mago" Silva</span>
+</div>
+<span class="font-score-sm text-score-sm text-secondary">+25 pts</span>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant/30">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-label-bold font-label-bold">2</div>
+<span class="font-body-md text-body-md">Fernanda Gol</span>
+</div>
+<span class="font-score-sm text-score-sm text-secondary">+25 pts</span>
+</div>
+<div class="flex justify-between items-center py-sm">
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-label-bold font-label-bold">12</div>
+<span class="font-body-md text-body-md font-bold">Você (Palpiteiro Pro)</span>
+</div>
+<span class="font-score-sm text-score-sm text-secondary font-bold">+25 pts</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Success/Toast Notification (Example state) -->
+<div class="fixed bottom-margin-mobile left-1/2 -translate-x-1/2 z-50 pointer-events-none">
+<div class="bg-inverse-surface text-inverse-on-surface px-lg py-md rounded-full flex items-center gap-sm shadow-xl border border-outline opacity-0 transform translate-y-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+<span class="material-symbols-outlined text-on-secondary-container">check_circle</span>
+<span class="font-label-bold text-label-bold">Link copiado para a área de transferência!</span>
+</div>
+</div>
+</body></html>
