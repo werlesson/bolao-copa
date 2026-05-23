@@ -1,6 +1,14 @@
 export default defineNuxtConfig({
   ssr: false,
 
+  typescript: {
+    tsConfig: {
+      compilerOptions: {
+        types: ['node', 'vite-plugin-pwa/client'],
+      },
+    },
+  },
+
   devServer: {
     port: 3000,
   },

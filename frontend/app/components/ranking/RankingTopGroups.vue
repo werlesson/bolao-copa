@@ -25,7 +25,7 @@ const groups = computed<PositionGroup[]>(() => {
     if (last && last.position === entry.position) {
       last.entries.push(entry)
     } else {
-      result.push({ position: entry.position, tier: tiers[tierIdx++], entries: [entry] })
+      result.push({ position: entry.position, tier: tiers[tierIdx++]!, entries: [entry] })
     }
   }
 

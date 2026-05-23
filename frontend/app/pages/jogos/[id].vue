@@ -121,7 +121,7 @@ watch(groupPredictions, (preds) => {
   const arr = [...others]
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1))
-    ;[arr[i], arr[j]] = [arr[j], arr[i]]
+    const tmp = arr[i]!; arr[i] = arr[j]!; arr[j] = tmp
   }
   shuffledOthers.value = arr
 }, { immediate: true, deep: true })

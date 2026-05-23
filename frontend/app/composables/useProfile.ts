@@ -1,4 +1,5 @@
 import type { ProfilePrediction, ProfileStats, PhasePoints } from '~/types/profile'
+import type { RankingEntry } from '~/types/ranking'
 import { useAuthStore, type AuthUser } from '~/stores/auth'
 import { useRankingStore } from '~/stores/ranking'
 import { unwrapList } from '~/utils/api'
@@ -74,7 +75,7 @@ export function useProfile() {
       ])
 
       // userEntry comes directly from the API (handles users outside global top 100).
-      const me = rankingStore.userEntry ?? rankingStore.entries.find(e => e.user.id === userId)
+      const me = rankingStore.userEntry ?? rankingStore.entries.find((e: RankingEntry) => e.user.id === userId)
       const total_predictions = me?.total_predictions ?? 0
       const correct_results = me?.correct_results ?? 0
       const accuracy_percent = total_predictions > 0

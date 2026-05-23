@@ -51,7 +51,9 @@ export const useAuthStore = defineStore('auth', () => {
             return
           }
 
-          user.value = unwrapUser(response._data)
+          if (response._data != null) {
+            user.value = unwrapUser(response._data)
+          }
         } catch {
           user.value = null
         } finally {
