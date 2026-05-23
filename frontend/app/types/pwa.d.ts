@@ -8,6 +8,7 @@ declare module 'virtual:pwa-register/vue' {
     onRegistered?: (registration: ServiceWorkerRegistration | undefined) => void
     onRegisteredSW?: (swUrl: string, registration: ServiceWorkerRegistration | undefined) => void
     onRegisterError?: (error: unknown) => void
+    onUpdatedSW?: (swUrl: string, registration: ServiceWorkerRegistration | undefined) => void
   }
 
   export function useRegisterSW(options?: RegisterSWOptions): {
