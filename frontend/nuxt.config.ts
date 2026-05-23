@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: {
       compilerOptions: {
-        types: ['node', 'vite-plugin-pwa/client'],
+        types: ['node'],
       },
     },
   },
