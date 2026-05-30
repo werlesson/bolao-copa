@@ -22,6 +22,9 @@ CMD ["pnpm", "dev", "--host", "0.0.0.0"]
 # ─── Stage: build ─────────────────────────────────────────────────────────────
 FROM node:20-alpine AS builder
 
+ARG NUXT_PUBLIC_VAPID_PUBLIC_KEY
+ENV NUXT_PUBLIC_VAPID_PUBLIC_KEY=$NUXT_PUBLIC_VAPID_PUBLIC_KEY
+
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml .npmrc ./
