@@ -106,8 +106,14 @@ services:
     container_name: bolao_nginx
     restart: unless-stopped
     volumes:
-      - ./backend/.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./backend:/var/www/html:ro
+      - type: bind
+        source: ./backend/.docker/nginx/nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
+      - type: bind
+        source: ./backend
+        target: /var/www/html
+        read_only: true
     depends_on:
       - app
     networks:
