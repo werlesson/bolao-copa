@@ -123,7 +123,7 @@ export default defineNuxtConfig({
         // Chunks JS do Nuxt: CacheFirst com validade de 24h (têm hash no nome).
         {
           urlPattern: /\/_nuxt\/.+\.js$/,
-          handler: 'CacheFirst',
+          handler: 'NetworkFirst',
           options: {
             cacheName: 'nuxt-chunks',
             expiration: { maxEntries: 80, maxAgeSeconds: 86400 },
