@@ -110,6 +110,7 @@ export default defineNuxtConfig({
     },
     workbox: {
       navigateFallback: '/',
+      navigateFallbackDenylist: [/^\/api\//],
       // Pré-cacheia apenas o App Shell (HTML, CSS, ícones).
       // Chunks JS são cacheados sob demanda via CacheFirst abaixo,
       // evitando bloquear a ativação do SW em um install payload gigante.
