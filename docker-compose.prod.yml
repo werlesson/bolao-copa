@@ -75,8 +75,8 @@ services:
     container_name: bolao_app
     restart: unless-stopped
     environment: *app-env
-        volumes:
-              - app_public:/var/www/html
+    volumes:
+      - app_public:/var/www/html
     depends_on:
       postgres:
         condition: service_healthy
