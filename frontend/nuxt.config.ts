@@ -113,7 +113,7 @@ export default defineNuxtConfig({
       // Pré-cacheia apenas o App Shell (HTML, CSS, ícones).
       // Chunks JS são cacheados sob demanda via CacheFirst abaixo,
       // evitando bloquear a ativação do SW em um install payload gigante.
-      globPatterns: ['index.html', '**/*.{css,ico,png,svg}'],
+      globPatterns: ['**/*.{css,ico,png,svg}'],
       // Arquivos maiores que 512 KB são excluídos do precache (fallback para rede).
       maximumFileSizeToCacheInBytes: 512 * 1024,
       // Inject push notification handlers into the generated SW
