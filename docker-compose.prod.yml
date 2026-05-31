@@ -133,7 +133,7 @@ services:
       - coolify
     labels:
       - "traefik.enable=true"
-      - 'traefik.http.routers.bolao-frontend.rule=Host(`bolaodacopa.werlesson.dev`)'
+      - "traefik.http.routers.bolao-frontend.rule=Host(`bolaodacopa.werlesson.dev`)"      
       - "traefik.http.routers.bolao-frontend.entrypoints=https"
       - "traefik.http.routers.bolao-frontend.tls=true"
       - "traefik.http.routers.bolao-frontend.tls.certresolver=letsencrypt"
