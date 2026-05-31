@@ -75,6 +75,8 @@ services:
     container_name: bolao_app
     restart: unless-stopped
     environment: *app-env
+    volumes:
+      - app_public:/var/www/html
     depends_on:
       postgres:
         condition: service_healthy
@@ -108,10 +110,7 @@ services:
     container_name: bolao_nginx
     restart: unless-stopped
     volumes:
-      - type: bind
-        source: ./backend
-        target: /var/www/html
-        read_only: true
+      - app_public:/var/www/html:ro
     depends_on:
       - app
     networks:
@@ -143,7 +142,7 @@ services:
 volumes:
   bolao_postgres_data:
   bolao_redis_data:
-
+  app_public:
 networks:
   bolao_network:
     driver: bridge
