@@ -64,7 +64,7 @@ onUnmounted(() => {
         <h1 class="font-headline-lg text-headline-lg uppercase tracking-tighter text-primary leading-none">
           BOLÃO COPA
         </h1>
-        <p class="mt-2 font-body-lg text-body-lg text-on-surface-variant">
+        <p class="mt-2 font-body-lg text-body-lg text-on-surface">
           A elite das previsões de futebol
         </p>
       </div>
@@ -93,6 +93,7 @@ onUnmounted(() => {
       <button
         type="button"
         :disabled="loading"
+        aria-label="Continuar com Google"
         class="flex h-14 w-full items-center justify-center gap-3 rounded-xl border border-white/15 bg-surface-container-high px-4 transition-[background-color,transform] hover:bg-surface-bright active:scale-[0.98] disabled:opacity-60"
         @click="handleLogin"
       >

@@ -6,16 +6,22 @@ use App\Models\FootballMatch;
 use App\Models\User;
 use App\Services\PushNotificationService;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SendMatchNotification implements ShouldQueue
+class SendMatchNotification implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public function __construct(public readonly string $matchId) {}
+
+    public function uniqueId(): string
+    {
+        return $this->matchId;
+    }
 
     public function handle(PushNotificationService $push): void
     {

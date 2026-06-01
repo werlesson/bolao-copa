@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\MatchStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreGroupRequest;
 use App\Http\Requests\TransferGroupRequest;
@@ -118,8 +119,7 @@ class GroupController extends Controller
             return response()->json(['message' => 'Apenas o dono pode excluir o grupo.'], 403);
         }
 
-        Cache::forget("ranking:group:{$group->id}");
-            Cache::forget("ranking:group:{$group->id}:global");
+        $this->invalidateGroupRankingCache($group->id);
         $group->delete();
 
         return response()->json(['message' => 'Grupo excluído com sucesso.']);
@@ -157,7 +157,7 @@ class GroupController extends Controller
 
         // Banned users cannot rejoin
         if (GroupBan::where('group_id', $group->id)->where('user_id', $user->id)->exists()) {
-            return response()->json(['message' => 'Você não pode entrar neste grupo.'], 403);
+            return response()->json(['message' => 'Você não pode entrar neste grupo.', 'error_code' => 'USER_BANNED'], 403);
         }
 
         // Already a member
@@ -169,7 +169,7 @@ class GroupController extends Controller
         // Group capacity check — reuse a single COUNT rather than firing a separate query
         $group->loadCount('groupMembers');
         if ($group->max_members !== null && $group->group_members_count >= $group->max_members) {
-            return response()->json(['message' => 'O grupo está cheio.'], 422);
+            return response()->json(['message' => 'O grupo está cheio.', 'error_code' => 'GROUP_FULL'], 422);
         }
 
         if ($group->require_approval) {
@@ -195,8 +195,7 @@ class GroupController extends Controller
         DB::transaction(function () use ($group, $user, $member) {
             $member->delete();
             Ranking::where('group_id', $group->id)->where('user_id', $user->id)->delete();
-            Cache::forget("ranking:group:{$group->id}");
-            Cache::forget("ranking:group:{$group->id}:global");
+            $this->invalidateGroupRankingCache($group->id);
         });
 
         return response()->json(['message' => 'Você saiu do grupo.']);
@@ -230,8 +229,7 @@ class GroupController extends Controller
             );
             $member->delete();
             Ranking::where('group_id', $group->id)->where('user_id', $target->id)->delete();
-            Cache::forget("ranking:group:{$group->id}");
-            Cache::forget("ranking:group:{$group->id}:global");
+            $this->invalidateGroupRankingCache($group->id);
         });
 
         return response()->json(['message' => 'Membro removido e banido do grupo.']);
@@ -304,15 +302,24 @@ class GroupController extends Controller
             return response()->json(['message' => 'Apenas solicitações pendentes podem ser aprovadas.'], 422);
         }
 
-        $group->loadCount('groupMembers');
-        if ($group->max_members !== null && $group->group_members_count >= $group->max_members) {
-            return response()->json(['message' => 'O grupo está cheio.'], 422);
-        }
+        $groupFull = false;
+        DB::transaction(function () use ($group, $joinRequest, &$groupFull) {
+            // Lock the group row to serialize concurrent approvals and prevent exceeding max_members
+            Group::where('id', $group->id)->lockForUpdate()->first();
 
-        DB::transaction(function () use ($group, $joinRequest) {
+            $currentCount = GroupMember::where('group_id', $group->id)->count();
+            if ($group->max_members !== null && $currentCount >= $group->max_members) {
+                $groupFull = true;
+                return;
+            }
+
             $joinRequest->update(['status' => 'APPROVED']);
             $this->addMemberAndRestoreRanking($group, $joinRequest->user);
         });
+
+        if ($groupFull) {
+            return response()->json(['message' => 'O grupo está cheio.', 'error_code' => 'GROUP_FULL'], 422);
+        }
 
         return response()->json(['message' => 'Solicitação aprovada.']);
     }
@@ -402,7 +409,7 @@ class GroupController extends Controller
         // Restore historical ranking from existing finished-match predictions
         $stats = Prediction::query()
             ->join('matches', 'matches.id', '=', 'predictions.match_id')
-            ->where('matches.status', 'FINISHED')
+            ->where('matches.status', MatchStatus::FINISHED->value)
             ->where('predictions.user_id', $user->id)
             ->selectRaw('
                 COALESCE(SUM(predictions.points_earned), 0)::int         AS total_points,
@@ -422,8 +429,7 @@ class GroupController extends Controller
             ]
         );
 
-        Cache::forget("ranking:group:{$group->id}");
-            Cache::forget("ranking:group:{$group->id}:global");
+        $this->invalidateGroupRankingCache($group->id);
 
         if ($statusCode === null) {
             return null;
@@ -443,5 +449,11 @@ class GroupController extends Controller
         }
 
         return $slug;
+    }
+
+    private function invalidateGroupRankingCache(string $groupId): void
+    {
+        Cache::forget("ranking:group:{$groupId}");
+        Cache::forget("ranking:group:{$groupId}:global");
     }
 }

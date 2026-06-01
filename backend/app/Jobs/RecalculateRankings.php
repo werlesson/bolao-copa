@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\MatchStatus;
 use App\Models\GroupMember;
 use App\Models\Prediction;
 use App\Models\Ranking;
@@ -58,7 +59,7 @@ class RecalculateRankings implements ShouldQueue, ShouldBeUnique
                 // One query per group: aggregate all finished-match predictions for every member.
                 $stats = Prediction::query()
                     ->join('matches', 'matches.id', '=', 'predictions.match_id')
-                    ->where('matches.status', 'FINISHED')
+                    ->where('matches.status', MatchStatus::FINISHED->value)
                     ->whereIn('predictions.user_id', $memberUserIds)
                     ->groupBy('predictions.user_id')
                     ->select([

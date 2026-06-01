@@ -10,7 +10,7 @@ services:
     environment:
       POSTGRES_DB: bolao
       POSTGRES_USER: bolao
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-secret}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:

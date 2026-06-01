@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\MatchStatus;
 use App\Models\FootballMatch;
 use App\Models\Prediction;
 use App\Services\FootballDataService;
@@ -60,9 +61,9 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
             ]
         );
 
-        if ($oldStatus !== 'FINISHED' && $newStatus === 'FINISHED') {
+        if ($oldStatus !== MatchStatus::FINISHED->value && $newStatus === MatchStatus::FINISHED->value) {
             $this->handleFinished($match, $scoring);
-        } elseif ($oldStatus !== $newStatus && in_array($newStatus, ['POSTPONED', 'CANCELLED'])) {
+        } elseif ($oldStatus !== $newStatus && in_array($newStatus, [MatchStatus::POSTPONED->value, MatchStatus::CANCELLED->value])) {
             $this->handleCancelledOrPostponed($match);
         }
     }
@@ -71,12 +72,12 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
     private function mapStatus(string $apiStatus): string
     {
         return match ($apiStatus) {
-            'IN_PLAY', 'PAUSED' => 'LIVE',
-            'SCHEDULED', 'TIMED' => 'SCHEDULED',
-            'FINISHED' => 'FINISHED',
-            'POSTPONED' => 'POSTPONED',
-            'CANCELLED', 'AWARDED', 'SUSPENDED' => 'CANCELLED',
-            default => 'SCHEDULED',
+            'IN_PLAY', 'PAUSED'                 => MatchStatus::LIVE->value,
+            'SCHEDULED', 'TIMED'                => MatchStatus::SCHEDULED->value,
+            'FINISHED'                          => MatchStatus::FINISHED->value,
+            'POSTPONED'                         => MatchStatus::POSTPONED->value,
+            'CANCELLED', 'AWARDED', 'SUSPENDED' => MatchStatus::CANCELLED->value,
+            default                             => MatchStatus::SCHEDULED->value,
         };
     }
 

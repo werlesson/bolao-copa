@@ -14,7 +14,7 @@ class StoreGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'             => ['required', 'string', 'max:255'],
+            'name'             => ['required', 'string', 'min:3', 'max:100'],
             'require_approval' => ['sometimes', 'boolean'],
             'max_members'      => ['sometimes', 'nullable', 'integer', 'min:2'],
         ];

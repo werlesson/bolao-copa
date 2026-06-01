@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Auth ────────────────────────────────────────────────────────────────────
-Route::prefix('auth/google')->group(function () {
+Route::prefix('auth/google')->middleware('throttle:15,1')->group(function () {
     Route::get('redirect', [AuthController::class, 'redirect']);
     Route::get('callback', [AuthController::class, 'callback']);
     Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -65,7 +65,7 @@ Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
     });
 
     // ─── Admin ───────────────────────────────────────────────────────────────
-    Route::middleware('admin')->prefix('admin')->group(function () {
+    Route::middleware(['admin', 'throttle:20,1'])->prefix('admin')->group(function () {
         Route::get('matches', [AdminController::class, 'matches']);
         Route::post('matches/sync', [AdminController::class, 'syncMatches']);
         Route::get('users', [AdminController::class, 'users']);
