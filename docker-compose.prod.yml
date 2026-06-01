@@ -143,3 +143,4 @@ networks:
     driver: bridge
   coolify:
     external: true
+# redeploy: 2026-06-01T11:21:19.143Z
