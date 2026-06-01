@@ -96,7 +96,7 @@ export default defineNuxtConfig({
       name: 'BolãoCopa 2026',
       short_name: 'BolãoCopa',
       description: 'Bolão da Copa do Mundo 2026',
-      start_url: '/',
+      start_url: '/jogos',
       scope: '/',
       theme_color: '#121414',
       background_color: '#121414',
@@ -118,6 +118,16 @@ export default defineNuxtConfig({
       // Inject push notification handlers into the generated SW
       importScripts: ['/push-handler.js'],
       runtimeCaching: [
+        // Navegações HTML: sempre da rede (NetworkFirst) para evitar tela branca na PWA
+        {
+          urlPattern: ({ request }) => request.mode === 'navigate',
+          handler: 'NetworkFirst',
+          options: {
+            cacheName: 'html-cache',
+            networkTimeoutSeconds: 5,
+            expiration: { maxEntries: 5, maxAgeSeconds: 86400 },
+          },
+        },
         // Chunks JS do Nuxt: CacheFirst com validade de 24h (têm hash no nome).
         {
           urlPattern: /\/_nuxt\/.+\.js$/,
