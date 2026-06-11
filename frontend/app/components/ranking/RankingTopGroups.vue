@@ -20,13 +20,13 @@ const groups = computed<PositionGroup[]>(() => {
   let tierIdx = 0
 
   for (const entry of props.entries) {
-    if (tierIdx >= MAX_GROUPS) break
     const last = result[result.length - 1]
     if (last && last.position === entry.position) {
       last.entries.push(entry)
-    } else {
-      result.push({ position: entry.position, tier: tiers[tierIdx++]!, entries: [entry] })
+      continue
     }
+    if (tierIdx >= MAX_GROUPS) break
+    result.push({ position: entry.position, tier: tiers[tierIdx++]!, entries: [entry] })
   }
 
   return result
