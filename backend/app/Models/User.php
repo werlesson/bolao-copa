@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -14,7 +15,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 #[ObservedBy([UserObserver::class])]
-#[Fillable(['name', 'email', 'avatar_url', 'google_id', 'push_subscription', 'onboarding_done', 'is_admin'])]
+#[Fillable(['name', 'email', 'avatar_url', 'google_id', 'push_subscription', 'onboarding_done', 'is_admin', 'deactivated_at'])]
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, HasUuids, Notifiable;
@@ -25,7 +26,18 @@ class User extends Authenticatable
             'push_subscription' => 'array',
             'onboarding_done'   => 'boolean',
             'is_admin'          => 'boolean',
+            'deactivated_at'    => 'datetime',
         ];
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        return $query->whereNull('deactivated_at');
+    }
+
+    public function isActive(): bool
+    {
+        return $this->deactivated_at === null;
     }
 
     public function groups(): BelongsToMany

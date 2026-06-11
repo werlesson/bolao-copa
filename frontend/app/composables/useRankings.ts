@@ -1,15 +1,18 @@
 import { storeToRefs } from 'pinia'
 import type { BolaoGroup, RankingEntry, RankingTabId } from '~/types/ranking'
 import { unwrapList } from '~/utils/api'
+import { useRankingPrefs } from '~/composables/useRankingPrefs'
 import { useRankingStore } from '~/stores/ranking'
 
 export function useRankings() {
   const config = useRuntimeConfig()
   const apiUrl = config.public.apiUrl as string
   const rankingStore = useRankingStore()
+  const { sortGroupsByRecent } = useRankingPrefs()
   const { entries: globalEntries, userEntry: globalUserEntry, total: globalTotal } = storeToRefs(rankingStore)
 
   const groups = ref<BolaoGroup[]>([])
+  const sortedGroups = computed(() => sortGroupsByRecent(groups.value))
   const localEntries = ref<RankingEntry[]>([])
   const isGlobalTab = ref(false)
   const loading = ref(false)
@@ -67,6 +70,7 @@ export function useRankings() {
 
   return {
     groups,
+    sortedGroups,
     entries,
     globalUserEntry,
     globalTotal,

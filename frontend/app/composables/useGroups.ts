@@ -37,8 +37,8 @@ export function useGroups() {
     }
   }
 
-  async function fetchGroup(id: string) {
-    loading.value = true
+  async function fetchGroup(id: string, options?: { silent?: boolean }) {
+    if (!options?.silent) loading.value = true
     error.value = null
     try {
       const response = await $fetch<BolaoGroup | { data: BolaoGroup }>(`/api/groups/${id}`, {
@@ -55,7 +55,7 @@ export function useGroups() {
         : 'Não foi possível carregar o grupo.'
       console.error('[useGroups] fetchGroup failed', err)
     } finally {
-      loading.value = false
+      if (!options?.silent) loading.value = false
     }
   }
 
@@ -169,6 +169,24 @@ export function useGroups() {
     })
   }
 
+  async function deleteGroup(id: string): Promise<void> {
+    await $fetch(`/api/groups/${id}`, {
+      baseURL: apiUrl,
+      method: 'DELETE',
+      credentials: 'include',
+      headers: { Accept: 'application/json' },
+    })
+  }
+
+  async function removeMember(groupId: string, userId: string): Promise<void> {
+    await $fetch(`/api/groups/${groupId}/members/${userId}`, {
+      baseURL: apiUrl,
+      method: 'DELETE',
+      credentials: 'include',
+      headers: { Accept: 'application/json' },
+    })
+  }
+
   async function joinGroupByToken(token: string): Promise<{ groupId: string; pending: boolean }> {
     const response = await $fetch.raw<BolaoGroup | JoinRequest | { data: BolaoGroup | JoinRequest }>(
       `/api/groups/join/${token}`,
@@ -207,5 +225,7 @@ export function useGroups() {
     fetchInvitePreview,
     joinGroupByToken,
     leaveGroup,
+    deleteGroup,
+    removeMember,
   }
 }

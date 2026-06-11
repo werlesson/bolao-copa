@@ -14,7 +14,7 @@ class UpdateGroupRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'             => ['sometimes', 'string', 'max:255'],
+            'name'             => ['sometimes', 'string', 'min:3', 'max:100'],
             'require_approval' => ['sometimes', 'boolean'],
             'max_members'      => ['sometimes', 'nullable', 'integer', 'min:2'],
         ];

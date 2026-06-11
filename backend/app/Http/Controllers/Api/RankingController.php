@@ -29,6 +29,11 @@ class RankingController extends Controller
         $userId    = $request->user()->id;
         $userEntry = collect($entries)->firstWhere('user.id', $userId);
 
+        if ($userEntry === null) {
+            $allEntries = $this->fetchRows($globalId, null);
+            $userEntry  = collect($allEntries)->firstWhere('user.id', $userId);
+        }
+
         return response()->json([
             'data'       => $entries,
             'total'      => $total,
@@ -77,7 +82,7 @@ class RankingController extends Controller
                 ->block(5, function () use ($groupId, $cacheKey) {
                     if ($fresh = Cache::get($cacheKey)) return $fresh;
 
-                    $total   = Ranking::where('group_id', $groupId)->count();
+                    $total   = $this->activeMemberCount($groupId);
                     $entries = $this->fetchRows($groupId, 100);
                     $data    = [$entries, $total];
 
@@ -85,7 +90,7 @@ class RankingController extends Controller
                     return $data;
                 });
         } catch (LockTimeoutException) {
-            $total   = Ranking::where('group_id', $groupId)->count();
+            $total   = $this->activeMemberCount($groupId);
             $entries = $this->fetchRows($groupId, 100);
             return [$entries, $total];
         }
@@ -101,7 +106,12 @@ class RankingController extends Controller
     private function fetchRows(string $groupId, ?int $limit): array
     {
         $rows = Ranking::where('rankings.group_id', $groupId)
+            ->join('group_members', function ($join) {
+                $join->on('group_members.user_id', '=', 'rankings.user_id')
+                    ->on('group_members.group_id', '=', 'rankings.group_id');
+            })
             ->join('users', 'users.id', '=', 'rankings.user_id')
+            ->whereNull('users.deactivated_at')
             ->select('rankings.*')
             ->with('user:id,name,avatar_url')
             ->orderByDesc('rankings.total_points')
@@ -138,5 +148,17 @@ class RankingController extends Controller
         }
 
         return $result;
+    }
+
+    private function activeMemberCount(string $groupId): int
+    {
+        return Ranking::where('rankings.group_id', $groupId)
+            ->join('group_members', function ($join) {
+                $join->on('group_members.user_id', '=', 'rankings.user_id')
+                    ->on('group_members.group_id', '=', 'rankings.group_id');
+            })
+            ->join('users', 'users.id', '=', 'rankings.user_id')
+            ->whereNull('users.deactivated_at')
+            ->count();
     }
 }

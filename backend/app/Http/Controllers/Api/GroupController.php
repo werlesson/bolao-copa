@@ -11,6 +11,7 @@ use App\Http\Resources\GroupResource;
 use App\Http\Resources\JoinRequestResource;
 use App\Jobs\RecalculateRankings;
 use App\Models\Group;
+use App\Services\RankingPositionService;
 use App\Models\GroupBan;
 use App\Models\GroupJoinRequest;
 use App\Models\GroupMember;
@@ -28,13 +29,22 @@ class GroupController extends Controller
 {
     // ─── Group CRUD ───────────────────────────────────────────────────────────
 
-    public function index(Request $request): AnonymousResourceCollection
+    public function index(Request $request, RankingPositionService $rankingPositions): AnonymousResourceCollection
     {
         $groups = $request->user()
             ->groups()
-            ->withCount('groupMembers')
+            ->withCount($this->activeMemberCountConstraint())
             ->withCount(['joinRequests as pending_requests_count' => fn ($q) => $q->where('status', 'PENDING')])
             ->get();
+
+        $positions = $rankingPositions->userPositionsByGroup(
+            $request->user()->id,
+            $groups->pluck('id')->all(),
+        );
+
+        $groups->each(function (Group $group) use ($positions) {
+            $group->setAttribute('user_rank', $positions[$group->id] ?? null);
+        });
 
         return GroupResource::collection($groups);
     }
@@ -75,16 +85,16 @@ class GroupController extends Controller
             return $group;
         });
 
-        $group->loadCount('groupMembers');
+        $this->loadActiveMemberCount($group);
 
         return (new GroupResource($group))->response()->setStatusCode(201);
     }
 
     public function show(Group $group, Request $request): GroupResource
     {
-        $group->loadCount('groupMembers')
-            ->loadCount(['joinRequests as pending_requests_count' => fn ($q) => $q->where('status', 'PENDING')])
-            ->load('members');
+        $this->loadActiveMemberCount($group);
+        $group->loadCount(['joinRequests as pending_requests_count' => fn ($q) => $q->where('status', 'PENDING')])
+            ->load(['members' => fn ($q) => $q->whereNull('users.deactivated_at')]);
 
         return new GroupResource($group);
     }
@@ -101,8 +111,14 @@ class GroupController extends Controller
             return response()->json(['message' => 'O grupo global não pode exigir aprovação.'], 403);
         }
 
-        $group->update($request->validated());
-        $group->loadCount('groupMembers');
+        $data = $request->validated();
+
+        if (array_key_exists('name', $data) && $data['name'] !== $group->name) {
+            $data['slug'] = $this->uniqueSlug($data['name'], $group->id);
+        }
+
+        $group->update($data);
+        $this->loadActiveMemberCount($group);
 
         return response()->json(new GroupResource($group));
     }
@@ -162,13 +178,13 @@ class GroupController extends Controller
 
         // Already a member
         if (GroupMember::where('group_id', $group->id)->where('user_id', $user->id)->exists()) {
-            $group->loadCount('groupMembers');
+            $this->loadActiveMemberCount($group);
             return response()->json(new GroupResource($group));
         }
 
-        // Group capacity check — reuse a single COUNT rather than firing a separate query
-        $group->loadCount('groupMembers');
-        if ($group->max_members !== null && $group->group_members_count >= $group->max_members) {
+        // Group capacity check — total members (including deactivated) occupy slots
+        $totalMembers = GroupMember::where('group_id', $group->id)->count();
+        if ($group->max_members !== null && $totalMembers >= $group->max_members) {
             return response()->json(['message' => 'O grupo está cheio.', 'error_code' => 'GROUP_FULL'], 422);
         }
 
@@ -201,7 +217,7 @@ class GroupController extends Controller
         return response()->json(['message' => 'Você saiu do grupo.']);
     }
 
-    public function removeMember(Group $group, User $target, Request $request): JsonResponse
+    public function removeMember(Group $group, string $userId, Request $request): JsonResponse
     {
         $user = $request->user();
 
@@ -213,22 +229,26 @@ class GroupController extends Controller
             return response()->json(['message' => 'Apenas o dono pode remover membros.'], 403);
         }
 
-        if ($target->id === $user->id) {
+        if ($userId === $user->id) {
             return response()->json(['message' => 'O dono não pode remover a si mesmo.'], 422);
         }
 
-        $member = GroupMember::where('group_id', $group->id)->where('user_id', $target->id)->first();
+        if (! User::whereKey($userId)->exists()) {
+            return response()->json(['message' => 'Usuário não encontrado.'], 404);
+        }
+
+        $member = GroupMember::where('group_id', $group->id)->where('user_id', $userId)->first();
         if (!$member) {
             return response()->json(['message' => 'Usuário não é membro deste grupo.'], 404);
         }
 
-        DB::transaction(function () use ($group, $target, $user, $member) {
+        DB::transaction(function () use ($group, $userId, $user, $member) {
             GroupBan::firstOrCreate(
-                ['group_id' => $group->id, 'user_id' => $target->id],
+                ['group_id' => $group->id, 'user_id' => $userId],
                 ['banned_by' => $user->id]
             );
             $member->delete();
-            Ranking::where('group_id', $group->id)->where('user_id', $target->id)->delete();
+            Ranking::where('group_id', $group->id)->where('user_id', $userId)->delete();
             $this->invalidateGroupRankingCache($group->id);
         });
 
@@ -435,17 +455,37 @@ class GroupController extends Controller
             return null;
         }
 
-        $group->loadCount('groupMembers');
+        $this->loadActiveMemberCount($group);
         return (new GroupResource($group))->response()->setStatusCode($statusCode);
     }
 
-    private function uniqueSlug(string $name): string
+    /** @return array<string, \Closure> */
+    private function activeMemberCountConstraint(): array
     {
-        $base = Str::slug($name);
+        return [
+            'groupMembers as group_members_count' => fn ($q) =>
+                $q->whereHas('user', fn ($uq) => $uq->active()),
+        ];
+    }
+
+    private function loadActiveMemberCount(Group $group): void
+    {
+        $group->loadCount($this->activeMemberCountConstraint());
+    }
+
+    private function uniqueSlug(string $name, ?string $exceptGroupId = null): string
+    {
+        $base = Str::slug($name) ?: 'grupo';
         $slug = $base;
 
-        if (Group::where('slug', $slug)->exists()) {
-            $slug = $base . '-' . Str::lower(Str::random(4));
+        $slugTaken = fn (string $candidate) => Group::where('slug', $candidate)
+            ->when($exceptGroupId, fn ($q) => $q->where('id', '!=', $exceptGroupId))
+            ->exists();
+
+        if ($slugTaken($slug)) {
+            do {
+                $slug = $base . '-' . Str::lower(Str::random(4));
+            } while ($slugTaken($slug));
         }
 
         return $slug;

@@ -9,8 +9,13 @@ const {
   error,
   savingName,
   nameError,
+  deactivating,
+  deleting,
+  accountError,
   fetchStats,
   updateName,
+  deactivateAccount,
+  deleteAccount,
 } = useProfile()
 const {
   permission,
@@ -26,6 +31,9 @@ const nameDraft = ref('')
 const editingName = ref(false)
 const nameInputRef = ref<HTMLInputElement | null>(null)
 const showLogoutDialog = ref(false)
+const showDeactivateDialog = ref(false)
+const showDeleteDialog = ref(false)
+const showDeleteConfirm = ref(false)
 const loggingOut = ref(false)
 const pushEnabled = ref(false)
 const pwa = usePWA()
@@ -135,6 +143,21 @@ async function handlePushToggle() {
 
 async function handleLogout() {
   loggingOut.value = true
+  await logout()
+}
+
+async function handleDeactivate() {
+  const ok = await deactivateAccount()
+  if (!ok) return
+  showDeactivateDialog.value = false
+  await logout()
+}
+
+async function handleDeleteAccount() {
+  const ok = await deleteAccount()
+  if (!ok) return
+  showDeleteConfirm.value = false
+  showDeleteDialog.value = false
   await logout()
 }
 </script>
@@ -482,6 +505,36 @@ async function handleLogout() {
           <span class="material-symbols-outlined text-[18px] text-on-surface-variant/25">chevron_right</span>
         </NuxtLink>
 
+        <!-- Deactivate account -->
+        <button
+          type="button"
+          :disabled="deactivating"
+          class="flex w-full items-center gap-3 border-t border-white/10 px-4 py-4 transition-colors hover:bg-white/5 active:bg-white/10 disabled:opacity-60"
+          @click="showDeactivateDialog = true"
+        >
+          <span class="material-symbols-outlined shrink-0 text-[22px] text-on-surface-variant/50">person_off</span>
+          <span class="flex-1 text-left font-body-lg text-body-lg text-on-surface">
+            {{ deactivating ? 'Desativando…' : 'Desativar conta' }}
+          </span>
+        </button>
+
+        <!-- Delete account -->
+        <button
+          type="button"
+          :disabled="deleting"
+          class="flex w-full items-center gap-3 border-t border-white/5 px-4 py-4 transition-colors hover:bg-error/5 active:bg-error/10 disabled:opacity-60"
+          @click="showDeleteDialog = true"
+        >
+          <span class="material-symbols-outlined shrink-0 text-[22px] text-error/60">delete_forever</span>
+          <span class="flex-1 text-left font-body-lg text-body-lg text-error/90">
+            {{ deleting ? 'Excluindo…' : 'Excluir conta permanentemente' }}
+          </span>
+        </button>
+
+        <p v-if="accountError" class="px-4 pb-2 font-body-sm text-body-sm text-error">
+          {{ accountError }}
+        </p>
+
         <!-- Logout row -->
         <button
           type="button"
@@ -497,6 +550,40 @@ async function handleLogout() {
       </section>
 
     </div>
+
+    <UiConfirmDialog
+      :open="showDeactivateDialog"
+      title="Desativar conta?"
+      message="Seus dados ficarão ocultos para todos. Ao fazer login novamente, sua conta será reativada automaticamente."
+      confirm-label="Desativar"
+      cancel-label="Cancelar"
+      danger
+      @confirm="handleDeactivate"
+      @cancel="showDeactivateDialog = false"
+    />
+
+    <UiConfirmDialog
+      :open="showDeleteDialog"
+      title="Excluir conta?"
+      message="Todos os seus palpites, pontos e participações em grupos serão apagados permanentemente. Ao entrar novamente, será como um novo usuário."
+      confirm-label="Continuar"
+      cancel-label="Cancelar"
+      danger
+      @confirm="showDeleteDialog = false; showDeleteConfirm = true"
+      @cancel="showDeleteDialog = false"
+    />
+
+    <UiTypeToConfirmDialog
+      :open="showDeleteConfirm"
+      title="Confirmar exclusão"
+      message="Esta ação é irreversível. Todos os seus dados serão removidos do sistema."
+      confirm-phrase="EXCLUIR"
+      confirm-label="Excluir permanentemente"
+      cancel-label="Cancelar"
+      danger
+      @confirm="handleDeleteAccount"
+      @cancel="showDeleteConfirm = false"
+    />
 
     <UiConfirmDialog
       :open="showLogoutDialog"

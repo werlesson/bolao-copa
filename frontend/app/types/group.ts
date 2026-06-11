@@ -16,6 +16,7 @@ export interface BolaoGroup {
   is_owner: boolean
   invite_token?: string
   members_count?: number | null
+  user_rank?: number | null
   pending_requests_count?: number
   members?: GroupMember[]
   created_at?: string
@@ -52,12 +53,4 @@ export interface InvitePreview {
   require_approval: boolean
   is_member: boolean
   has_pending_request: boolean
-}
-
-export interface GroupRankingPreviewRow {
-  position: number
-  name: string
-  totalPoints: number
-  isCurrentUser: boolean
-  gapBefore?: boolean
 }

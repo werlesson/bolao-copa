@@ -3,7 +3,7 @@ import type { RankingEntry, RankingTabId } from '~/types/ranking'
 import RankingTopGroups from '~/components/ranking/RankingTopGroups.vue'
 import RankingRow from '~/components/ranking/RankingRow.vue'
 
-const PREVIEW_SIZE = 7
+const MAX_VISIBLE = 10
 
 // Number of entries consumed by the leaders section (first 3 distinct position groups).
 const podiumCount = computed(() => {
@@ -24,7 +24,8 @@ const podiumCount = computed(() => {
 definePageMeta({ middleware: 'auth' })
 
 const { user } = useAuth()
-const { groups, entries, globalUserEntry, globalTotal, isGlobalTab, loading, error, fetchGroups, fetchRanking } = useRankings()
+const { recordGroupView, getInitialTab } = useRankingPrefs()
+const { sortedGroups, entries, globalUserEntry, globalTotal, isGlobalTab, loading, error, fetchGroups, fetchRanking } = useRankings()
 
 const activeTab = ref<RankingTabId>('global')
 const showFullList = ref(false)
@@ -32,11 +33,13 @@ const searchQuery = ref('')
 
 const tabs = computed(() => [
   { id: 'global' as const, label: 'Geral' },
-  ...groups.value.map(group => ({
+  ...sortedGroups.value.map(group => ({
     id: group.id as RankingTabId,
     label: group.name,
   })),
 ])
+
+const showViewAllButton = computed(() => entries.value.length > MAX_VISIBLE)
 
 const userEntry = computed(() => {
   if (isGlobalTab.value) return globalUserEntry.value
@@ -47,15 +50,17 @@ const userEntry = computed(() => {
 const userInTopN = computed(() => {
   if (!userEntry.value) return false
   return entries.value
-    .slice(0, podiumCount.value + PREVIEW_SIZE)
+    .slice(0, MAX_VISIBLE)
     .some(e => e.user.id === userEntry.value!.user.id)
 })
 
-// Preview: PREVIEW_SIZE entries immediately after the leaders section.
+// Preview: entries after podium, capped so total visible is MAX_VISIBLE.
 const previewEntries = computed<RankingEntry[]>(() => {
-  const regular = entries.value.slice(podiumCount.value, podiumCount.value + PREVIEW_SIZE)
+  const previewSize = Math.max(0, MAX_VISIBLE - podiumCount.value)
+  const regular = entries.value.slice(podiumCount.value, podiumCount.value + previewSize)
   if (userInTopN.value || !userEntry.value) return regular
-  return [...regular.slice(0, PREVIEW_SIZE - 1), userEntry.value]
+  if (previewSize <= 1) return [userEntry.value]
+  return [...regular.slice(0, previewSize - 1), userEntry.value]
 })
 
 const showUserGap = computed(() => !!userEntry.value && !userInTopN.value)
@@ -73,10 +78,14 @@ const participantHint = computed(() => {
 })
 
 onMounted(async () => {
-  await Promise.all([fetchGroups(), fetchRanking(activeTab.value)])
+  await fetchGroups()
+  const initial = getInitialTab(sortedGroups.value.map(g => g.id))
+  activeTab.value = initial
+  await fetchRanking(initial)
 })
 
 watch(activeTab, (tabId) => {
+  recordGroupView(tabId)
   fetchRanking(tabId)
 })
 
@@ -178,8 +187,8 @@ function closeFullList() {
       <!-- Top leaders — keyed by tab so animation replays on tab switch -->
       <RankingTopGroups :entries="entries" :current-user-id="user?.id" />
 
-      <!-- Preview list: positions 4–10 (or user substituted at slot 10) -->
-      <section class="mt-4 px-margin pb-6">
+      <!-- Preview list: capped at MAX_VISIBLE (or user substituted at last slot) -->
+      <section class="mt-4 px-margin" :class="showViewAllButton ? 'pb-24' : 'pb-6'">
         <!-- Column header -->
         <div class="mb-3 flex items-center justify-between px-1">
           <span class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/50">Classificação</span>
@@ -204,16 +213,23 @@ function closeFullList() {
           </template>
         </div>
 
-        <!-- Ver todos button -->
+      </section>
+
+      <!-- Floating Ver todos button -->
+      <div
+        v-if="showViewAllButton"
+        class="pointer-events-none fixed inset-x-0 z-30 px-margin"
+        style="bottom: calc(5.5rem + env(safe-area-inset-bottom))"
+      >
         <button
           type="button"
-          class="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-surface-container py-3 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container-high active:scale-[0.98]"
+          class="pointer-events-auto flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-surface-container/95 py-3 font-label-caps text-label-caps uppercase tracking-widest text-on-surface shadow-[0_-4px_24px_rgba(0,0,0,0.35)] backdrop-blur-xl transition-colors hover:bg-surface-container-high active:scale-[0.98]"
           @click="openFullList"
         >
           <span class="material-symbols-outlined text-[18px]">format_list_numbered</span>
           Ver todos · {{ isGlobalTab ? globalTotal : entries.length }}
         </button>
-      </section>
+      </div>
         </div>
       </Transition>
     </template>

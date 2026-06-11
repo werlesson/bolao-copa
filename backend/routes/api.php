@@ -20,6 +20,7 @@ Route::prefix('auth/google')->middleware('throttle:15,1')->group(function () {
 Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
     // ─── User profile — read ──────────────────────────────────────────────
     Route::get('user', [UserController::class, 'show']);
+    Route::get('user/stats', [UserController::class, 'stats']);
 
     // ─── Matches ─────────────────────────────────────────────────────────────
     Route::get('matches', [MatchController::class, 'index']);
@@ -46,6 +47,8 @@ Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
         Route::post('user/onboarding', [UserController::class, 'completeOnboarding']);
         Route::put('user/push-subscription', [UserController::class, 'storePushSubscription']);
         Route::delete('user/push-subscription', [UserController::class, 'destroyPushSubscription']);
+        Route::post('user/deactivate', [UserController::class, 'deactivate']);
+        Route::delete('user', [UserController::class, 'destroy']);
 
         // Predictions — write
         Route::post('predictions', [PredictionController::class, 'store']);
@@ -56,7 +59,8 @@ Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
         Route::patch('groups/{group}', [GroupController::class, 'update']);
         Route::delete('groups/{group}', [GroupController::class, 'destroy']);
         Route::post('groups/{group}/leave', [GroupController::class, 'leave']);
-        Route::delete('groups/{group}/members/{user}', [GroupController::class, 'removeMember']);
+        Route::delete('groups/{group}/members/{userId}', [GroupController::class, 'removeMember'])
+            ->whereUuid('userId');
         Route::patch('groups/{group}/transfer', [GroupController::class, 'transfer']);
         Route::post('groups/{group}/invite/regenerate', [GroupController::class, 'regenerateInvite']);
         Route::post('groups/{group}/requests/{joinRequest}/approve', [GroupController::class, 'approveRequest']);

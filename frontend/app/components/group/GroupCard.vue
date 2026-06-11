@@ -1,21 +1,13 @@
 <script setup lang="ts">
 import type { BolaoGroup } from '~/types/group'
-import type { GroupRankingPreviewRow } from '~/types/group'
-import { shortDisplayName } from '~/utils/ranking'
 
 const props = defineProps<{
   group: BolaoGroup
-  userRank: number
-  previewRows: GroupRankingPreviewRow[]
+  userRank?: number | null
   pendingRequestsCount?: number
 }>()
 
 const isTopRank = computed(() => props.userRank === 1)
-
-function rowLabel(row: GroupRankingPreviewRow): string {
-  if (row.isCurrentUser) return 'Você'
-  return shortDisplayName(row.name)
-}
 </script>
 
 <template>
@@ -35,10 +27,17 @@ function rowLabel(row: GroupRankingPreviewRow): string {
         Rank
       </span>
       <span
+        v-if="userRank != null"
         class="font-mono text-[18px] font-bold leading-none tabular-nums"
         :class="isTopRank ? 'text-primary' : 'text-on-surface'"
       >
         #{{ userRank }}
+      </span>
+      <span
+        v-else
+        class="font-mono text-[18px] font-bold leading-none text-on-surface-variant/30"
+      >
+        —
       </span>
     </div>
 
@@ -60,34 +59,12 @@ function rowLabel(row: GroupRankingPreviewRow): string {
         <p class="font-body-sm text-[12px] flex items-center gap-1 text-on-surface-variant/60">
           <span class="material-symbols-outlined text-[13px]">groups</span>
           {{ group.members_count ?? 0 }} {{ (group.members_count ?? 0) === 1 ? 'membro' : 'membros' }}
+          <span v-if="group.is_owner" class="ml-1 text-secondary-container/80">· Dono</span>
           <span v-if="group.require_approval" class="ml-1 inline-flex items-center gap-0.5">
             <span class="material-symbols-outlined text-[11px]">lock</span>
           </span>
         </p>
       </div>
-    </div>
-
-    <!-- Mini ranking preview -->
-    <div v-if="previewRows.length > 0" class="mb-3 space-y-1.5 border-t border-white/5 pt-3">
-      <template v-for="row in previewRows" :key="row.position">
-        <div v-if="row.gapBefore" class="flex items-center justify-center py-0.5">
-          <span class="font-mono text-[10px] tracking-widest text-on-surface-variant/25">···</span>
-        </div>
-        <div class="flex items-center gap-2">
-          <span
-            class="w-5 shrink-0 font-mono text-[11px] tabular-nums"
-            :class="row.isCurrentUser ? 'text-primary font-bold' : 'text-on-surface-variant/40'"
-          >{{ row.position }}</span>
-          <span
-            class="flex-1 truncate font-label-caps text-[11px]"
-            :class="row.isCurrentUser ? 'text-primary font-bold' : 'text-on-surface-variant/70'"
-          >{{ rowLabel(row) }}</span>
-          <span
-            class="shrink-0 font-mono text-[11px] tabular-nums"
-            :class="row.isCurrentUser ? 'text-primary font-bold' : 'text-on-surface-variant/60'"
-          >{{ row.totalPoints }} pts</span>
-        </div>
-      </template>
     </div>
 
     <!-- Footer -->
@@ -100,7 +77,7 @@ function rowLabel(row: GroupRankingPreviewRow): string {
         {{ pendingRequestsCount }} pendente{{ pendingRequestsCount === 1 ? '' : 's' }}
       </span>
       <span v-else class="font-label-caps text-[10px] text-on-surface-variant/40">
-        {{ previewRows.length > 0 ? `${group.members_count ?? previewRows.length} no ranking` : 'Sem ranking' }}
+        {{ group.is_owner ? 'Seu grupo' : 'Participando' }}
       </span>
       <span class="font-label-caps text-[10px] uppercase tracking-widest text-primary/70 flex items-center gap-1">
         VER

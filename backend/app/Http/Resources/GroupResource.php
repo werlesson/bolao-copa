@@ -25,6 +25,10 @@ class GroupResource extends JsonResource
             'invite_token'           => $this->when($isOwner, $this->invite_token),
             // populated via withCount / loadCount in the controller
             'members_count'          => $this->group_members_count ?? null,
+            'user_rank'              => $this->when(
+                array_key_exists('user_rank', $this->resource->getAttributes()),
+                $this->user_rank,
+            ),
             'pending_requests_count' => $this->when($isOwner, $this->pending_requests_count ?? 0),
             // only included when relation is explicitly eager-loaded (show endpoint)
             'members'                => $this->whenLoaded('members', fn () =>

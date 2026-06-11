@@ -1,81 +1,100 @@
 <script setup lang="ts">
-import type { RankingEntry } from '~/types/ranking'
+import type { GroupMember } from '~/types/group'
 
 const props = defineProps<{
-  entry: RankingEntry
+  member: GroupMember
   isCurrentUser?: boolean
+  isGroupOwner?: boolean
+  interactive?: boolean
+  rankingPosition?: number | null
+  compact?: boolean
+}>()
+
+const emit = defineEmits<{
+  select: []
 }>()
 
 const displayName = computed(() =>
-  props.isCurrentUser ? 'Você' : props.entry.user.name,
+  props.isCurrentUser ? 'Você' : props.member.name,
 )
 
-const exactLabel = computed(() => {
-  const count = props.entry.exact_scores
-  return `${count} ${count === 1 ? 'exato' : 'exatos'}`
+const joinedLabel = computed(() => {
+  if (!props.member.joined_at) return null
+  const formatted = new Intl.DateTimeFormat('pt-BR', {
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(props.member.joined_at))
+  return `Desde ${formatted.replace('.', '')}`
 })
 
-const isLeader = computed(() => props.entry.position === 1)
+const roleLabel = computed(() => {
+  if (props.isCurrentUser && props.isGroupOwner) return 'Dono do grupo'
+  if (props.isGroupOwner) return 'Dono do grupo'
+  if (props.isCurrentUser) return 'Seu perfil'
+  return joinedLabel.value
+})
 </script>
 
 <template>
-  <div
-    class="glass-card flex items-center gap-3 rounded-xl px-3 py-3"
+  <component
+    :is="interactive ? 'button' : 'div'"
+    :type="interactive ? 'button' : undefined"
+    class="flex w-full items-center gap-3 text-left transition-colors"
     :class="[
-      isLeader ? 'border-l-4 border-l-secondary-container neon-glow-green' : '',
-      isCurrentUser && !isLeader ? 'border-l-4 border-l-primary/40 bg-primary/[0.03]' : '',
+      compact ? 'px-1 py-2' : 'glass-card rounded-xl px-3 py-3',
+      isCurrentUser && !compact ? 'border border-primary/15 bg-primary/[0.04]' : '',
+      interactive ? 'cursor-pointer hover:bg-surface-container-high/60 active:scale-[0.99]' : '',
     ]"
+    @click="interactive && emit('select')"
   >
-    <!-- Position -->
-    <span
-      class="w-7 shrink-0 text-center font-mono text-[15px] font-bold leading-none tabular-nums"
-      :class="isLeader ? 'text-secondary-container' : isCurrentUser ? 'text-primary' : 'text-on-surface-variant/50'"
-    >
-      {{ entry.position }}
-    </span>
-
-    <!-- Avatar -->
     <div
-      class="h-9 w-9 shrink-0 overflow-hidden rounded-full"
-      :class="isLeader ? 'ring-1 ring-secondary-container/50' : isCurrentUser ? 'ring-1 ring-primary/30' : 'ring-1 ring-white/10'"
+      class="shrink-0 overflow-hidden rounded-full ring-1"
+      :class="[
+        compact ? 'h-8 w-8' : 'h-10 w-10',
+        isCurrentUser ? 'ring-primary/35' : isGroupOwner ? 'ring-secondary-container/40' : 'ring-white/10',
+      ]"
     >
       <UiAvatar
-        :name="entry.user.name"
-        :src="entry.user.avatar_url"
+        :name="member.name"
+        :src="member.avatar_url"
         size="md"
         class="!h-full !w-full"
       />
     </div>
 
-    <!-- Info -->
     <div class="min-w-0 flex-1">
       <div class="flex items-center gap-1.5">
-        <p class="truncate font-body-sm text-[14px] font-semibold leading-none text-on-surface">
+        <p
+          class="truncate font-body-sm font-semibold leading-tight text-on-surface"
+          :class="compact ? 'text-[13px]' : 'text-[14px]'"
+        >
           {{ displayName }}
         </p>
         <span
-          v-if="isCurrentUser"
-          class="shrink-0 rounded bg-primary/10 px-1.5 py-0.5 font-label-caps text-[9px] text-primary"
-        >
-          EU
-        </span>
+          v-if="isGroupOwner"
+          class="material-symbols-outlined shrink-0 text-[14px] leading-none text-secondary-container"
+          style="font-variation-settings: 'FILL' 1"
+          title="Dono do grupo"
+        >verified</span>
       </div>
-      <p class="mt-0.5 font-label-caps text-[10px] text-on-surface-variant/50">
-        {{ exactLabel }}
+      <p
+        v-if="roleLabel"
+        class="mt-0.5 truncate font-body-sm text-[11px] text-on-surface-variant/50"
+      >
+        {{ roleLabel }}
       </p>
     </div>
 
-    <!-- Points -->
-    <div class="shrink-0 text-right">
-      <p
-        class="font-mono text-[20px] font-bold leading-none tabular-nums"
-        :class="isLeader ? 'text-secondary-container' : isCurrentUser ? 'text-primary' : 'text-on-surface'"
-      >
-        {{ entry.total_points }}
-      </p>
-      <p class="mt-0.5 font-label-caps text-[9px] text-on-surface-variant/40">
-        pts
+    <div v-if="rankingPosition && rankingPosition > 0" class="shrink-0 text-right">
+      <p class="font-mono text-[12px] font-medium tabular-nums text-on-surface-variant/35">
+        {{ rankingPosition }}º
       </p>
     </div>
-  </div>
+
+    <span
+      v-if="interactive"
+      class="material-symbols-outlined shrink-0 text-[18px] text-on-surface-variant/20"
+      aria-hidden="true"
+    >chevron_right</span>
+  </component>
 </template>
