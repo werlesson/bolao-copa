@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
           })
 
           if (response.status === 401) {
-            user.value = null
+            await handleUnauthorized()
             return
           }
 
@@ -65,6 +65,34 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     return fetchUserPromise
+  }
+
+  let unauthorizedRedirect: Promise<void> | null = null
+
+  /** Clears local auth state and sends the user to login (unless already there). */
+  async function handleUnauthorized() {
+    user.value = null
+    initialized.value = true
+
+    if (!import.meta.client) return
+
+    const route = useRoute()
+    if (route.path === '/login' || route.path.startsWith('/join/')) return
+
+    if (!unauthorizedRedirect) {
+      unauthorizedRedirect = (async () => {
+        try {
+          await navigateTo({
+            path: '/login',
+            query: { message: 'Sessão expirada. Entre novamente.' },
+          })
+        } finally {
+          unauthorizedRedirect = null
+        }
+      })()
+    }
+
+    await unauthorizedRedirect
   }
 
   function login() {
@@ -146,6 +174,7 @@ export const useAuthStore = defineStore('auth', () => {
     initialized,
     isAuthenticated,
     fetchUser,
+    handleUnauthorized,
     login,
     logout,
     processPendingInvite,

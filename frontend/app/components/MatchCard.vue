@@ -5,6 +5,7 @@ import { flagUrl, isMatchTbd } from '~/types/match'
 const props = defineProps<{
   match: Match
   prediction?: UserPrediction | null
+  resultsMode?: boolean
 }>()
 
 const localStatus = ref(props.match.status)
@@ -41,7 +42,7 @@ const timeLabel = computed(() => {
     parts.push(KNOCKOUT_LABELS[props.match.stage]!)
   }
 
-  if (isScheduled.value || isLive.value) {
+  if (isScheduled.value || isLive.value || (isFinished.value && props.resultsMode)) {
     const time = new Intl.DateTimeFormat('pt-BR', {
       hour: '2-digit',
       minute: '2-digit',
@@ -52,16 +53,27 @@ const timeLabel = computed(() => {
   return parts.join(' • ')
 })
 
+const hasScore = computed(() =>
+  props.match.home_score !== null && props.match.away_score !== null,
+)
+
 const scoreDisplay = computed(() => {
-  if (
-    props.match.home_score !== null
-    && props.match.away_score !== null
-    && (isLive.value || isFinished.value)
-  ) {
+  if (hasScore.value && (isLive.value || isFinished.value)) {
     return `${props.match.home_score} - ${props.match.away_score}`
   }
+  if (isFinished.value) return '—'
   return 'VS'
 })
+
+const homeWon = computed(() =>
+  isFinished.value && hasScore.value && props.match.home_score! > props.match.away_score!,
+)
+const awayWon = computed(() =>
+  isFinished.value && hasScore.value && props.match.away_score! > props.match.home_score!,
+)
+const showStatusBadge = computed(() =>
+  !(props.resultsMode && isFinished.value),
+)
 
 const predictionLabel = computed(() => {
   if (!props.prediction) return null
@@ -113,6 +125,7 @@ function goToMatch() {
     class="glass-card relative overflow-hidden cursor-pointer rounded-xl border border-white/10 p-5 transition-[border-color,box-shadow,transform] duration-200 hover:border-primary/20 active:scale-[0.98]"
     :class="[
       isLive ? 'neon-glow-green' : '',
+      resultsMode && isFinished ? 'border-white/5' : '',
     ]"
     role="button"
     :tabindex="0"
@@ -135,28 +148,36 @@ function goToMatch() {
     <div class="relative">
     <!-- Top bar -->
     <div class="mb-4 flex items-start justify-between gap-2">
-      <div class="min-w-0">
-        <template v-if="isScheduled && !isTbd && !isInactive">
-          <span class="font-label-caps text-label-caps inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary">
-            <CountdownTimer
-              :starts-at="match.starts_at"
-              @kickoff="handleKickoff"
+      <template v-if="resultsMode && isFinished">
+        <span
+          v-if="timeLabel"
+          class="font-label-caps text-label-caps text-on-surface-variant/70"
+        >{{ timeLabel }}</span>
+      </template>
+      <template v-else>
+        <div class="min-w-0">
+          <template v-if="isScheduled && !isTbd && !isInactive">
+            <span class="font-label-caps text-label-caps inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-primary">
+              <CountdownTimer
+                :starts-at="match.starts_at"
+                @kickoff="handleKickoff"
+              />
+            </span>
+          </template>
+          <template v-else-if="showStatusBadge">
+            <MatchStatusBadge
+              :status="localStatus"
+              :match="match"
             />
-          </span>
-        </template>
-        <template v-else>
-          <MatchStatusBadge
-            :status="localStatus"
-            :match="match"
-          />
-        </template>
-      </div>
-      <span
-        v-if="timeLabel"
-        class="font-label-caps text-label-caps shrink-0 text-on-surface-variant"
-      >
-        {{ timeLabel }}
-      </span>
+          </template>
+        </div>
+        <span
+          v-if="timeLabel"
+          class="font-label-caps text-label-caps shrink-0 text-on-surface-variant"
+        >
+          {{ timeLabel }}
+        </span>
+      </template>
     </div>
 
     <!-- Teams & score -->
@@ -174,7 +195,9 @@ function goToMatch() {
           >
           <span v-else class="font-label-caps text-label-caps text-on-surface-variant">?</span>
         </div>
-        <span class="min-w-0 w-full truncate text-center text-[13px] font-bold uppercase text-on-surface font-sans">
+        <span class="min-w-0 w-full truncate text-center text-[13px] font-bold uppercase font-sans"
+          :class="homeWon ? 'text-primary' : awayWon ? 'text-on-surface-variant/45' : 'text-on-surface'"
+        >
           {{ match.home_team ?? '—' }}
         </span>
       </div>
@@ -182,7 +205,11 @@ function goToMatch() {
       <div class="flex flex-col items-center gap-1">
         <span
           class="font-headline-lg text-headline-lg leading-none tracking-tighter"
-          :class="isLive ? 'text-primary' : isFinished ? 'text-on-surface-variant/60' : 'text-primary/20'"
+          :class="isLive
+            ? 'text-primary'
+            : isFinished
+              ? (resultsMode ? 'text-on-surface' : 'text-on-surface-variant/60')
+              : 'text-primary/20'"
         >
           {{ scoreDisplay }}
         </span>
@@ -207,7 +234,9 @@ function goToMatch() {
           >
           <span v-else class="font-label-caps text-label-caps text-on-surface-variant">?</span>
         </div>
-        <span class="min-w-0 w-full truncate text-center text-[13px] font-bold uppercase text-on-surface font-sans">
+        <span class="min-w-0 w-full truncate text-center text-[13px] font-bold uppercase font-sans"
+          :class="awayWon ? 'text-primary' : homeWon ? 'text-on-surface-variant/45' : 'text-on-surface'"
+        >
           {{ match.away_team ?? '—' }}
         </span>
       </div>
@@ -266,23 +295,32 @@ function goToMatch() {
             :class="isFinished ? 'text-on-surface/60' : 'text-secondary-container/75'"
           >{{ predictionLabel }}</span>
         </span>
-        <div v-if="pointsEarned !== null && isFinished" class="flex items-center gap-1">
+        <div v-if="pointsEarned !== null && isFinished" class="flex items-center gap-1.5">
           <span
             v-if="pointsEarned > 0"
-            class="material-symbols-outlined text-[11px] leading-none text-success/80"
+            class="material-symbols-outlined text-[14px] leading-none text-secondary-container"
             style="font-variation-settings: 'FILL' 1"
           >stars</span>
           <span
-            class="font-mono text-[11px] font-bold"
-            :class="pointsEarned > 0 ? 'text-success/80' : 'text-on-surface-variant/40'"
+            class="font-mono font-bold leading-none"
+            :class="[
+              pointsEarned > 0 ? 'text-secondary-container' : 'text-on-surface-variant/40',
+              resultsMode ? 'text-[14px]' : 'text-[11px]',
+            ]"
           >{{ pointsEarned > 0 ? `+${pointsEarned}` : '0' }} pt</span>
         </div>
       </div>
 
       <!-- Live / finished, no prediction -->
-      <div v-else-if="isLive || isFinished" class="flex items-center gap-1.5">
-        <span class="h-1.5 w-1.5 rounded-full bg-on-surface-variant/20" />
-        <span class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/35">Sem palpite</span>
+      <div v-else-if="isLive || isFinished" class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5">
+          <span class="h-1.5 w-1.5 rounded-full bg-on-surface-variant/20" />
+          <span class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/35">Sem palpite</span>
+        </div>
+        <span
+          v-if="resultsMode && isFinished"
+          class="material-symbols-outlined text-[16px] leading-none text-on-surface-variant/30"
+        >chevron_right</span>
       </div>
 
     </div>

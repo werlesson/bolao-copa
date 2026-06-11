@@ -1,5 +1,6 @@
 import type { Match, MatchStatus, UserPrediction } from '~/types/match'
 import { unwrapList } from '~/utils/api'
+import { matchListNeedsFastPoll } from '~/utils/matchPolling'
 
 const STAGE_ORDER: Record<string, number> = {
   GROUP_STAGE: 1,
@@ -103,7 +104,7 @@ export function useMatches() {
 
   const currentPhase = computed(() => deriveCurrentPhase(matches.value))
 
-  async function fetchMatches() {
+  async function fetchMatches(options?: { bustCache?: boolean }) {
     loading.value = true
     error.value = null
 
@@ -111,7 +112,11 @@ export function useMatches() {
       const matchesRes = await $fetch<Match[] | { data: Match[] }>('/api/matches', {
         baseURL: apiUrl,
         credentials: 'include',
-        headers: { Accept: 'application/json' },
+        headers: {
+          Accept: 'application/json',
+          ...(options?.bustCache ? { 'Cache-Control': 'no-cache' } : {}),
+        },
+        ...(options?.bustCache ? { query: { _: Date.now() } } : {}),
       })
 
       matches.value = sortMatches(unwrapList(matchesRes))
@@ -152,6 +157,10 @@ export function useMatches() {
     return predictionsByMatchId.value[matchId] ?? null
   }
 
+  function needsFastPoll(): boolean {
+    return matchListNeedsFastPoll(matches.value)
+  }
+
   return {
     matches,
     loading,
@@ -159,6 +168,7 @@ export function useMatches() {
     currentPhase,
     fetchMatches,
     predictionFor,
+    needsFastPoll,
     STAGE_ORDER,
   }
 }

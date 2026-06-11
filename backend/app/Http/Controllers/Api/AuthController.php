@@ -55,7 +55,11 @@ class AuthController extends Controller
         }
 
         $user->tokens()->where('name', 'web')->delete();
-        $plainToken = $user->createToken('web')->plainTextToken;
+        $plainToken = $user->createToken(
+            'web',
+            ['*'],
+            now()->addDays(self::COOKIE_DAYS),
+        )->plainTextToken;
 
         $cookie = cookie(
             name: self::COOKIE_NAME,

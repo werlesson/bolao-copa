@@ -34,7 +34,7 @@ class MatchController extends Controller
                         }
 
                         $data = $this->queryAndRender($status, $stage);
-                        Cache::tags(['matches'])->put($cacheKey, $data, 30);
+                        Cache::tags(['matches'])->put($cacheKey, $data, $this->listCacheTtl());
                         return $data;
                     });
             } catch (LockTimeoutException) {
@@ -64,6 +64,20 @@ class MatchController extends Controller
             ->get();
 
         return MatchResource::collection($matches)->resolve();
+    }
+
+    /** Shorter TTL while games are live or awaiting final scores. */
+    private function listCacheTtl(): int
+    {
+        $hasLive = FootballMatch::where('status', 'LIVE')->exists();
+
+        $hasPendingScores = FootballMatch::query()
+            ->where('status', 'FINISHED')
+            ->where(fn ($q) => $q->whereNull('home_score')->orWhereNull('away_score'))
+            ->where('starts_at', '>=', now()->subHours(48))
+            ->exists();
+
+        return ($hasLive || $hasPendingScores) ? 10 : 30;
     }
 
     public function show(FootballMatch $match, Request $request): JsonResponse

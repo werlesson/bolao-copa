@@ -145,7 +145,7 @@ export default defineNuxtConfig({
           options: {
             cacheName: 'matches-cache',
             networkTimeoutSeconds: 3,
-            expiration: { maxAgeSeconds: 60 },
+            expiration: { maxAgeSeconds: 20 },
           },
         },
         {

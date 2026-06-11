@@ -29,6 +29,8 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
             $this->syncMatch($data, $scoring);
         }
 
+        $this->backfillMissingScores($football, $scoring);
+
         // Invalidate all match list caches so the next polling request reflects the new data.
         Cache::tags(['matches'])->flush();
     }
@@ -39,10 +41,20 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
         $apiStatus  = $data['status'];
         $newStatus  = $this->mapStatus($apiStatus);
 
-        [$homeScore, $awayScore] = $this->extractScore($data['score'] ?? []);
+        [$homeScore, $awayScore] = $this->extractScore($data['score'] ?? [], $apiStatus);
 
-        // Snapshot old status before the upsert
-        $oldStatus = FootballMatch::where('external_id', $externalId)->value('status');
+        $existing = FootballMatch::where('external_id', $externalId)->first();
+        $oldStatus = $existing?->status;
+        $oldHome   = $existing?->home_score;
+        $oldAway   = $existing?->away_score;
+
+        // API may mark FINISHED before fullTime is populated — keep last known scores.
+        if ($homeScore === null && $oldHome !== null) {
+            $homeScore = $oldHome;
+        }
+        if ($awayScore === null && $oldAway !== null) {
+            $awayScore = $oldAway;
+        }
 
         $match = FootballMatch::updateOrCreate(
             ['external_id' => $externalId],
@@ -61,10 +73,45 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
             ]
         );
 
+        $scoresAvailable = $homeScore !== null && $awayScore !== null;
+        $scoresJustArrived = $scoresAvailable
+            && ($oldHome === null || $oldAway === null)
+            && $newStatus === MatchStatus::FINISHED->value;
+
+        $scoresChanged = $scoresAvailable
+            && ($oldHome !== $homeScore || $oldAway !== $awayScore)
+            && $newStatus === MatchStatus::FINISHED->value;
+
         if ($oldStatus !== MatchStatus::FINISHED->value && $newStatus === MatchStatus::FINISHED->value) {
-            $this->handleFinished($match, $scoring);
+            $this->applyMatchResults($match, $scoring, notify: true);
+        } elseif ($newStatus === MatchStatus::FINISHED->value && ($scoresJustArrived || $scoresChanged)) {
+            $this->applyMatchResults($match, $scoring, notify: $scoresJustArrived);
         } elseif ($oldStatus !== $newStatus && in_array($newStatus, [MatchStatus::POSTPONED->value, MatchStatus::CANCELLED->value])) {
             $this->handleCancelledOrPostponed($match);
+        }
+    }
+
+    /** Re-fetch individual matches when bulk sync has FINISHED but no score yet. */
+    private function backfillMissingScores(FootballDataService $football, ScoringService $scoring): void
+    {
+        $stale = FootballMatch::query()
+            ->where('status', MatchStatus::FINISHED->value)
+            ->whereNotNull('external_id')
+            ->where(function ($q) {
+                $q->whereNull('home_score')->orWhereNull('away_score');
+            })
+            ->where('starts_at', '>=', now()->subHours(48))
+            ->limit(10)
+            ->get();
+
+        foreach ($stale as $match) {
+            try {
+                $data = $football->fetchMatch((int) $match->external_id);
+            } catch (\Throwable) {
+                continue;
+            }
+
+            $this->syncMatch($data, $scoring);
         }
     }
 
@@ -85,14 +132,11 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
     {
         $group = $data['group'] ?? null;
 
-        // Tournament group stage (e.g. Copa do Mundo): prefer the group letter.
-        // football-data.org returns "GROUP_A", "GROUP_B", etc. — strip the prefix.
         if ($group !== null && $group !== '') {
             $letter = (string) preg_replace('/^GROUP_/i', '', $group);
             return $letter !== '' ? $letter : (string) $group;
         }
 
-        // League / regular season: use the matchday number.
         if (isset($data['matchday'])) {
             return (string) $data['matchday'];
         }
@@ -105,8 +149,12 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
         return $team['crest'] ?? null;
     }
 
-    private function handleFinished(FootballMatch $match, ScoringService $scoring): void
+    private function applyMatchResults(FootballMatch $match, ScoringService $scoring, bool $notify): void
     {
+        if ($match->home_score === null || $match->away_score === null) {
+            return;
+        }
+
         $predictions = Prediction::where('match_id', $match->id)->get();
 
         foreach ($predictions as $prediction) {
@@ -120,7 +168,10 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
         }
 
         RecalculateRankings::dispatch($match->id);
-        SendMatchNotification::dispatch($match->id);
+
+        if ($notify) {
+            SendMatchNotification::dispatch($match->id);
+        }
     }
 
     private function handleCancelledOrPostponed(FootballMatch $match): void
@@ -133,27 +184,29 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
      * Returns [homeScore, awayScore] using regularTime for knockout rounds
      * with extra time/penalties, and fullTime otherwise.
      *
-     * The football-data.org API only populates regularTime when the match
-     * went beyond 90 min (EXTRA_TIME or PENALTY_SHOOTOUT duration). For
-     * regular-time results, fullTime already equals the 90-min score.
-     *
      * @return array{0: int|null, 1: int|null}
      */
-    private function extractScore(array $score): array
+    private function extractScore(array $score, string $apiStatus = 'FINISHED'): array
     {
-        // regularTime is present and populated only for knockout matches that
-        // went to extra time or penalties — this is the 90-min score.
         $regular = $score['regularTime'] ?? null;
         if ($regular !== null && $regular['home'] !== null) {
             return [(int) $regular['home'], (int) $regular['away']];
         }
 
-        // Group stage or knockout resolved in 90 min.
         $full = $score['fullTime'] ?? [];
-        return [
-            isset($full['home']) ? (int) $full['home'] : null,
-            isset($full['away']) ? (int) $full['away'] : null,
-        ];
+        if (isset($full['home'], $full['away'])) {
+            return [(int) $full['home'], (int) $full['away']];
+        }
+
+        // During live play the current tally is sometimes only in halfTime briefly.
+        if (in_array($apiStatus, ['IN_PLAY', 'PAUSED'], true)) {
+            $half = $score['halfTime'] ?? [];
+            if (isset($half['home'], $half['away'])) {
+                return [(int) $half['home'], (int) $half['away']];
+            }
+        }
+
+        return [null, null];
     }
 
     /** Returns null for TBD/unknown teams so the frontend can show "Times a definir". */

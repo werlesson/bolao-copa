@@ -29,4 +29,17 @@ class FootballDataService
 
         return $response->json('matches', []);
     }
+
+    /** @return array<string, mixed> */
+    public function fetchMatch(int $externalId): array
+    {
+        $response = Http::withHeader('X-Auth-Token', $this->apiKey)
+            ->timeout(15)
+            ->retry(2, 500)
+            ->get(self::BASE_URL . "/matches/{$externalId}");
+
+        $response->throw();
+
+        return $response->json();
+    }
 }

@@ -2,6 +2,7 @@
 import type { Match } from '~/types/match'
 import { flagUrl } from '~/types/match'
 import { dateKey, groupMatchesByDate } from '~/composables/useMatches'
+import { matchPollIntervalMs } from '~/utils/matchPolling'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -9,38 +10,56 @@ const { matches, loading, error, currentPhase, fetchMatches, predictionFor } = u
 const showFinished = ref(false)
 const showFilterSheet = ref(false)
 const cookieOpts = { default: () => null as string | null, maxAge: 60 * 60 * 24 * 90 }
+const viewModeCookieOpts = { default: () => 'agenda' as 'agenda' | 'encerrados', maxAge: 60 * 60 * 24 * 90 }
+const viewMode = useCookie<'agenda' | 'encerrados'>('jogos-view-mode', viewModeCookieOpts)
 const activeStage = useCookie<string | null>('jogos-filter-stage', cookieOpts)
 const activeGroup = useCookie<string | null>('jogos-filter-group', cookieOpts)
 const activeTeam = useCookie<string | null>('jogos-filter-team', cookieOpts)
 const activeDate = useCookie<string | null>('jogos-filter-date', cookieOpts)
 const teamSearch = ref('')
 
-let pollingInterval: ReturnType<typeof setInterval> | null = null
+let pollTimer: ReturnType<typeof setTimeout> | null = null
+
+async function refreshMatches() {
+  const fast = matchPollIntervalMs(matches.value) <= 20_000
+  await fetchMatches({ bustCache: fast })
+}
+
+function schedulePoll() {
+  if (pollTimer) {
+    clearTimeout(pollTimer)
+    pollTimer = null
+  }
+  if (document.visibilityState !== 'visible') return
+
+  const delay = matchPollIntervalMs(matches.value)
+  pollTimer = setTimeout(async () => {
+    await refreshMatches()
+    schedulePoll()
+  }, delay)
+}
 
 function startPolling() {
-  if (pollingInterval) return
-  pollingInterval = setInterval(fetchMatches, 60_000)
+  schedulePoll()
 }
 
 function stopPolling() {
-  if (pollingInterval) {
-    clearInterval(pollingInterval)
-    pollingInterval = null
+  if (pollTimer) {
+    clearTimeout(pollTimer)
+    pollTimer = null
   }
 }
 
 function handleVisibilityChange() {
   if (document.visibilityState === 'visible') {
-    fetchMatches()
-    startPolling()
+    refreshMatches().then(() => startPolling())
   } else {
     stopPolling()
   }
 }
 
 onMounted(() => {
-  fetchMatches()
-  startPolling()
+  refreshMatches().then(() => startPolling())
   document.addEventListener('visibilitychange', handleVisibilityChange)
 })
 
@@ -241,16 +260,39 @@ const tailMatches = computed(() =>
 
 const scheduledGroups = computed(() => groupMatchesByDate(scheduledMatches.value))
 const finishedGroups = computed(() => groupMatchesByDate(finishedMatches.value))
+const finishedGroupsReversed = computed(() =>
+  [...finishedGroups.value].sort((a, b) => b.key.localeCompare(a.key)),
+)
+
+const isResultsMode = computed(() => viewMode.value === 'encerrados')
 
 const showFinishedSection = computed(() => showFinished.value || activeDate.value !== null)
 
 const showEmptyAgenda = computed(() =>
-  !loading.value && !error.value && matches.value.length > 0
+  !isResultsMode.value && !loading.value && !error.value && matches.value.length > 0
   && liveMatches.value.length === 0 && scheduledMatches.value.length === 0
   && finishedMatches.value.length === 0,
 )
 
+const showEmptyResults = computed(() =>
+  isResultsMode.value && !loading.value && !error.value && matches.value.length > 0
+  && finishedMatches.value.length === 0,
+)
+
+const resultsSummary = computed(() => {
+  let totalPoints = 0
+  for (const m of finishedMatches.value) {
+    const pts = predictionFor(m.id)?.points_earned
+    if (pts !== null && pts !== undefined) totalPoints += pts
+  }
+  return { totalPoints }
+})
+
 const skeletonCount = 4
+
+const viewChipBase = 'flex-1 rounded-full py-2 font-label-caps text-[11px] uppercase tracking-widest transition-colors duration-150'
+const viewChipInactive = 'text-on-surface-variant'
+const viewChipActive = 'bg-primary text-on-primary shadow-sm shadow-primary/20'
 
 const chipBase = 'rounded-full border px-3 py-1.5 font-label-caps text-[11px] uppercase tracking-widest transition-colors duration-150'
 const chipInactive = 'border-white/10 text-on-surface-variant hover:border-white/20 hover:text-on-surface'
@@ -318,6 +360,25 @@ const chipActive = 'border-primary/30 bg-primary/10 text-primary'
     <div class="px-margin py-4">
       <UiPhaseBadge :phase="currentPhase" class="mb-4" />
 
+      <div v-if="matches.length > 0" class="mb-4 flex rounded-full border border-white/10 bg-surface-container-low p-1">
+        <button
+          type="button"
+          :class="[viewChipBase, !isResultsMode ? viewChipActive : viewChipInactive]"
+          :aria-pressed="!isResultsMode"
+          @click="viewMode = 'agenda'"
+        >
+          Agenda
+        </button>
+        <button
+          type="button"
+          :class="[viewChipBase, isResultsMode ? viewChipActive : viewChipInactive]"
+          :aria-pressed="isResultsMode"
+          @click="viewMode = 'encerrados'"
+        >
+          Encerrados
+        </button>
+      </div>
+
       <div v-if="loading && matches.length === 0" class="space-y-2">
         <UiMatchCardSkeleton v-for="n in skeletonCount" :key="n" />
       </div>
@@ -328,7 +389,7 @@ const chipActive = 'border-primary/30 bg-primary/10 text-primary'
         v-if="error"
         type="button"
         class="mb-6 flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-surface-container py-3 font-label-caps text-label-caps uppercase text-on-surface transition-colors hover:bg-surface-container-high"
-        @click="fetchMatches"
+        @click="refreshMatches"
       >
         <span class="material-symbols-outlined text-[18px]">refresh</span>
         TENTAR NOVAMENTE
@@ -342,14 +403,67 @@ const chipActive = 'border-primary/30 bg-primary/10 text-primary'
       </p>
 
       <template v-if="matches.length > 0">
-        <!-- Empty state -->
+        <!-- Empty state: agenda -->
         <p v-if="showEmptyAgenda" class="mb-4 font-body-lg text-body-lg text-on-surface-variant">
           <template v-if="hasActiveFilters">Nenhum jogo encontrado com os filtros selecionados.</template>
           <template v-else>Não há jogos na agenda agora.</template>
         </p>
 
+        <!-- Empty state: resultados -->
+        <p v-if="showEmptyResults" class="mb-4 font-body-lg text-body-lg text-on-surface-variant">
+          <template v-if="hasActiveFilters">Nenhum resultado com os filtros selecionados.</template>
+          <template v-else>Nenhum jogo encerrado.</template>
+        </p>
+
+        <!-- RESULTADOS (modo encerrados) -->
+        <template v-if="isResultsMode">
+          <div
+            v-if="finishedMatches.length > 0"
+            class="mb-6 flex items-center justify-between rounded-xl border border-white/10 bg-surface-container px-4 py-3"
+          >
+            <div>
+              <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/50">
+                Jogos encerrados
+              </p>
+              <p class="font-title-md text-title-md text-on-surface">
+                {{ finishedMatches.length }}
+                {{ finishedMatches.length === 1 ? 'partida' : 'partidas' }}
+              </p>
+            </div>
+            <div class="text-right">
+              <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/50">
+                Seus pontos
+              </p>
+              <p
+                class="font-headline-lg-mobile text-headline-lg-mobile leading-none tracking-tighter"
+                :class="resultsSummary.totalPoints > 0 ? 'text-secondary-container' : 'text-on-surface-variant/40'"
+              >
+                {{ resultsSummary.totalPoints > 0 ? `+${resultsSummary.totalPoints}` : '0' }}
+              </p>
+            </div>
+          </div>
+
+          <section v-for="group in finishedGroupsReversed" :key="group.key" class="mb-8">
+            <div class="mb-4 flex items-center gap-3">
+              <h2 class="shrink-0 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+                {{ group.label }}
+              </h2>
+              <div class="h-px flex-1 bg-outline-variant" />
+            </div>
+            <div class="space-y-2">
+              <MatchCard
+                v-for="match in group.matches"
+                :key="match.id"
+                :match="match"
+                :prediction="predictionFor(match.id)"
+                results-mode
+              />
+            </div>
+          </section>
+        </template>
+
         <!-- AO VIVO -->
-        <section v-if="liveMatches.length > 0" class="mb-8">
+        <section v-if="!isResultsMode && liveMatches.length > 0" class="mb-8">
           <div class="mb-4 flex items-center gap-2">
             <span class="h-2 w-2 shrink-0 animate-pulse rounded-full bg-primary" />
             <h2 class="shrink-0 font-label-caps text-label-caps uppercase tracking-widest text-primary">Ao Vivo</h2>
@@ -367,25 +481,27 @@ const chipActive = 'border-primary/30 bg-primary/10 text-primary'
         </section>
 
         <!-- PRÓXIMOS (agrupados por data) -->
-        <section v-for="group in scheduledGroups" :key="group.key" class="mb-8">
-          <div class="mb-4 flex items-center gap-3">
-            <h2 class="shrink-0 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
-              {{ group.label }}
-            </h2>
-            <div class="h-px flex-1 bg-outline-variant" />
-          </div>
-          <div class="space-y-2">
-            <MatchCard
-              v-for="match in group.matches"
-              :key="match.id"
-              :match="match"
-              :prediction="predictionFor(match.id)"
-            />
-          </div>
-        </section>
+        <template v-if="!isResultsMode">
+          <section v-for="group in scheduledGroups" :key="group.key" class="mb-8">
+            <div class="mb-4 flex items-center gap-3">
+              <h2 class="shrink-0 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
+                {{ group.label }}
+              </h2>
+              <div class="h-px flex-1 bg-outline-variant" />
+            </div>
+            <div class="space-y-2">
+              <MatchCard
+                v-for="match in group.matches"
+                :key="match.id"
+                :match="match"
+                :prediction="predictionFor(match.id)"
+              />
+            </div>
+          </section>
+        </template>
 
-        <!-- ENCERRADOS (colapsável) -->
-        <div v-if="finishedMatches.length > 0" class="mb-8">
+        <!-- ENCERRADOS (colapsável, só no modo agenda) -->
+        <div v-if="!isResultsMode && finishedMatches.length > 0" class="mb-8">
           <button
             v-if="activeDate === null"
             type="button"
@@ -429,7 +545,7 @@ const chipActive = 'border-primary/30 bg-primary/10 text-primary'
         </div>
 
         <!-- ADIADOS E CANCELADOS -->
-        <section v-if="tailMatches.length > 0" class="mb-8">
+        <section v-if="!isResultsMode && tailMatches.length > 0" class="mb-8">
           <div class="mb-4 flex items-center gap-3">
             <h2 class="shrink-0 font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant">
               Adiados e Cancelados

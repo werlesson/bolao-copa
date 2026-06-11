@@ -100,17 +100,14 @@ services:
     networks:
       - bolao_network
 
-  # --- Scheduler (dispara schedule:run a cada minuto; SyncMatchResults a cada 2 min) ---
+  # --- Scheduler (schedule:work — SyncMatchResults a cada 1 min) ---
   scheduler:
     build:
       context: ./backend
       dockerfile: Dockerfile
     container_name: bolao_scheduler
     restart: unless-stopped
-    command:
-      - sh
-      - -c
-      - "while true; do php artisan schedule:run --verbose --no-interaction; sleep 60; done"
+    command: ["php", "artisan", "schedule:work"]
     environment: *app-env
     depends_on:
       postgres:

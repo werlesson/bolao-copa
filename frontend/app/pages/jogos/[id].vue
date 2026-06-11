@@ -3,6 +3,7 @@ import type { NavigationGuardNext } from 'vue-router'
 import type { GroupPrediction, Match, MatchDetailResponse, UserPrediction } from '~/types/match'
 import { flagUrl, isMatchTbd } from '~/types/match'
 import MatchLocked from '~/components/MatchLocked.vue'
+import { matchNeedsFastPoll, matchPollIntervalMs } from '~/utils/matchPolling'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -188,10 +189,15 @@ async function fetchMatchDetail() {
   loadError.value = null
 
   try {
+    const fast = match.value ? matchNeedsFastPoll(match.value) : false
     const res = await $fetch<MatchDetailResponse>(`/api/matches/${matchId.value}`, {
       baseURL: apiUrl,
       credentials: 'include',
-      headers: { Accept: 'application/json' },
+      headers: {
+        Accept: 'application/json',
+        ...(fast ? { 'Cache-Control': 'no-cache' } : {}),
+      },
+      ...(fast ? { query: { _: Date.now() } } : {}),
     })
 
     match.value = res.data
@@ -243,13 +249,71 @@ function handleKickoff() {
   if (localStatus.value === 'SCHEDULED') localStatus.value = 'LIVE'
 }
 
+let detailPollTimer: ReturnType<typeof setTimeout> | null = null
+
+function scheduleDetailPoll() {
+  if (detailPollTimer) {
+    clearTimeout(detailPollTimer)
+    detailPollTimer = null
+  }
+  if (document.visibilityState !== 'visible') return
+  if (!matchNeedsFastPoll(match.value)) return
+
+  const delay = matchPollIntervalMs(match.value ? [match.value] : [])
+  detailPollTimer = setTimeout(async () => {
+    await fetchMatchDetailSilent()
+    scheduleDetailPoll()
+  }, delay)
+}
+
+async function fetchMatchDetailSilent() {
+  try {
+    const res = await $fetch<MatchDetailResponse>(`/api/matches/${matchId.value}`, {
+      baseURL: apiUrl,
+      credentials: 'include',
+      headers: { Accept: 'application/json', 'Cache-Control': 'no-cache' },
+      query: { _: Date.now() },
+    })
+    match.value = res.data
+    applyPrediction(res.user_prediction)
+    groupPredictions.value = res.group_predictions ?? []
+    localStatus.value = res.data.status
+  } catch {
+    // keep last known state during background refresh
+  }
+}
+
+function stopDetailPoll() {
+  if (detailPollTimer) {
+    clearTimeout(detailPollTimer)
+    detailPollTimer = null
+  }
+}
+
+function handleDetailVisibilityChange() {
+  if (document.visibilityState === 'visible') {
+    fetchMatchDetailSilent().then(() => scheduleDetailPoll())
+  } else {
+    stopDetailPoll()
+  }
+}
+
 onMounted(() => {
-  fetchMatchDetail()
+  fetchMatchDetail().then(() => scheduleDetailPoll())
+  document.addEventListener('visibilitychange', handleDetailVisibilityChange)
+})
+
+onUnmounted(() => {
+  stopDetailPoll()
+  document.removeEventListener('visibilitychange', handleDetailVisibilityChange)
 })
 
 watch(matchId, () => {
-  fetchMatchDetail()
+  stopDetailPoll()
+  fetchMatchDetail().then(() => scheduleDetailPoll())
 })
+
+watch(match, () => scheduleDetailPoll())
 </script>
 
 <template>
