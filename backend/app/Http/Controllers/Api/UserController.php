@@ -7,9 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePushSubscriptionRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
+use App\Models\FootballMatch;
 use App\Models\Group;
 use App\Models\Prediction;
 use App\Models\Ranking;
+use App\Services\ScoringService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -48,13 +50,6 @@ class UserController extends Controller
 
         $totalPredictions = Prediction::where('user_id', $user->id)->count();
 
-        $scoredPredictions = Prediction::query()
-            ->join('matches', 'matches.id', '=', 'predictions.match_id')
-            ->where('predictions.user_id', $user->id)
-            ->where('matches.status', MatchStatus::FINISHED->value)
-            ->whereNotNull('predictions.points_earned')
-            ->count();
-
         $ranking = Ranking::where('group_id', $globalId)
             ->where('user_id', $user->id)
             ->first();
@@ -64,8 +59,11 @@ class UserController extends Controller
         $totalPoints    = $ranking?->total_points ?? 0;
         $position       = $ranking ? $this->computeGlobalPosition($globalId, $user->id) : null;
 
-        $accuracyPercent = $scoredPredictions > 0
-            ? (int) round(($correctResults / $scoredPredictions) * 100)
+        $finishedMatchesCount = FootballMatch::where('status', MatchStatus::FINISHED->value)->count();
+        $maxPossiblePoints    = $finishedMatchesCount * ScoringService::MAX_POINTS_PER_MATCH;
+
+        $accuracyPercent = $maxPossiblePoints > 0
+            ? (int) round(($totalPoints / $maxPossiblePoints) * 100)
             : null;
 
         $predictions = Prediction::query()

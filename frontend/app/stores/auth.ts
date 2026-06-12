@@ -20,12 +20,61 @@ function unwrapUser(response: UserApiResponse): AuthUser {
   return response as AuthUser
 }
 
+const AUTH_SYNC_CHANNEL = 'bolao-auth'
+
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<AuthUser | null>(null)
   const initialized = ref(false)
   let fetchUserPromise: Promise<void> | null = null
+  let authChannel: BroadcastChannel | null = null
+  let syncingFromPeer = false
 
   const isAuthenticated = computed(() => user.value !== null)
+
+  function initAuthSync() {
+    if (!import.meta.client || authChannel) return
+
+    authChannel = new BroadcastChannel(AUTH_SYNC_CHANNEL)
+    authChannel.onmessage = (event: MessageEvent<{ type?: string }>) => {
+      const type = event.data?.type
+      if (type === 'logout') {
+        void syncLogoutFromPeer()
+      } else if (type === 'login') {
+        void fetchUser()
+      }
+    }
+  }
+
+  function notifyAuthPeers(type: 'login' | 'logout') {
+    if (!import.meta.client || syncingFromPeer) return
+
+    try {
+      initAuthSync()
+      authChannel?.postMessage({ type })
+    } catch {
+      // BroadcastChannel indisponível em alguns contextos.
+    }
+  }
+
+  async function syncLogoutFromPeer() {
+    if (syncingFromPeer) return
+
+    syncingFromPeer = true
+    try {
+      user.value = null
+      initialized.value = true
+
+      const route = useRoute()
+      if (route.path === '/login' || route.path.startsWith('/join/')) return
+
+      await navigateTo({
+        path: '/login',
+        query: { message: 'Sessão encerrada.' },
+      })
+    } finally {
+      syncingFromPeer = false
+    }
+  }
 
   async function fetchUser() {
     if (!fetchUserPromise) {
@@ -52,7 +101,11 @@ export const useAuthStore = defineStore('auth', () => {
           }
 
           if (response._data != null) {
+            const wasLoggedOut = user.value === null
             user.value = unwrapUser(response._data)
+            if (wasLoggedOut && user.value !== null) {
+              notifyAuthPeers('login')
+            }
           }
         } catch {
           user.value = null
@@ -73,6 +126,7 @@ export const useAuthStore = defineStore('auth', () => {
   async function handleUnauthorized() {
     user.value = null
     initialized.value = true
+    notifyAuthPeers('logout')
 
     if (!import.meta.client) return
 
@@ -152,6 +206,8 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   async function logout() {
+    notifyAuthPeers('logout')
+
     const config = useRuntimeConfig()
     const apiUrl = config.public.apiUrl as string
 
@@ -173,6 +229,7 @@ export const useAuthStore = defineStore('auth', () => {
     user,
     initialized,
     isAuthenticated,
+    initAuthSync,
     fetchUser,
     handleUnauthorized,
     login,

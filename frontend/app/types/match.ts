@@ -25,6 +25,10 @@ export interface UserPrediction {
   points_earned: number | null
 }
 
+export interface PredictionWithMatch extends UserPrediction {
+  match: Match
+}
+
 export interface PredictionUser {
   id: string
   name: string

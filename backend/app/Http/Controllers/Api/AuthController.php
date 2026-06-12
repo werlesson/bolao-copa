@@ -54,7 +54,6 @@ class AuthController extends Controller
             ]);
         }
 
-        $user->tokens()->where('name', 'web')->delete();
         $plainToken = $user->createToken(
             'web',
             ['*'],

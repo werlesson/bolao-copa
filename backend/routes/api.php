@@ -10,10 +10,12 @@ use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
 // ─── Auth ────────────────────────────────────────────────────────────────────
+Route::post('auth/logout', [AuthController::class, 'logout'])
+    ->middleware(['auth:sanctum', 'throttle:15,1']);
+
 Route::prefix('auth/google')->middleware('throttle:15,1')->group(function () {
     Route::get('redirect', [AuthController::class, 'redirect']);
     Route::get('callback', [AuthController::class, 'callback']);
-    Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 });
 
 // ─── Autenticado ─────────────────────────────────────────────────────────────

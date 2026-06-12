@@ -17,6 +17,7 @@ const {
   deactivateAccount,
   deleteAccount,
 } = useProfile()
+
 const {
   permission,
   loading: pushLoading,
@@ -314,6 +315,18 @@ async function handleDeleteAccount() {
             <span class="mt-0.5 text-[22px] font-bold leading-none text-primary">{{ accuracyLabel }}</span>
           </div>
         </section>
+
+        <NuxtLink
+          to="/palpites"
+          :class="[statCardClass, 'flex items-center gap-3 px-4 py-4 transition-colors hover:bg-white/5 active:bg-white/10']"
+        >
+          <span class="material-symbols-outlined shrink-0 text-[22px] text-primary/70">history</span>
+          <span class="min-w-0 flex-1 font-body-lg text-body-lg text-on-surface">Meus palpites</span>
+          <span class="font-label-caps text-[11px] text-on-surface-variant/50">
+            {{ stats.total_predictions }}
+          </span>
+          <span class="material-symbols-outlined shrink-0 text-[18px] text-on-surface-variant/25">chevron_right</span>
+        </NuxtLink>
 
         <!-- Phase performance chart -->
         <section :class="[statCardClass, 'overflow-hidden']">

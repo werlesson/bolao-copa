@@ -75,7 +75,61 @@ class UserAccountTest extends TestCase
         $response->assertOk()
             ->assertJsonPath('total_predictions', 2)
             ->assertJsonPath('total_points', 3)
-            ->assertJsonPath('exact_scores', 1);
+            ->assertJsonPath('exact_scores', 1)
+            ->assertJsonPath('accuracy_percent', 100);
+    }
+
+    public function test_user_stats_accuracy_is_points_earned_over_max_possible(): void
+    {
+        $user = User::factory()->create();
+        $globalGroup = Group::where('is_global', true)->firstOrFail();
+
+        Ranking::where('user_id', $user->id)
+            ->where('group_id', $globalGroup->id)
+            ->update([
+                'total_points'      => 4,
+                'exact_scores'      => 1,
+                'correct_results'   => 2,
+                'total_predictions' => 2,
+            ]);
+
+        $finishedMatches = collect([
+            ['external_id' => 3001, 'home_team' => 'Brasil', 'away_team' => 'Argentina'],
+            ['external_id' => 3002, 'home_team' => 'França', 'away_team' => 'Alemanha'],
+            ['external_id' => 3003, 'home_team' => 'Espanha', 'away_team' => 'Portugal'],
+        ])->map(function (array $data, int $index) {
+            return FootballMatch::create([
+                ...$data,
+                'starts_at'  => now()->subDays($index + 1),
+                'stage'      => 'GROUP_STAGE',
+                'status'     => MatchStatus::FINISHED->value,
+                'home_score' => 1,
+                'away_score' => 0,
+            ]);
+        });
+
+        Prediction::create([
+            'user_id'       => $user->id,
+            'match_id'      => $finishedMatches[0]->id,
+            'home_score'    => 1,
+            'away_score'    => 0,
+            'points_earned' => 3,
+        ]);
+
+        Prediction::create([
+            'user_id'       => $user->id,
+            'match_id'      => $finishedMatches[1]->id,
+            'home_score'    => 1,
+            'away_score'    => 0,
+            'points_earned' => 1,
+        ]);
+
+        Sanctum::actingAs($user);
+
+        $this->getJson('/api/user/stats')
+            ->assertOk()
+            ->assertJsonPath('total_points', 4)
+            ->assertJsonPath('accuracy_percent', 44);
     }
 
     public function test_deactivate_hides_user_from_ranking(): void

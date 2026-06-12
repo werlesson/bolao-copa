@@ -419,28 +419,38 @@ const chipActive = 'border-primary/30 bg-primary/10 text-primary'
         <template v-if="isResultsMode">
           <div
             v-if="finishedMatches.length > 0"
-            class="mb-6 flex items-center justify-between rounded-xl border border-white/10 bg-surface-container px-4 py-3"
+            class="mb-6 rounded-xl border border-white/10 bg-surface-container px-4 py-3"
           >
-            <div>
-              <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/50">
-                Jogos encerrados
-              </p>
-              <p class="font-title-md text-title-md text-on-surface">
-                {{ finishedMatches.length }}
-                {{ finishedMatches.length === 1 ? 'partida' : 'partidas' }}
-              </p>
+            <div class="flex items-center justify-between">
+              <div>
+                <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/50">
+                  Jogos encerrados
+                </p>
+                <p class="font-title-md text-title-md text-on-surface">
+                  {{ finishedMatches.length }}
+                  {{ finishedMatches.length === 1 ? 'partida' : 'partidas' }}
+                </p>
+              </div>
+              <div class="text-right">
+                <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/50">
+                  Seus pontos
+                </p>
+                <p
+                  class="font-headline-lg-mobile text-headline-lg-mobile leading-none tracking-tighter"
+                  :class="resultsSummary.totalPoints > 0 ? 'text-secondary-container' : 'text-on-surface-variant/40'"
+                >
+                  {{ resultsSummary.totalPoints > 0 ? `+${resultsSummary.totalPoints}` : '0' }}
+                </p>
+              </div>
             </div>
-            <div class="text-right">
-              <p class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/50">
-                Seus pontos
-              </p>
-              <p
-                class="font-headline-lg-mobile text-headline-lg-mobile leading-none tracking-tighter"
-                :class="resultsSummary.totalPoints > 0 ? 'text-secondary-container' : 'text-on-surface-variant/40'"
-              >
-                {{ resultsSummary.totalPoints > 0 ? `+${resultsSummary.totalPoints}` : '0' }}
-              </p>
-            </div>
+            <button
+              type="button"
+              class="mt-3 flex w-full items-center justify-center gap-1.5 border-t border-white/5 pt-3 font-label-caps text-[10px] uppercase tracking-widest text-primary transition-opacity hover:opacity-80"
+              @click="navigateTo('/palpites')"
+            >
+              <span class="material-symbols-outlined text-[14px]">history</span>
+              Ver meu histórico
+            </button>
           </div>
 
           <section v-for="group in finishedGroupsReversed" :key="group.key" class="mb-8">
