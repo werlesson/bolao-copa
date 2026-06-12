@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { BolaoGroup, JoinRequest } from '~/types/group'
+import { isJoinRoute, isLoginRoute } from '~/utils/route'
 
 export interface AuthUser {
   id: string
@@ -65,9 +66,9 @@ export const useAuthStore = defineStore('auth', () => {
       initialized.value = true
 
       const route = useRoute()
-      if (route.path === '/login') return
+      if (isLoginRoute(route.path)) return
 
-      if (route.path.startsWith('/join/')) {
+      if (isJoinRoute(route.path)) {
         await preserveJoinTokenAndRedirectToLogin('Sessão encerrada.')
         return
       }
@@ -115,6 +116,16 @@ export const useAuthStore = defineStore('auth', () => {
           })
 
           if (response.status === 401) {
+            user.value = null
+            initialized.value = true
+
+            if (import.meta.client) {
+              const route = useRoute()
+              if (isLoginRoute(route.path) || isJoinRoute(route.path)) {
+                return
+              }
+            }
+
             await handleUnauthorized()
             return
           }
@@ -155,9 +166,9 @@ export const useAuthStore = defineStore('auth', () => {
     if (!import.meta.client) return
 
     const route = useRoute()
-    if (route.path === '/login') return
+    if (isLoginRoute(route.path)) return
 
-    if (route.path.startsWith('/join/')) {
+    if (isJoinRoute(route.path)) {
       await preserveJoinTokenAndRedirectToLogin('Sessão expirada. Entre novamente.')
       return
     }

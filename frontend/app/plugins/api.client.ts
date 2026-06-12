@@ -8,6 +8,8 @@ export default defineNuxtPlugin(() => {
 
       const url = typeof request === 'string' ? request : request.toString()
       if (url.includes('/api/auth/google') || url.includes('/api/auth/logout')) return
+      // Guest check on /api/user is expected on login — fetchUser handles it.
+      if (url.includes('/api/user')) return
 
       void auth.handleUnauthorized()
     },
