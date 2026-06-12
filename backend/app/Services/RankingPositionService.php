@@ -8,6 +8,46 @@ use Illuminate\Support\Collection;
 class RankingPositionService
 {
     /**
+     * Competition ranking (1224) for all active members in a group.
+     *
+     * @return array<string, int> user_id => position
+     */
+    public function positionsForGroup(string $groupId): array
+    {
+        $rows = Ranking::query()
+            ->where('rankings.group_id', $groupId)
+            ->join('group_members', function ($join) {
+                $join->on('group_members.user_id', '=', 'rankings.user_id')
+                    ->on('group_members.group_id', '=', 'rankings.group_id');
+            })
+            ->join('users', 'users.id', '=', 'rankings.user_id')
+            ->whereNull('users.deactivated_at')
+            ->select('rankings.*')
+            ->orderByDesc('rankings.total_points')
+            ->orderByDesc('rankings.exact_scores')
+            ->orderByRaw('LOWER(users.name)')
+            ->get();
+
+        $positions  = [];
+        $rank       = 0;
+        $idx        = 0;
+        $prevPoints = null;
+        $prevExact  = null;
+
+        foreach ($rows as $row) {
+            $idx++;
+            if ($row->total_points !== $prevPoints || $row->exact_scores !== $prevExact) {
+                $rank       = $idx;
+                $prevPoints = $row->total_points;
+                $prevExact  = $row->exact_scores;
+            }
+            $positions[$row->user_id] = $rank;
+        }
+
+        return $positions;
+    }
+
+    /**
      * Competition ranking (1224): same (points, exatos) share position.
      *
      * @param  list<string>  $groupIds

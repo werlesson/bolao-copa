@@ -6,6 +6,7 @@ use App\Enums\MatchStatus;
 use App\Models\GroupMember;
 use App\Models\Prediction;
 use App\Models\Ranking;
+use App\Services\RankingPositionService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -31,7 +32,7 @@ class RecalculateRankings implements ShouldQueue, ShouldBeUnique
         return $this->matchId;
     }
 
-    public function handle(): void
+    public function handle(RankingPositionService $positionService): void
     {
         // Find every group that has at least one member who predicted this match.
         $groupIds = GroupMember::whereIn(
@@ -40,7 +41,7 @@ class RecalculateRankings implements ShouldQueue, ShouldBeUnique
         )->distinct()->pluck('group_id');
 
         foreach ($groupIds as $groupId) {
-            $this->recalculateGroup($groupId);
+            $this->recalculateGroup($groupId, $positionService);
 
             // Invalidate both cache variants (group ranking + global top-100 if applicable).
             Cache::forget("ranking:group:{$groupId}");
@@ -48,13 +49,14 @@ class RecalculateRankings implements ShouldQueue, ShouldBeUnique
         }
     }
 
-    private function recalculateGroup(string $groupId): void
+    private function recalculateGroup(string $groupId, RankingPositionService $positionService): void
     {
         // Per-group lock prevents two concurrent RecalculateRankings jobs (from
         // different matches finishing simultaneously) from racing on updateOrCreate.
         Cache::lock("lock:ranking:recalc:{$groupId}", 60)
-            ->block(30, function () use ($groupId) {
+            ->block(30, function () use ($groupId, $positionService) {
                 $memberUserIds = GroupMember::where('group_id', $groupId)->pluck('user_id');
+                $positionsBefore = $positionService->positionsForGroup($groupId);
 
                 // One query per group: aggregate all finished-match predictions for every member.
                 $stats = Prediction::query()
@@ -83,6 +85,27 @@ class RecalculateRankings implements ShouldQueue, ShouldBeUnique
                             'correct_results'   => $row ? (int) $row->correct_results   : 0,
                             'total_predictions' => $row ? (int) $row->total_predictions : 0,
                         ]
+                    );
+                }
+
+                $positionsAfter = $positionService->positionsForGroup($groupId);
+
+                foreach ($memberUserIds as $userId) {
+                    Ranking::where('user_id', $userId)
+                        ->where('group_id', $groupId)
+                        ->update(['last_position' => $positionsAfter[$userId] ?? null]);
+                }
+
+                $hasPredictions = Prediction::where('match_id', $this->matchId)
+                    ->whereIn('user_id', $memberUserIds)
+                    ->exists();
+
+                if ($hasPredictions) {
+                    GenerateRankingBulletin::dispatch(
+                        $groupId,
+                        $this->matchId,
+                        $positionsBefore,
+                        $positionsAfter,
                     );
                 }
             });

@@ -155,6 +155,11 @@ export default defineNuxtConfig({
           handler: 'StaleWhileRevalidate',
           options: { cacheName: 'rankings-cache', expiration: { maxAgeSeconds: 90 } },
         },
+        {
+          urlPattern: /\/api\/(groups\/[^/]+\/ranking\/bulletin|rankings\/global\/bulletin)/,
+          handler: 'StaleWhileRevalidate',
+          options: { cacheName: 'ranking-bulletins-cache', expiration: { maxAgeSeconds: 90 } },
+        },
       ],
     },
   },

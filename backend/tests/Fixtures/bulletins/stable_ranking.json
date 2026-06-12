@@ -1,0 +1,21 @@
+{
+  "context": {
+    "matchId": "match-stable",
+    "homeTeam": "Espanha",
+    "awayTeam": "Itália",
+    "scoreLabel": "1×0",
+    "matchStatus": "FINISHED",
+    "groupId": "group-familia",
+    "groupName": "Família",
+    "memberCount": 6,
+    "highlights": [],
+    "podiumAfter": [
+      {"user": "Ana", "pos": 1, "pts": 15},
+      {"user": "Bruno", "pos": 2, "pts": 14},
+      {"user": "Carla", "pos": 3, "pts": 12}
+    ],
+    "stats": {"scored": 4, "moved": 0, "exact_hits": 1}
+  },
+  "expected_template": "Rolou gol, rolou ponto, mas no Família ninguém trocou de lugar.",
+  "significant": false
+}

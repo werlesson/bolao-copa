@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['user_id', 'group_id', 'total_points', 'exact_scores', 'correct_results', 'total_predictions'])]
+#[Fillable(['user_id', 'group_id', 'total_points', 'exact_scores', 'correct_results', 'total_predictions', 'last_position'])]
 class Ranking extends Model
 {
     use HasUuids;
@@ -18,7 +18,8 @@ class Ranking extends Model
     protected function casts(): array
     {
         return [
-            'updated_at' => 'datetime',
+            'last_position' => 'integer',
+            'updated_at'    => 'datetime',
         ];
     }
 

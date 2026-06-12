@@ -1,0 +1,25 @@
+{
+  "context": {
+    "matchId": "match-podium",
+    "homeTeam": "França",
+    "awayTeam": "Uruguai",
+    "scoreLabel": "1×1",
+    "matchStatus": "FINISHED",
+    "groupId": "group-churrasco",
+    "groupName": "Churrasco FC",
+    "memberCount": 12,
+    "highlights": [
+      {"type": "new_leader", "user": "Pedro", "from": 2, "to": 1, "pts": 1},
+      {"type": "left_podium", "user": "Carlos", "from": 2, "to": 5, "pts": 0},
+      {"type": "entered_podium", "user": "Ana", "from": 4, "to": 3, "pts": 3}
+    ],
+    "podiumAfter": [
+      {"user": "Pedro", "pos": 1, "pts": 18},
+      {"user": "Lucas", "pos": 2, "pts": 17},
+      {"user": "Ana", "pos": 3, "pts": 16}
+    ],
+    "stats": {"scored": 9, "moved": 6, "exact_hits": 2}
+  },
+  "expected_template": "Pedro passou na frente e agora manda no Churrasco FC. Carlos saiu voando do pódio no Churrasco FC. 9 pontuaram e 6 trocaram de lugar — mexeu geral",
+  "significant": true
+}

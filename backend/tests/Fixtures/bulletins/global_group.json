@@ -1,0 +1,24 @@
+{
+  "context": {
+    "matchId": "match-global",
+    "homeTeam": "Canada",
+    "awayTeam": "Bosnia-H.",
+    "scoreLabel": "1×1",
+    "matchStatus": "FINISHED",
+    "groupId": "group-global",
+    "groupName": "Geral Copa 2026",
+    "memberCount": 100,
+    "highlights": [
+      {"type": "new_leader", "user": "Prof. Sheila Dibbert", "from": 58, "to": 1, "pts": 3},
+      {"type": "big_jump", "user": "Prof. Vincenza Greenholt I", "from": 58, "to": 1, "pts": 3}
+    ],
+    "podiumAfter": [
+      {"user": "Prof. Sheila Dibbert", "pos": 1, "pts": 42},
+      {"user": "João", "pos": 2, "pts": 40},
+      {"user": "Maria", "pos": 3, "pts": 38}
+    ],
+    "stats": {"scored": 67, "moved": 45, "exact_hits": 8}
+  },
+  "expected_template": "Prof. Sheila Dibbert passou na frente e agora manda no Geral Copa 2026. Prof. Vincenza Greenholt I deu um pulo do 58º pro 1º. 67 pontuaram e 45 trocaram de lugar — mexeu geral",
+  "significant": true
+}

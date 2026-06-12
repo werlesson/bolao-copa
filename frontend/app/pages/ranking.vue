@@ -2,6 +2,7 @@
 import type { RankingEntry, RankingTabId } from '~/types/ranking'
 import RankingTopGroups from '~/components/ranking/RankingTopGroups.vue'
 import RankingRow from '~/components/ranking/RankingRow.vue'
+import RankingBulletinBanner from '~/components/ranking/RankingBulletinBanner.vue'
 
 const MAX_VISIBLE = 10
 
@@ -26,6 +27,7 @@ definePageMeta({ middleware: 'auth' })
 const { user } = useAuth()
 const { recordGroupView, getInitialTab } = useRankingPrefs()
 const { sortedGroups, entries, globalUserEntry, globalTotal, isGlobalTab, loading, error, fetchGroups, fetchRanking } = useRankings()
+const { bulletin, loading: bulletinLoading, fetchBulletin } = useRankingBulletin()
 
 const activeTab = ref<RankingTabId>('global')
 const showFullList = ref(false)
@@ -81,12 +83,16 @@ onMounted(async () => {
   await fetchGroups()
   const initial = getInitialTab(sortedGroups.value.map(g => g.id))
   activeTab.value = initial
-  await fetchRanking(initial)
+  await Promise.all([
+    fetchRanking(initial),
+    fetchBulletin(initial),
+  ])
 })
 
 watch(activeTab, (tabId) => {
   recordGroupView(tabId)
   fetchRanking(tabId)
+  fetchBulletin(tabId)
 })
 
 function selectTab(tabId: RankingTabId) {
@@ -176,14 +182,25 @@ function closeFullList() {
     <template v-else>
       <!-- Participant count (compact, inline with tab bar when no groups) -->
       <p
-        class="font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/40"
-        :class="tabs.length > 1 ? 'px-margin' : 'mt-2 px-margin'"
+        class="mb-2 font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant/40"
+        :class="tabs.length > 1 ? 'px-margin pt-1' : 'mt-2 px-margin'"
       >
         {{ participantHint }}
       </p>
 
       <Transition name="page-fade" mode="out-in">
         <div :key="activeTab">
+      <div
+        v-if="bulletinLoading"
+        class="mx-margin h-[156px] animate-pulse rounded-xl bg-surface-container-high/60"
+        aria-hidden="true"
+      />
+      <RankingBulletinBanner
+        v-else-if="bulletin"
+        :bulletin="bulletin"
+        :tab-id="activeTab"
+      />
+
       <!-- Top leaders — keyed by tab so animation replays on tab switch -->
       <RankingTopGroups :entries="entries" :current-user-id="user?.id" />
 

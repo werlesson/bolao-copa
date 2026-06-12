@@ -38,7 +38,7 @@ function isCurrentUser(entry: RankingEntry): boolean {
 </script>
 
 <template>
-  <section v-if="entries.length > 0" class="mt-3 space-y-1.5 px-margin">
+  <section v-if="entries.length > 0" class="mt-4 space-y-1.5 px-margin">
     <template v-for="group in groups" :key="group.position">
       <div
         v-for="entry in group.entries"

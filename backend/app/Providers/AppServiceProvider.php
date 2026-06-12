@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\RankingBulletinGenerator;
+use App\Services\GeminiBulletinGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(RankingBulletinGenerator::class, GeminiBulletinGenerator::class);
     }
 
     /**

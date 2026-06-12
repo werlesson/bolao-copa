@@ -1,0 +1,23 @@
+{
+  "context": {
+    "matchId": "match-large",
+    "homeTeam": "México",
+    "awayTeam": "África do Sul",
+    "scoreLabel": "0×0",
+    "matchStatus": "FINISHED",
+    "groupId": "group-firma",
+    "groupName": "Bolão da Firma",
+    "memberCount": 48,
+    "highlights": [
+      {"type": "exact_score", "user": "Lucas", "from": 7, "to": 7, "pts": 3}
+    ],
+    "podiumAfter": [
+      {"user": "Ana", "pos": 1, "pts": 30},
+      {"user": "Carlos", "pos": 2, "pts": 28},
+      {"user": "Pedro", "pos": 3, "pts": 27}
+    ],
+    "stats": {"scored": 20, "moved": 3, "exact_hits": 1}
+  },
+  "expected_template": "Lucas cravou o placar (+3). 20 pontuaram e 3 trocaram de lugar — mexeu geral",
+  "significant": false
+}

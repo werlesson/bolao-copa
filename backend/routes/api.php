@@ -39,7 +39,9 @@ Route::middleware(['auth:sanctum', 'throttle:120,1'])->group(function () {
 
     // ─── Rankings ────────────────────────────────────────────────────────────
     Route::get('groups/{group}/ranking', [RankingController::class, 'groupRanking']);
+    Route::get('groups/{group}/ranking/bulletin', [RankingController::class, 'groupBulletin']);
     Route::get('rankings/global', [RankingController::class, 'globalRanking']);
+    Route::get('rankings/global/bulletin', [RankingController::class, 'globalBulletin']);
 
     // ─── Write endpoints — stricter rate limit (20 req/min) ──────────────────
     Route::middleware('throttle:20,1')->group(function () {

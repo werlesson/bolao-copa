@@ -76,12 +76,18 @@ backend/
     Jobs/
       SyncMatchResults.php          # sincroniza resultados da API externa
       RecalculateRankings.php       # recalcula rankings após resultado
+      GenerateRankingBulletin.php   # resumo pós-jogo por grupo (template ou Gemini)
       SendMatchNotification.php     # push ao finalizar jogo
       SendUpcomingMatchReminders.php # push 1h antes para quem não palpitou
     Services/
       FootballDataService.php       # wrapper da API football-data.org
       ScoringService.php            # lógica de pontuação 3pts/1pt/0
+      RankingMovementService.php    # detecta destaques e templates de bulletin
+      GeminiBulletinGenerator.php   # gera texto via Gemini 2.5 Flash-Lite
+      BulletinContentValidator.php  # valida resposta da IA antes de gravar
       PushNotificationService.php   # envio de notificações via web-push
+    Contracts/
+      RankingBulletinGenerator.php  # interface do gerador de bulletin
     Models/
       User.php
       Group.php
@@ -91,6 +97,7 @@ backend/
       Match.php
       Prediction.php
       Ranking.php
+      RankingBulletin.php           # resumo pós-jogo por (grupo, jogo)
     Observers/
       UserObserver.php              # ao criar user: adiciona ao grupo global
   database/
@@ -120,6 +127,7 @@ frontend/
         MatchStatusBadge.vue        # badges: AO VIVO | Adiado | Cancelado | TBD
       ranking/
         RankingRow.vue              # linha do ranking com posição, avatar, pts
+        RankingBulletinBanner.vue   # resumo pós-jogo expandível/ocultável
         PodiumTop3.vue              # pódio visual para top 3
       group/
         GroupCard.vue               # card de grupo na listagem
@@ -141,6 +149,8 @@ frontend/
       useMatches.ts                 # buscar e filtrar jogos
       usePredictions.ts             # buscar e salvar palpites
       useRankings.ts                # buscar rankings por grupo
+      useRankingBulletin.ts         # fetch bulletin por aba (global/grupo)
+      useRankingBulletinPrefs.ts     # ocultar/reexibir banner (localStorage)
       useGroups.ts                  # CRUD grupos, convites, membros
       useOnboarding.ts              # controle de exibição (localStorage + API)
     middleware/
@@ -675,6 +685,7 @@ DELETE /api/groups/{id}/members/{userId} # remover membro e banir — owner
 PATCH /api/groups/{id}/transfer         # { new_owner_id } — transferir ownership
 POST  /api/groups/{id}/invite/regenerate # regenerar invite_token — owner
 GET   /api/groups/{id}/ranking          # ranking do grupo (com cache Redis)
+GET   /api/groups/{id}/ranking/bulletin # último(s) resumo(s) pós-jogo do grupo
 GET   /api/groups/{id}/requests         # solicitações PENDING — owner apenas
 POST  /api/groups/{id}/requests/{id}/approve # aprovar solicitação — owner
 POST  /api/groups/{id}/requests/{id}/reject  # rejeitar solicitação — owner
@@ -688,6 +699,7 @@ POST  /api/groups/join/{token}          # entrar no grupo via token
 
 # ─── Rankings ────────────────────────────────────────────────────────────────
 GET   /api/rankings/global              # ranking do grupo global (is_global = true)
+GET   /api/rankings/global/bulletin     # último(s) resumo(s) do grupo global
 
 # ─── User ────────────────────────────────────────────────────────────────────
 GET   /api/user                         # dados do usuário autenticado
@@ -727,13 +739,15 @@ Schedule::job(new SendUpcomingMatchReminders)->hourly();
 
 // ─── RecalculateRankings ──────────────────────────────────────────────────
 // 1. Buscar todos os grupos que têm pelo menos um membro com palpite no jogo
-// 2. Para cada grupo, para cada membro:
-//    a. Somar total_points de todas as predictions onde match está FINISHED
-//    b. Contar exact_scores (points_earned = 3)
-//    c. Contar correct_results (points_earned >= 1)
-//    d. Contar total_predictions
-//    e. UPSERT em rankings
-// 3. Deletar chave Redis "ranking:group:{groupId}" para invalidar cache
+// 2. Snapshot positionsBefore → recalcular stats → positionsAfter + last_position
+// 3. Para cada grupo com palpite no jogo: GenerateRankingBulletin::dispatch(...)
+// 4. Deletar chave Redis "ranking:group:{groupId}" para invalidar cache
+
+// ─── GenerateRankingBulletin ─────────────────────────────────────────────
+// 1. Montar MovementContext (highlights curados, máx. 3)
+// 2. Se isSignificant + AI_RANKING_ENABLED + budget OK → Gemini → validador
+// 3. Senão (ou falha) → template PHP gratuito
+// 4. UPSERT em ranking_bulletins (group_id, match_id) + invalidar cache bulletin
 
 // ─── SendMatchNotification ────────────────────────────────────────────────
 // 1. Buscar predictions do jogo com users que têm push_subscription
@@ -832,6 +846,11 @@ export default defineNuxtConfig({
           urlPattern: /\/api\/rankings/,
           handler: 'StaleWhileRevalidate',
           options: { cacheName: 'rankings-cache', expiration: { maxAgeSeconds: 90 } }
+        },
+        {
+          urlPattern: /\/api\/(groups\/[^/]+\/ranking\/bulletin|rankings\/global\/bulletin)/,
+          handler: 'StaleWhileRevalidate',
+          options: { cacheName: 'ranking-bulletins-cache', expiration: { maxAgeSeconds: 90 } }
         }
       ]
     }
@@ -941,6 +960,15 @@ GOOGLE_REDIRECT_URI=http://localhost:8000/api/auth/google/callback
 VAPID_PUBLIC_KEY=                           # gerar com php artisan webpush:vapid
 VAPID_PRIVATE_KEY=
 VAPID_SUBJECT=mailto:seu@email.com
+
+# Resumos de ranking (Gemini) — ver backend/README.md
+AI_RANKING_ENABLED=false
+GEMINI_API_KEY=                             # https://aistudio.google.com/
+GEMINI_MODEL=gemini-2.5-flash-lite
+GEMINI_MAX_OUTPUT_TOKENS=64
+GEMINI_TEMPERATURE=0.55
+BULLETIN_PROMPT_VERSION=3
+AI_RANKING_DAILY_BUDGET=0
 ```
 
 ### frontend/.env (desenvolvimento)
@@ -994,7 +1022,7 @@ GOOGLE_REDIRECT_URI=https://api.seudominio.com/api/auth/google/callback
 19. Onboarding (4 slides + `useOnboarding`) — ref: `onboarding_palpites/`, `onboarding_grupos/`, `regulamento_e_pontua_o/`
 20. `/jogos` — listagem com `MatchCard`, `CountdownTimer`, `MatchStatusBadge` — ref: `home_jogos/`
 21. `/jogos/[id]` — detalhe com `ScoreInput`, `MatchLocked`, palpites — ref: `detalhes_da_partida/`
-22. `/ranking` — `PodiumTop3`, `RankingRow` — ref: `ranking/`
+22. `/ranking` — `RankingBulletinBanner`, `RankingTopGroups`, `RankingRow` — ref: `ranking/`
 23. `/grupos` — listagem com `GroupCard` — ref: `meus_grupos/`
 24. `/grupos/novo` — formulário de criação — ref: `criar_novo_grupo/`
 25. `/grupos/[id]` — detalhe com `GroupInviteCard`, `MemberRow`, `JoinRequestRow` — ref: `detalhes_do_grupo/`

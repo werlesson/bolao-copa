@@ -55,4 +55,17 @@ return [
         'private_key' => env('VAPID_PRIVATE_KEY'),
     ],
 
+    'gemini' => [
+        'api_key'           => env('GEMINI_API_KEY'),
+        'model'             => env('GEMINI_MODEL', 'gemini-2.5-flash-lite'),
+        'max_output_tokens' => (int) env('GEMINI_MAX_OUTPUT_TOKENS', 64),
+        'temperature'       => (float) env('GEMINI_TEMPERATURE', 0.55),
+        'prompt_version'    => env('BULLETIN_PROMPT_VERSION', '3'),
+    ],
+
+    'ai_ranking' => [
+        'enabled'      => filter_var(env('AI_RANKING_ENABLED', false), FILTER_VALIDATE_BOOL),
+        'daily_budget' => (int) env('AI_RANKING_DAILY_BUDGET', 0),
+    ],
+
 ];

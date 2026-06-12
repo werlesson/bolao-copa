@@ -1,0 +1,23 @@
+{
+  "context": {
+    "matchId": "match-new-leader",
+    "homeTeam": "Brasil",
+    "awayTeam": "Argentina",
+    "scoreLabel": "2×1",
+    "matchStatus": "FINISHED",
+    "groupId": "group-trabalho",
+    "groupName": "Trabalho",
+    "memberCount": 8,
+    "highlights": [
+      {"type": "new_leader", "user": "Maria", "from": 3, "to": 1, "pts": 3},
+      {"type": "lost_leadership", "user": "João", "from": 1, "to": 2, "pts": 0}
+    ],
+    "podiumAfter": [
+      {"user": "Maria", "pos": 1, "pts": 24},
+      {"user": "João", "pos": 2, "pts": 22}
+    ],
+    "stats": {"scored": 6, "moved": 4, "exact_hits": 1}
+  },
+  "expected_template": "Maria passou na frente e agora manda no Trabalho. João perdeu a ponta no Trabalho",
+  "significant": true
+}

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RankingBulletinResource;
 use App\Models\Group;
+use App\Models\GroupMember;
 use App\Models\Ranking;
+use App\Models\RankingBulletin;
 use Illuminate\Contracts\Cache\LockTimeoutException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -41,7 +44,77 @@ class RankingController extends Controller
         ]);
     }
 
+    public function groupBulletin(Request $request, Group $group): JsonResponse
+    {
+        if (!$this->userIsGroupMember($request->user()->id, $group->id)) {
+            abort(403, 'Você não participa deste grupo.');
+        }
+
+        return $this->bulletinResponse($group->id, $request);
+    }
+
+    public function globalBulletin(Request $request): JsonResponse
+    {
+        $globalId = Cache::rememberForever('group:global:id', fn () =>
+            Group::where('is_global', true)->firstOrFail()->id
+        );
+
+        return $this->bulletinResponse($globalId, $request);
+    }
+
     // ─── Private ─────────────────────────────────────────────────────────────
+
+    private function bulletinResponse(string $groupId, Request $request): JsonResponse
+    {
+        $limit    = min(max((int) $request->query('limit', 1), 1), 10);
+        $cacheKey = "ranking:group:{$groupId}:bulletins:{$limit}";
+        $cached   = Cache::get($cacheKey);
+
+        if ($cached !== null) {
+            return response()->json(['data' => $cached]);
+        }
+
+        try {
+            $data = Cache::lock("lock:{$cacheKey}", 10)
+                ->block(5, function () use ($groupId, $cacheKey, $limit) {
+                    if ($fresh = Cache::get($cacheKey)) {
+                        return $fresh;
+                    }
+
+                    $rows = RankingBulletin::query()
+                        ->where('group_id', $groupId)
+                        ->with('match:id,home_team,away_team,home_score,away_score')
+                        ->orderByDesc('created_at')
+                        ->limit($limit)
+                        ->get();
+
+                    $payload = RankingBulletinResource::collection($rows)->resolve();
+                    Cache::put($cacheKey, $payload, 90);
+
+                    return $payload;
+                });
+
+            return response()->json(['data' => $data]);
+        } catch (LockTimeoutException) {
+            $rows = RankingBulletin::query()
+                ->where('group_id', $groupId)
+                ->with('match:id,home_team,away_team,home_score,away_score')
+                ->orderByDesc('created_at')
+                ->limit($limit)
+                ->get();
+
+            return response()->json([
+                'data' => RankingBulletinResource::collection($rows)->resolve(),
+            ]);
+        }
+    }
+
+    private function userIsGroupMember(string $userId, string $groupId): bool
+    {
+        return GroupMember::where('group_id', $groupId)
+            ->where('user_id', $userId)
+            ->exists();
+    }
 
     /**
      * Group ranking: all members, full list, 90 s Redis cache.
