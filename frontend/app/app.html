@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    {{ HEAD }}
+    <style>
+      html, body {
+        margin: 0;
+        background-color: #121414;
+        color: #e2e2e2;
+      }
+      #__nuxt:empty::before {
+        content: '';
+        display: block;
+        width: 2rem;
+        height: 2rem;
+        margin: 40vh auto 0;
+        border: 2px solid rgba(101, 223, 118, 0.25);
+        border-top-color: #65df76;
+        border-radius: 50%;
+        animation: bolao-spin 0.7s linear infinite;
+      }
+      @keyframes bolao-spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
+  </head>
+  <body>
+    {{ APP }}
+  </body>
+</html>

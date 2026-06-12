@@ -109,6 +109,7 @@ export default defineNuxtConfig({
       ],
     },
     workbox: {
+      cleanupOutdatedCaches: true,
       // Pré-cacheia apenas o App Shell (HTML, CSS, ícones).
       // Chunks JS são cacheados sob demanda via CacheFirst abaixo,
       // evitando bloquear a ativação do SW em um install payload gigante.

@@ -111,6 +111,7 @@ export const useAuthStore = defineStore('auth', () => {
             credentials: 'include',
             headers: { Accept: 'application/json' },
             ignoreResponseError: true,
+            signal: AbortSignal.timeout(12_000),
           })
 
           if (response.status === 401) {
