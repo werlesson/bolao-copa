@@ -129,7 +129,7 @@ class UserAccountTest extends TestCase
         $this->getJson('/api/user/stats')
             ->assertOk()
             ->assertJsonPath('total_points', 4)
-            ->assertJsonPath('accuracy_percent', 44);
+            ->assertJsonPath('accuracy_percent', 67);
     }
 
     public function test_deactivate_hides_user_from_ranking(): void

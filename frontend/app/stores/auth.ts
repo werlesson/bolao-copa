@@ -65,7 +65,12 @@ export const useAuthStore = defineStore('auth', () => {
       initialized.value = true
 
       const route = useRoute()
-      if (route.path === '/login' || route.path.startsWith('/join/')) return
+      if (route.path === '/login') return
+
+      if (route.path.startsWith('/join/')) {
+        await preserveJoinTokenAndRedirectToLogin('Sessão encerrada.')
+        return
+      }
 
       await navigateTo({
         path: '/login',
@@ -74,6 +79,24 @@ export const useAuthStore = defineStore('auth', () => {
     } finally {
       syncingFromPeer = false
     }
+  }
+
+  function preserveJoinInviteToken() {
+    if (!import.meta.client) return
+
+    const route = useRoute()
+    const match = route.path.match(/^\/join\/([^/]+)/)
+    if (match?.[1]) {
+      sessionStorage.setItem('pending_invite_token', match[1])
+    }
+  }
+
+  async function preserveJoinTokenAndRedirectToLogin(message: string) {
+    preserveJoinInviteToken()
+    await navigateTo({
+      path: '/login',
+      query: { message },
+    })
   }
 
   async function fetchUser() {
@@ -131,7 +154,12 @@ export const useAuthStore = defineStore('auth', () => {
     if (!import.meta.client) return
 
     const route = useRoute()
-    if (route.path === '/login' || route.path.startsWith('/join/')) return
+    if (route.path === '/login') return
+
+    if (route.path.startsWith('/join/')) {
+      await preserveJoinTokenAndRedirectToLogin('Sessão expirada. Entre novamente.')
+      return
+    }
 
     if (!unauthorizedRedirect) {
       unauthorizedRedirect = (async () => {

@@ -73,18 +73,10 @@ class GroupController extends Controller
                 'joined_at' => now(),
             ]);
 
-            Ranking::create([
-                'group_id'         => $group->id,
-                'user_id'          => $user->id,
-                'total_points'     => 0,
-                'exact_scores'     => 0,
-                'correct_results'  => 0,
-                'total_predictions'=> 0,
-            ]);
-
             return $group;
         });
 
+        $this->restoreRankingForUser($group, $user);
         $this->loadActiveMemberCount($group);
 
         return (new GroupResource($group))->response()->setStatusCode(201);
@@ -426,7 +418,18 @@ class GroupController extends Controller
             'joined_at' => now(),
         ]);
 
-        // Restore historical ranking from existing finished-match predictions
+        $this->restoreRankingForUser($group, $user);
+
+        if ($statusCode === null) {
+            return null;
+        }
+
+        $this->loadActiveMemberCount($group);
+        return (new GroupResource($group))->response()->setStatusCode($statusCode);
+    }
+
+    private function restoreRankingForUser(Group $group, User $user): void
+    {
         $stats = Prediction::query()
             ->join('matches', 'matches.id', '=', 'predictions.match_id')
             ->where('matches.status', MatchStatus::FINISHED->value)
@@ -450,13 +453,6 @@ class GroupController extends Controller
         );
 
         $this->invalidateGroupRankingCache($group->id);
-
-        if ($statusCode === null) {
-            return null;
-        }
-
-        $this->loadActiveMemberCount($group);
-        return (new GroupResource($group))->response()->setStatusCode($statusCode);
     }
 
     /** @return array<string, \Closure> */

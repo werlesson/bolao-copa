@@ -16,13 +16,25 @@ self.addEventListener('push', event => {
   )
 })
 
+function clientMatchesUrl(clientUrl, targetUrl) {
+  try {
+    const clientPath = new URL(clientUrl).pathname
+    const targetPath = targetUrl.startsWith('http')
+      ? new URL(targetUrl).pathname
+      : targetUrl
+    return clientPath === targetPath
+  } catch {
+    return clientUrl.includes(targetUrl)
+  }
+}
+
 self.addEventListener('notificationclick', event => {
   event.notification.close()
   const url = event.notification.data?.url ?? '/'
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
       for (const client of clientList) {
-        if (client.url === url && 'focus' in client) return client.focus()
+        if (clientMatchesUrl(client.url, url) && 'focus' in client) return client.focus()
       }
       return self.clients.openWindow(url)
     })

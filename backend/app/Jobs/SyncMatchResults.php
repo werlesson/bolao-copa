@@ -7,6 +7,7 @@ use App\Models\FootballMatch;
 use App\Models\Prediction;
 use App\Services\FootballDataService;
 use App\Services\ScoringService;
+use App\Support\MatchStage;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -64,7 +65,7 @@ class SyncMatchResults implements ShouldQueue, ShouldBeUnique
                 'home_flag'  => $this->teamCrest($data['homeTeam'] ?? []),
                 'away_flag'  => $this->teamCrest($data['awayTeam'] ?? []),
                 'starts_at'  => $data['utcDate'],
-                'stage'      => $data['stage'] ?? 'REGULAR_SEASON',
+                'stage'      => MatchStage::normalize($data['stage'] ?? null),
                 'group_name' => $this->groupLabel($data),
                 'status'     => $newStatus,
                 'home_score' => $homeScore,

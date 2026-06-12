@@ -136,49 +136,55 @@ export function usePushNotifications() {
         throw firstErr
       }
 
-      const allRegs = await navigator.serviceWorker.getRegistrations().catch(() => [] as ServiceWorkerRegistration[])
-      for (const r of allRegs) {
-        await r.unregister().catch(() => {})
-      }
+      let freshReg: ServiceWorkerRegistration
 
-      const freshReg = await new Promise<ServiceWorkerRegistration>((resolve, reject) => {
-        const timer = setTimeout(
-          () => reject(new Error('Timeout ao reativar o service worker.')),
-          10_000,
-        )
-        navigator.serviceWorker.register('/sw.js', { scope: '/' })
-          .then((reg) => {
-            if (reg.active) {
-              clearTimeout(timer)
-              resolve(reg)
-              return
-            }
-            const sw = reg.installing ?? reg.waiting
-            if (!sw) {
-              clearTimeout(timer)
-              resolve(reg)
-              return
-            }
-            sw.addEventListener('statechange', function handler() {
-              if (sw.state === 'activated') {
-                sw.removeEventListener('statechange', handler)
+      if (import.meta.dev) {
+        const allRegs = await navigator.serviceWorker.getRegistrations().catch(() => [] as ServiceWorkerRegistration[])
+        for (const r of allRegs) {
+          await r.unregister().catch(() => {})
+        }
+
+        freshReg = await new Promise<ServiceWorkerRegistration>((resolve, reject) => {
+          const timer = setTimeout(
+            () => reject(new Error('Timeout ao reativar o service worker.')),
+            10_000,
+          )
+          navigator.serviceWorker.register('/sw.js', { scope: '/' })
+            .then((reg) => {
+              if (reg.active) {
                 clearTimeout(timer)
                 resolve(reg)
+                return
               }
+              const sw = reg.installing ?? reg.waiting
+              if (!sw) {
+                clearTimeout(timer)
+                resolve(reg)
+                return
+              }
+              sw.addEventListener('statechange', function handler() {
+                if (sw.state === 'activated') {
+                  sw.removeEventListener('statechange', handler)
+                  clearTimeout(timer)
+                  resolve(reg)
+                }
+              })
             })
-          })
-          .catch((e) => { clearTimeout(timer); reject(e) })
-      })
-
-      // After re-registering, wait for the fresh SW to control the page before subscribing.
-      if (!navigator.serviceWorker.controller) {
-        await new Promise<void>((resolve) => {
-          const timer = setTimeout(resolve, 3_000)
-          navigator.serviceWorker.addEventListener('controllerchange', () => {
-            clearTimeout(timer)
-            resolve()
-          }, { once: true })
+            .catch((e) => { clearTimeout(timer); reject(e) })
         })
+
+        if (!navigator.serviceWorker.controller) {
+          await new Promise<void>((resolve) => {
+            const timer = setTimeout(resolve, 3_000)
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+              clearTimeout(timer)
+              resolve()
+            }, { once: true })
+          })
+        }
+      } else {
+        freshReg = await getServiceWorkerRegistration()
+        await navigator.serviceWorker.ready
       }
 
       const current = await attemptSubscribe(freshReg)

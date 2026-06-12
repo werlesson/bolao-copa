@@ -7,11 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdatePushSubscriptionRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\FootballMatch;
 use App\Models\Group;
 use App\Models\Prediction;
 use App\Models\Ranking;
 use App\Services\ScoringService;
+use App\Support\MatchStage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -22,21 +22,9 @@ class UserController extends Controller
 {
     private const COOKIE_NAME = 'auth_token';
 
-    private const PHASE_ORDER = [
-        'GROUP_STAGE',
-        'ROUND_OF_16',
-        'QUARTER_FINALS',
-        'SEMI_FINALS',
-        'FINAL',
-    ];
+    private const PHASE_ORDER = MatchStage::PHASE_ORDER;
 
-    private const PHASE_SHORT_LABELS = [
-        'GROUP_STAGE'    => 'Grupos',
-        'ROUND_OF_16'    => 'Oitavas',
-        'QUARTER_FINALS' => 'Quartas',
-        'SEMI_FINALS'    => 'Semi-final',
-        'FINAL'          => 'Final',
-    ];
+    private const PHASE_SHORT_LABELS = MatchStage::LABELS;
 
     public function show(Request $request): UserResource
     {
@@ -59,8 +47,11 @@ class UserController extends Controller
         $totalPoints    = $ranking?->total_points ?? 0;
         $position       = $ranking ? $this->computeGlobalPosition($globalId, $user->id) : null;
 
-        $finishedMatchesCount = FootballMatch::where('status', MatchStatus::FINISHED->value)->count();
-        $maxPossiblePoints    = $finishedMatchesCount * ScoringService::MAX_POINTS_PER_MATCH;
+        $scoredPredictionsCount = Prediction::where('user_id', $user->id)
+            ->whereNotNull('points_earned')
+            ->count();
+
+        $maxPossiblePoints = $scoredPredictionsCount * ScoringService::MAX_POINTS_PER_MATCH;
 
         $accuracyPercent = $maxPossiblePoints > 0
             ? (int) round(($totalPoints / $maxPossiblePoints) * 100)
@@ -207,7 +198,7 @@ class UserController extends Controller
                 continue;
             }
 
-            $stage = $prediction->match->stage;
+            $stage = MatchStage::normalize($prediction->match->stage);
             $byStage[$stage] = ($byStage[$stage] ?? 0) + $prediction->points_earned;
         }
 

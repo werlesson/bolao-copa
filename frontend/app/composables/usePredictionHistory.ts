@@ -2,33 +2,14 @@ import type { Match, PredictionWithMatch } from '~/types/match'
 import { flagUrl } from '~/types/match'
 import { dateKey, formatDateSection } from '~/composables/useMatches'
 import { unwrapList } from '~/utils/api'
+import { normalizeStage, STAGE_LABELS, STAGE_ORDER } from '~/utils/matchStages'
 
 export type PredictionViewMode = 'todos' | 'aguardando' | 'finalizados'
 export type OutcomeFilter = 'exact' | 'partial' | 'miss' | null
 
 export const MAX_POINTS_PER_MATCH = 3
 
-const STAGE_ORDER: Record<string, number> = {
-  GROUP_STAGE: 0,
-  REGULAR_SEASON: 0,
-  LAST_32: 1,
-  LAST_16: 2,
-  QUARTER_FINALS: 3,
-  SEMI_FINALS: 4,
-  THIRD_PLACE: 5,
-  FINAL: 6,
-}
-
-export const STAGE_LABELS: Record<string, string> = {
-  GROUP_STAGE: 'Grupos',
-  REGULAR_SEASON: 'Grupos',
-  LAST_32: 'Rodada 32',
-  LAST_16: 'Oitavas',
-  QUARTER_FINALS: 'Quartas',
-  SEMI_FINALS: 'Semifinal',
-  THIRD_PLACE: '3º Lugar',
-  FINAL: 'Final',
-}
+export { STAGE_LABELS } from '~/utils/matchStages'
 
 export const OUTCOME_LABELS: Record<Exclude<OutcomeFilter, null>, string> = {
   exact: 'Placar exato (+3)',
@@ -128,7 +109,7 @@ export function usePredictionHistory() {
   }
 
   function matchesFilters(item: PredictionWithMatch): boolean {
-    if (activeStage.value && item.match.stage !== activeStage.value) return false
+    if (activeStage.value && normalizeStage(item.match.stage) !== activeStage.value) return false
     if (
       activeTeam.value
       && item.match.home_team !== activeTeam.value
@@ -137,7 +118,10 @@ export function usePredictionHistory() {
       return false
     }
     if (activeDate.value && dateKey(item.match.starts_at) !== activeDate.value) return false
-    if (activeOutcome.value) {
+    if (
+      activeOutcome.value
+      && viewMode.value !== 'aguardando'
+    ) {
       const outcome = predictionOutcome(item)
       if (outcome !== activeOutcome.value) return false
     }
@@ -190,7 +174,7 @@ export function usePredictionHistory() {
 
   const availableStages = computed(() => {
     const seen = new Set<string>()
-    for (const item of predictions.value) seen.add(item.match.stage)
+    for (const item of predictions.value) seen.add(normalizeStage(item.match.stage))
     return [...seen]
       .sort((a, b) => (STAGE_ORDER[a] ?? 99) - (STAGE_ORDER[b] ?? 99))
       .map(stage => ({ value: stage, label: STAGE_LABELS[stage] ?? stage }))
@@ -217,7 +201,7 @@ export function usePredictionHistory() {
     if (activeStage.value) {
       const stageTeams = new Set<string>()
       for (const item of predictions.value) {
-        if (item.match.stage === activeStage.value) {
+        if (normalizeStage(item.match.stage) === activeStage.value) {
           if (item.match.home_team) stageTeams.add(item.match.home_team)
           if (item.match.away_team) stageTeams.add(item.match.away_team)
         }

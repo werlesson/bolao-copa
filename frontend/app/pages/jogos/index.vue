@@ -3,6 +3,7 @@ import type { Match } from '~/types/match'
 import { flagUrl } from '~/types/match'
 import { dateKey, groupMatchesByDate } from '~/composables/useMatches'
 import { matchPollIntervalMs } from '~/utils/matchPolling'
+import { isGroupStage, normalizeStage, STAGE_LABELS, STAGE_ORDER } from '~/utils/matchStages'
 
 definePageMeta({ middleware: 'auth' })
 
@@ -68,38 +69,23 @@ onUnmounted(() => {
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 
-const STAGE_ORDER: Record<string, number> = {
-  GROUP_STAGE: 0, REGULAR_SEASON: 0,
-  LAST_32: 1, LAST_16: 2, QUARTER_FINALS: 3,
-  SEMI_FINALS: 4, THIRD_PLACE: 5, FINAL: 6,
-}
-
-const STAGE_LABELS: Record<string, string> = {
-  GROUP_STAGE: 'Grupos', REGULAR_SEASON: 'Grupos',
-  LAST_32: 'Rodada 32', LAST_16: 'Oitavas',
-  QUARTER_FINALS: 'Quartas', SEMI_FINALS: 'Semifinal',
-  THIRD_PLACE: '3º Lugar', FINAL: 'Final',
-}
-
 const availableStages = computed(() => {
   const seen = new Set<string>()
-  for (const m of matches.value) seen.add(m.stage)
+  for (const m of matches.value) seen.add(normalizeStage(m.stage))
   return [...seen]
     .sort((a, b) => (STAGE_ORDER[a] ?? 99) - (STAGE_ORDER[b] ?? 99))
     .map(stage => ({ value: stage, label: STAGE_LABELS[stage] ?? stage }))
 })
 
 const isGroupStageActive = computed(() =>
-  !activeStage.value
-  || activeStage.value === 'GROUP_STAGE'
-  || activeStage.value === 'REGULAR_SEASON',
+  !activeStage.value || isGroupStage(activeStage.value),
 )
 
 const availableGroups = computed(() => {
   if (!isGroupStageActive.value) return []
   const groups = new Set<string>()
   for (const m of matches.value) {
-    if (m.group_name && (m.stage === 'GROUP_STAGE' || m.stage === 'REGULAR_SEASON')) {
+    if (m.group_name && isGroupStage(m.stage)) {
       groups.add(m.group_name)
     }
   }
@@ -123,7 +109,7 @@ const filteredTeams = computed(() => {
   if (activeStage.value) {
     const stageTeams = new Set<string>()
     for (const m of matches.value) {
-      if (m.stage === activeStage.value) {
+      if (normalizeStage(m.stage) === activeStage.value) {
         if (m.home_team) stageTeams.add(m.home_team)
         if (m.away_team) stageTeams.add(m.away_team)
       }
@@ -234,7 +220,7 @@ const activeFilterCount = computed(() =>
 
 function applyFilters(list: Match[]): Match[] {
   return list.filter((m) => {
-    if (activeStage.value && m.stage !== activeStage.value) return false
+    if (activeStage.value && normalizeStage(m.stage) !== activeStage.value) return false
     if (activeGroup.value && m.group_name !== activeGroup.value) return false
     if (activeTeam.value && m.home_team !== activeTeam.value && m.away_team !== activeTeam.value) return false
     if (activeDate.value && dateKey(m.starts_at) !== activeDate.value) return false
