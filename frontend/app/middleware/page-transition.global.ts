@@ -9,8 +9,15 @@ function depth(path: string): number {
 }
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  // `/` só redireciona — `out-in` desmonta index antes de montar /jogos → tela branca.
-  if (normalizeRoutePath(from.path) === '/') {
+  const toPath = normalizeRoutePath(to.path)
+  const fromPath = normalizeRoutePath(from.path)
+
+  // Redirects de bootstrap/auth — `out-in` desmonta a página antes da próxima montar.
+  if (
+    fromPath === '/'
+    || (toPath === '/login' && fromPath !== '/login')
+    || (toPath === '/onboarding' && fromPath !== '/onboarding')
+  ) {
     to.meta.pageTransition = false
     from.meta.pageTransition = false
     return

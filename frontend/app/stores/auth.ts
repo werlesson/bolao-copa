@@ -116,6 +116,7 @@ export const useAuthStore = defineStore('auth', () => {
           })
 
           if (response.status === 401) {
+            const hadSession = user.value !== null
             user.value = null
             initialized.value = true
 
@@ -126,7 +127,12 @@ export const useAuthStore = defineStore('auth', () => {
               }
             }
 
-            await handleUnauthorized()
+            // Sessão expirada durante uso — redirect com mensagem.
+            // Visita inicial sem login: auth/guest middleware envia para /login
+            // (evita navigateTo duplicado com o middleware → tela branca).
+            if (hadSession) {
+              await handleUnauthorized()
+            }
             return
           }
 
