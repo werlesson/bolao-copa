@@ -1,7 +1,10 @@
 <script setup lang="ts">
-definePageMeta({ middleware: 'auth' })
-
-await navigateTo('/jogos', { replace: true })
+definePageMeta({
+  middleware: [
+    'auth',
+    defineNuxtRouteMiddleware(() => navigateTo('/jogos', { replace: true })),
+  ],
+})
 </script>
 
 <template>
