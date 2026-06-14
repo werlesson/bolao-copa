@@ -24,7 +24,7 @@ RUN docker-php-ext-install \
 
 # Redis extension (reinstall build deps; docker-php-ext-install purges them)
 RUN apk add --no-cache --virtual .redis-build-deps $PHPIZE_DEPS \
-    && pecl install redis \
+    && MAKEFLAGS="-j1" pecl install redis \
     && docker-php-ext-enable redis \
     && apk del .redis-build-deps
 
